@@ -13,7 +13,7 @@ function Row(props) {
     }, 0);
   }
   return (
-      <div onContextMenu={handleRightClick} style={{bottom}}>
+      <div onContextMenu={handleRightClick}>
         {props.pictures.filter((picture) => picture.type === props.type).map((picture) => {
           return <Picture
                   url={picture.url} 
