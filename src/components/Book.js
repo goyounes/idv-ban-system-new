@@ -16,6 +16,10 @@ function Book(props) {
     const openBook = (e) => {
       setBook(1);
     }
+    if (props.globalList.bookShouldOpen === true){
+      toggleBook()
+      delete props.globalList.bookShouldOpen;
+    }
 
     const visible = {
         "height": "960px",

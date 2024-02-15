@@ -63,7 +63,7 @@ function Canvas(props) {
     
     if (val > 0){
       if (GlobalList.isSelected(CharcterHitID)){
-        // Nothing to do
+        GlobalList.bookShouldOpen = true
       }   
       else if (!GlobalList.idExist(CharcterHitID)){  
         GlobalList.addSelect(CharcterHitID)                      
