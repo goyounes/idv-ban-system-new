@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/idv-ban-system/static/css/main.cf4e263d.css",
-    "main.js": "/idv-ban-system/static/js/main.ea7e41c1.js",
+    "main.js": "/idv-ban-system/static/js/main.5e3bad46.js",
     "static/media/0.png": "/idv-ban-system/static/media/0.10f06d8dc2eedc92e917.png",
     "static/media/4.png": "/idv-ban-system/static/media/4.515d2568315186d04afb.png",
     "static/media/1.png": "/idv-ban-system/static/media/1.ae6550a3a9a6e7c96408.png",
@@ -12,8 +12,8 @@
     "static/media/10.png": "/idv-ban-system/static/media/10.81b2c604fc607127e849.png",
     "static/media/Seer.png": "/idv-ban-system/static/media/Seer.1a74de3e627f394aa9a2.png",
     "static/media/Priestess.png": "/idv-ban-system/static/media/Priestess.f1f733150bf76cfdcbee.png",
-    "static/media/Psychologist.png": "/idv-ban-system/static/media/Psychologist.cd1c3931d559ad258a65.png",
-    "static/media/Barmaid.png": "/idv-ban-system/static/media/Barmaid.6443fbbf28e1dfe81b3b.png",
+    "static/media/Psychologist.png": "/idv-ban-system/static/media/Psychologist.7d146c0b0436e70697cb.png",
+    "static/media/Barmaid.png": "/idv-ban-system/static/media/Barmaid.e396dea83c1a59e1969f.png",
     "static/media/Composer.png": "/idv-ban-system/static/media/Composer.906f3bc97543679f51c8.png",
     "static/media/142.png": "/idv-ban-system/static/media/142.6ffefe323cb3661df585.png",
     "static/media/014.png": "/idv-ban-system/static/media/014.e21e0fa6230f890db334.png",
@@ -32,7 +32,7 @@
     "static/media/100.png": "/idv-ban-system/static/media/100.21069deeb9fdd96f25fc.png",
     "static/media/060.png": "/idv-ban-system/static/media/060.0cd4e6f6f3ba12e191e1.png",
     "static/media/Lawyer.png": "/idv-ban-system/static/media/Lawyer.efe370c72978ccfc0f29.png",
-    "static/media/Prospector.png": "/idv-ban-system/static/media/Prospector.0987ecfacb43b45dc5d9.png",
+    "static/media/Prospector.png": "/idv-ban-system/static/media/Prospector.07cc24268ccb3a978e42.png",
     "static/media/Forward.png": "/idv-ban-system/static/media/Forward.16241405a552ca602f9f.png",
     "static/media/ToyMerchant.png": "/idv-ban-system/static/media/ToyMerchant.aafac11318ced68e0947.png",
     "static/media/Dancer.png": "/idv-ban-system/static/media/Dancer.b424aa5f7d802012a1ba.png",
@@ -46,7 +46,7 @@
     "static/media/123.png": "/idv-ban-system/static/media/123.44e00e17226a3289c2fc.png",
     "static/media/121.png": "/idv-ban-system/static/media/121.5007033ff8a331286b61.png",
     "static/media/050.png": "/idv-ban-system/static/media/050.842108eb7dd9e120e446.png",
-    "static/media/Cheerleader.png": "/idv-ban-system/static/media/Cheerleader.4f48c9a2665838048353.png",
+    "static/media/Cheerleader.png": "/idv-ban-system/static/media/Cheerleader.e4ea40ae659bf72eb001.png",
     "static/media/090.png": "/idv-ban-system/static/media/090.12bcaa53933c68bca62b.png",
     "static/media/040.png": "/idv-ban-system/static/media/040.5babffdf766d40a57a13.png",
     "static/media/120.png": "/idv-ban-system/static/media/120.24b2e24cab4e16fc73d0.png",
@@ -96,12 +96,12 @@
     "static/media/024.png": "/idv-ban-system/static/media/024.2cabb3878cfbe03e9add.png",
     "static/media/023.png": "/idv-ban-system/static/media/023.70165db55314a1cc4a09.png",
     "static/media/Aeroplanist.png": "/idv-ban-system/static/media/Aeroplanist.10deff71c95a2da65e6a.png",
-    "static/media/Explorer.png": "/idv-ban-system/static/media/Explorer.2d3c3fd7a3f6d9ea1ab5.png",
-    "static/media/Gardener.png": "/idv-ban-system/static/media/Gardener.099f1d8a3f81f39441c0.png",
-    "static/media/FirstOfficer.png": "/idv-ban-system/static/media/FirstOfficer.c02b1887685aa6403a55.png",
+    "static/media/Explorer.png": "/idv-ban-system/static/media/Explorer.efe370c72978ccfc0f29.png",
+    "static/media/FirstOfficer.png": "/idv-ban-system/static/media/FirstOfficer.3d168593fd6738d53fa4.png",
+    "static/media/Gardener.png": "/idv-ban-system/static/media/Gardener.77e7ed51063f496ecd37.png",
     "static/media/Wildling.png": "/idv-ban-system/static/media/Wildling.210dc85c4b454df1b814.png",
-    "static/media/Gravekeeper.png": "/idv-ban-system/static/media/Gravekeeper.7ff8954ef64f7a578ae0.png",
-    "static/media/Mercenary.png": "/idv-ban-system/static/media/Mercenary.4adc7703ba5b17d95b4b.png",
+    "static/media/Gravekeeper.png": "/idv-ban-system/static/media/Gravekeeper.f328f6494ac1e2cdb88b.png",
+    "static/media/Mercenary.png": "/idv-ban-system/static/media/Mercenary.78edde9a49be4a7698b6.png",
     "static/media/Magician.png": "/idv-ban-system/static/media/Magician.19cae8f303ac622d9637.png",
     "static/media/Cowboy.png": "/idv-ban-system/static/media/Cowboy.66559aaa57d7683a0a08.png",
     "static/media/032.png": "/idv-ban-system/static/media/032.8ea8423ab95ecd55f3de.png",
@@ -170,10 +170,10 @@
     "static/media/7_Batter.png": "/idv-ban-system/static/media/7_Batter.0eebc478621386164301.png",
     "index.html": "/idv-ban-system/index.html",
     "main.cf4e263d.css.map": "/idv-ban-system/static/css/main.cf4e263d.css.map",
-    "main.ea7e41c1.js.map": "/idv-ban-system/static/js/main.ea7e41c1.js.map"
+    "main.5e3bad46.js.map": "/idv-ban-system/static/js/main.5e3bad46.js.map"
   },
   "entrypoints": [
     "static/css/main.cf4e263d.css",
-    "static/js/main.ea7e41c1.js"
+    "static/js/main.5e3bad46.js"
   ]
 }
