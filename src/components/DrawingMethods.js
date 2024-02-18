@@ -155,6 +155,44 @@ export function Draw_5_Selection_Layer_BG (Drawing_array,context, width, height)
     }
   }
 }
+const DEFAULT_CHANGE = 0.03
+const BUFFER_LIMIT = 0.5 * 60 // 0.5s 30frames
+let opacity = 1.0
+let change = - DEFAULT_CHANGE
+let buffer = 0
+export function loopOpacity(){
+  if (buffer < BUFFER_LIMIT){
+    buffer++;
+    console.log("Buffer not full")
+  }else{
+    console.log("Opacity",opacity)
+    opacity += change
+    if ( opacity > 1) {
+      change = - DEFAULT_CHANGE
+    }
+    if ( opacity < 0.5) {
+      change = DEFAULT_CHANGE
+      console.log('change is ',change)
+      // opacity = 1 // change =  DEFAULT_CHANGE
+      change =  DEFAULT_CHANGE*10
+      buffer = 7
+    }
+  }
+}
+export function resetOpacity(){
+  opacity = 1
+  change = - DEFAULT_CHANGE
+  buffer = 0
+}
+export function freezeOpacity(){
+  if ( opacity > 1){
+    resetOpacity()
+    return 1
+  }
+  change = 0.03
+  loopOpacity()
+  return 0
+}
 export function Draw_51_Selection_Layer (Drawing_array,context, width, height){
   // const Drawing_array = GlobalList.getSelected()
   for (const CharcterId of Drawing_array){
@@ -167,8 +205,10 @@ export function Draw_51_Selection_Layer (Drawing_array,context, width, height){
     DrawLayerWithCircleAnimation(charcterData,'R',img,context, width, height)
     charcterData.R = charcterData.R + PropogationSpeed.select
     }else{
-    context.drawImage(img, 0, 0, width, height);
-    charcterData.R = 850; //Animation is stoped and we jump to a high value to indicate the end
+      context.globalAlpha = opacity
+      context.drawImage(img, 0, 0, width, height);
+      context.globalAlpha = 1
+      charcterData.R = 850; //Animation is stoped and we jump to a high value to indicate the end
     }
   }
 }

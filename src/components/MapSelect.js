@@ -38,13 +38,13 @@ function MapSelect(props) {
         setCipherNum(cipherNum+1);
         if (cipherNum === combinedMaps[map].length-1)
         {
-            setCipherNum(0)
+            setCipherNum(1)
         }
     }
 
     const decreaseCipherNum = (e) => {
         setCipherNum(cipherNum-1);
-        if (cipherNum === 0)
+        if (cipherNum === 1)
         {
             setCipherNum(combinedMaps[map].length-1)
         }
@@ -57,8 +57,6 @@ function MapSelect(props) {
     const mapselect = {
         "textAlign": "Left",        
         "minWidth": "530px", 
-        // "display": "flex",
-        // "justifyContent": "left",
     }
     const button = {
         "fontSize":"20px",

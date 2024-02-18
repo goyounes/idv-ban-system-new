@@ -102,7 +102,7 @@ function Canvas(props) {
   const AnimationActive = useRef(null);
 
   function animate(){
-    // console.log("     Animate() function excuted");
+    console.log("     Animate() function excuted");
     AnimationActive.current = true
     const layerID0 = GlobalList.layerID(props.PictureList[GlobalList.hunterSlot0]?.url)
     const layerID1 = GlobalList.layerID(props.PictureList[GlobalList.hunterSlot1]?.url)
@@ -158,12 +158,25 @@ function Canvas(props) {
     
     if (DM.AnimationNotOver(CCM)) {
       window.requestAnimationFrame(animate)
-    } else {
-      AnimationActive.current = false
+    }else{
+      AnimationActive.current = false;
+      if (GlobalList.is1SurvsSelecteded()){
+        if (!GlobalList.isSurvsSelectionomplete()) {
+          DM.loopOpacity()
+          window.requestAnimationFrame(animate);
+          AnimationActive.current = true
+        } else if (!DM.freezeOpacity()){
+          window.requestAnimationFrame(animate);
+          AnimationActive.current = true
+        }
+      }else{
+        DM.resetOpacity();
+      }
     }
   }
 
   useEffect(() => {
+    if (!AnimationActive.current)  console.log(" %c                      Will call Animate() function excuted","color:red");
     if (!AnimationActive.current)  window.requestAnimationFrame(animate);
     N1_BlackLinesImg.onload = function() {
       animate();

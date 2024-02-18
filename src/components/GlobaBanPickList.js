@@ -374,6 +374,13 @@ class GlobaBanPickList {
     if (this.value[13]==="13")   return false
     return true
   }
+  is1SurvsSelecteded (){
+    if (this.value[8]!=="8")     return true
+    if (this.value[9]!=="9")     return true
+    if (this.value[11]!=="11")   return true
+    if (this.value[13]!=="13")   return true
+    return false
+  }
 
   getName(filename) {
     const split1 = filename.split("_");
