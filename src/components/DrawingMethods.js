@@ -231,6 +231,24 @@ function DrawLayerWithCircleAnimation(C,RayonPropertyToUse,img,context,width,hei
   context.restore();
 }
 
+export function DrawLayerWithSelectedMask(charcterNames,img,context,width,height){
+
+  context.save()
+  context.beginPath();
+  for (let i=0;i<4;i++){
+    const CharcterName = charcterNames[i]
+    if (CharcterName.length <=2 ) continue
+    const C = CCM[CharcterName]
+    context.moveTo(C.x1+50,C.y1);
+    context.arc(C.x1,C.y1, 50, 0, Math.PI * 2);
+    // context.strokeStyle = "#FF0000";
+    // context.stroke();
+  }
+  context.clip();
+  context.drawImage(img, 0, 0, width, height);
+  context.restore();
+}
+
 export function AnimationNotOver(CCM){
   let restart = false
   for (const CharcterId in CCM){
