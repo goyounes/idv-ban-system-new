@@ -138,6 +138,7 @@ function Canvas(props) {
     context.filter = "none";
     context.globalAlpha = 1;
 
+    DM.Draw_51_Selection_Layer       (GlobalList.getSelected(),context,canvas.width, canvas.height)
     DM.Draw_5_Selection_Layer_BG     (GlobalList.getSelected(),context,canvas.width, canvas.height)
     if (layerID0 !== -1) {// if there is a hunter that's selected
       DM.DrawLayerWithSelectedMask(GlobalList.getSelected(),images0[layerID0-1],context,canvas.width, canvas.height)
@@ -145,7 +146,6 @@ function Canvas(props) {
       context.drawImage(N4_Grey_CharctersImg, 0, 0, canvas.width, canvas.height);
       context.globalAlpha = 1;
     }
-    DM.Draw_51_Selection_Layer       (GlobalList.getSelected(),context,canvas.width, canvas.height)
     DM.Draw_6_Clean_Hunter_Layer     (GlobalList.getBannedRemoved(),context,canvas.width, canvas.height)
     DM.Draw_7_Black_Lines_Gone_Layer (GlobalList.getBannedRemoved(),context,canvas.width, canvas.height)
 

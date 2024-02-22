@@ -155,8 +155,8 @@ export function Draw_5_Selection_Layer_BG (Drawing_array,context, width, height)
     }
   }
 }
-const DEFAULT_CHANGE = 0.03
-const BUFFER_LIMIT = 0.5 * 60 // 0.5s 30frames
+const DEFAULT_CHANGE = 0.03                     // 170hz => *60/170
+const BUFFER_LIMIT = 0.5 * 60 // 0.5s 30frames // 170hz => *170/60
 let opacity = 1.0
 let change = - DEFAULT_CHANGE
 let buffer = 0
@@ -174,8 +174,8 @@ export function loopOpacity(){
       change = DEFAULT_CHANGE
       console.log('change is ',change)
       // opacity = 1 // change =  DEFAULT_CHANGE
-      change =  DEFAULT_CHANGE*10
-      buffer = 7
+      change =  DEFAULT_CHANGE * 10
+      buffer = (30-23)// 170hz => *170/60
     }
   }
 }
@@ -189,7 +189,7 @@ export function freezeOpacity(){
     resetOpacity()
     return 1
   }
-  change = 0.03
+  change = DEFAULT_CHANGE
   loopOpacity()
   return 0
 }
