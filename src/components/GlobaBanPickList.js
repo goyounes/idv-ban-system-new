@@ -16,6 +16,7 @@ class GlobaBanPickList {
     this.hunterSlot2 =-1;
     this.hunterSlot3 =-1;
     this.hunterSlot4 =-1;
+    this.ignoredHunters = {}
     this.Positions = {}
     this.tempPositions = {}
   
@@ -28,6 +29,7 @@ class GlobaBanPickList {
     this.Positions[id] = undefined
     return result
   }
+  // you can probabily clean this.
   getIdCoords1 (id){
     if (this.tempPositions[id] === undefined) return [null,null]
     return this.tempPositions[id]
@@ -608,6 +610,18 @@ class GlobaBanPickList {
     navigator.clipboard.writeText(JSON.stringify(exportArray));
     console.log("Exported Globalist is =>",exportArray)
     return exportArray // change the export 
+  }
+  addIgnoredHunter(hunterIdNumber){
+    this.ignoredHunters[hunterIdNumber] = "ignored"
+    return 1
+  }
+  removeIgnoredHunter(hunterIdNumber){
+    this.ignoredHunters[hunterIdNumber] = null
+    return 1
+  }
+  isHunterIgnored(hunterIdNumber){
+    this.ignoredHunters[hunterIdNumber] === "ignored" && console.log("Condition for hunter ID:",hunterIdNumber ," is :",this.ignoredHunters[hunterIdNumber] === "ignored")
+    return this.ignoredHunters[hunterIdNumber] === "ignored"
   }
 }
   export default GlobaBanPickList

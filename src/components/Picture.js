@@ -85,6 +85,7 @@ function Picture(props) {
         if (!GlobalList.isHunterUsed(props.id)){// condition was !isUsed, but i removed it because i like hunters without opacity
           togglePic(e);
           setBorderColor("transparent");
+          GlobalList.addIgnoredHunter(props.id)
         }
       } 
       if (!GlobalList) return
@@ -102,7 +103,6 @@ function Picture(props) {
           setBorderColor('transparent')
           return -1
         }
-        debugger
         if (GlobalList.hunterSlot0 === props.id ) {
           GlobalList.hunterSlot0 = clearHunter();
           GlobalList.hunterSelect ="";
@@ -160,7 +160,7 @@ function Picture(props) {
         ref={drag}
         src={props.url}
         width="90vh"
-        style={{visibility: props.reset ? 'visible' : '',border: isDragging ? "7px solid white" : "7px solid "+ borderColor , opacity: isUsed ? "60%" : "100%",backgroundColor: getBgColor(borderColor)}}
+        style={{visibility: GlobalList.isHunterIgnored(props.id) ? 'hidden' : '',border: isDragging ? "7px solid white" : "7px solid "+ borderColor , opacity: isUsed ? "60%" : "100%",backgroundColor: getBgColor(borderColor)}}
         alt="Invalid URL"
         onContextMenu={handleClick}
       />

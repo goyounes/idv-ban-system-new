@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import Picture from "./Picture";
 import "../App.css";
 
 function Row(props) {
-  const [reset,setReset] = useState(false)
   const handleRightClick = (e)=>{
     e.preventDefault();
     console.log("Right Click on Row, Images will be restored")
-    setReset(true);
-    setTimeout(() => {
-      setReset(false);
-    }, 0);
+
+    props.pictures.filter((picture) => picture.type === props.type).map((picture) => {
+      return  props.globalList.removeIgnoredHunter(picture.id)
+    })
+    props.update();
   }
+
   return (
       <div onContextMenu={handleRightClick}>
         {props.pictures.filter((picture) => picture.type === props.type).map((picture) => {
@@ -23,7 +24,6 @@ function Row(props) {
                   needUpdate={props.needUpdate}
                   update={props.update}
                   container="book"
-                  reset={reset}
                 />;
         })}
     </div>
