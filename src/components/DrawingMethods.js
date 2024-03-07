@@ -175,6 +175,7 @@ function OrderedResult(result,GlobalList){
     }
   })
   console.log("ordered result is =>",oResult)
+  GlobalList.HunterPoints = oResult
   return oResult
 }
 function count(Array){

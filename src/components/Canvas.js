@@ -254,7 +254,7 @@ function Canvas(props) {
     "marginLeft":"7.5px",
     "height": '108px',
     "width" : '120px',
-    "fontSize":"33px",
+    "fontSize":"32px",
   }
   
   const Button2 = {

@@ -19,7 +19,7 @@ class GlobaBanPickList {
     this.ignoredHunters = {}
     this.Positions = {}
     this.tempPositions = {}
-  
+    this.HunterPoints = []
   }
   getIdCoords (id){
     if (this.Positions[id] === undefined){
