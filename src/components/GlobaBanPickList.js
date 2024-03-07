@@ -311,8 +311,24 @@ class GlobaBanPickList {
     if (this.hunterSelect!=="") result.push(this.getEquiv(this.hunterSelect));
     return result
   }  
+  getHunterIDsToIgnore(){
+    const res = new Set([
+      Number(this.hunterBan1),
+      Number(this.hunterBan2),
+      Number(this.hunterBan3),
+    ])
+    for (const key in this.ignoredHunters){
+      if (this.ignoredHunters[key]!==null) res.add(Number(key))
+    }
+    console.log("the set values are=>",res)
+    res.delete(-1)
+    return res
+  }
   getSelected (){
     return [this.value[8],this.value[9],this.value[11],this.value[13]]
+  }
+  getSelectedIDs (){
+    return [this.getEquiv(this.value[8]),this.getEquiv(this.value[9]),this.getEquiv(this.value[11]),this.getEquiv(this.value[13])]
   }
   getBanned ()  {
     return  [this.value[6],this.value[7],this.value[10],this.value[12]]

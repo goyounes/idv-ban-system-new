@@ -12,6 +12,7 @@ const players = importAll(require.context('../images/players', false, /\.(png|jp
 
 function Slot(props) {
   var [list, setList] = useState([]);
+  // eslint-disable-next-line
   var [idList, setIdList] = useState([]);
   var [playerId, setPlayerId] = useState(-1);
   const GlobalList = props.globalList;
@@ -30,7 +31,7 @@ function Slot(props) {
 
   const addPictureToSlot = (id) => {
     const pictureList = props.PictureList.filter((picture) => id === picture.id);
-    console.log("idList: ",idList);
+    // console.log("idList: ",idList);
     // pictureList[0].isUsed = true;
     setIdList([id]);
     // console.log("new id list after push",idList.push(id))

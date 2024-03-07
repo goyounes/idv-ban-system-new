@@ -1,3 +1,4 @@
+import { Image as ImageLib } from 'image-js'
 // if i want to change the animation to always stick to time and have constate propogation speed i need to use C.time=Date.now()
 // then calculate time difference and calulate how much R shuld be
 // R = R + 6 => (R gets bigger 6 px each 1/60 of a second => V = 0.36 px/ms )
@@ -87,6 +88,114 @@ const charctercolisionsmap = {
   "WeepingClown": {"id": "WeepingClown ", "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Prisoner":     {"id": "Prisoner ",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
 }
+function translateColour(value){
+  return (value===250&&100)||(value===143&&50)||(value===18&&0)||(value===242&&-100)||0
+}
+const internalHunterPoints = []
+export async function CalculateHunterPoints(hunterPoints,HunterLayers,HunterPictureList,GlobalList){
+  // const hunterPoints = [];
+  for (const i in HunterPictureList){
+    const Hunter = HunterPictureList[i]
+    // if  (ignoredHunterIDs.includes(HunterPictureList)) continue
+    const split = Hunter.url.split("_");
+    const layerId = split.length === 4 ? split[2] : -1;
+    // console.log("Hunter slot id: " + Hunter.id);
+    // console.log("Hunter layer id: "+ layerId);
+    if (layerId === -1){ 
+      // console.log("This hunter is not supported yet, No Canvas Layer will be drawn"); // not supported
+      continue
+    }
+      // the layer id is:
+      // hunterPoints[Hunter.id] = HunterLayers[layerId]
+      // console.log(Hunter.url,layerId-1)
+      const img = HunterLayers[layerId-1]
+      const arr = []
+      // console.log(HunterLayers)
+      // console.log(img)
+        ImageLib.load(img.src).then((image) => {
+          for (const CharcterId in CCM){
+            const charcterData = CCM[CharcterId]
+            var pixelColor = image.getPixelXY(Math.floor(charcterData.x1 * image.width/850+10), Math.floor(charcterData.y1 *image.height/692+10));
+            // arr[GlobalList.getEquiv(CharcterId)] = CharcterId + pixelColor.join()
+            arr[GlobalList.getEquiv(CharcterId)] = translateColour(pixelColor[0])
+            // console.log(`Pixel color for ${CharcterId} at (${charcterData.x1}, ${charcterData.y1})`, pixelColor);
+            // context.arcMath.floor(charcterData.x1 * 0.5577 + 10), Math.floor(charcterData.y1 *0.5585 + 10), 10, 0, Math.PI * 2);
+          }
+          // console.log(`Hunter : ${Hunter.id} / ${Hunter.url} height:${image.height} and width:${image.width}`)
+          hunterPoints[Hunter.id] = arr
+          internalHunterPoints[Hunter.id]=[...arr]
+          // console.log(arr);
+          // Log the RGB values of the pixel color
+        });
+  }
+  return hunterPoints
+}
+export function HunterPointsTotal(GlobalList){
+  // console.log(internalHunterPoints)
+  const hunterPoints = internalHunterPoints
+  if (!GlobalList.isSurvsSelectionomplete()){
+    // console.log("Survivors are not all selected yet, no calculation will be made")
+    return
+  }
+  const SelectedSurvivorsIDs = GlobalList.getSelectedIDs()
+  // console.log(GlobalList.getSelectedIDs(), GlobalList.getSelected())
+  const result = []
+  const X = GlobalList.getHunterIDsToIgnore()
+    for (let i = 42;i <= hunterPoints.length;i++){
+      const arr = hunterPoints[i]
+      if (X.has(i)) continue      // hunter is ignored
+      if (arr === undefined) continue // hunter has no layer (Clerk etc)
+      const NewArr = [arr[SelectedSurvivorsIDs[0]], arr[SelectedSurvivorsIDs[1]], arr[SelectedSurvivorsIDs[2]], arr[SelectedSurvivorsIDs[3]]]
+      result[i] = [
+        NewArr.reduce((total, item) => total + item) + ((count(NewArr)[-100] >= 2)?-50:0),
+        NewArr,  
+      ]
+      // if (count(arr)[-100] >= 2) result[i] -= 50 //if 2 charcteres are red then the whole team is significantly weaker
+    }
+    GlobalList.getHunterIDsToIgnore()
+  console.log("%c Result points is => ","color:red",result)
+  OrderedResult(result,GlobalList)
+  return result
+}
+function OrderedResult(result,GlobalList){
+  const oResult = []
+  console.log("i'm using ths to calculate the ordered list",result)
+  for (let i = 42;i <= result.length;i++){
+    if(!result[i]) continue
+    const temp = result[i]
+    oResult.push({name: GlobalList.getEquiv(i),id: i, totalPoints: temp[0],Points : temp[1]})
+    // oResult.push(5)
+  }
+
+  oResult.sort((a, b)=> {
+    if (a.totalPoints < b.totalPoints ) {
+      return -1;
+    } else if (a.totalPoints > b.totalPoints) {
+      return 1;
+    }
+  })
+  console.log("ordered result is =>",oResult)
+  return oResult
+}
+function count(Array){
+  const elementCounts = {};
+  Array.forEach(element => {
+  elementCounts[element] = (elementCounts[element] || 0) + 1;
+  });
+  return elementCounts
+}
+
+// export function test_points(context){     //No need for this anymore as i was using it to verify the colours were recognized properly in the layer images
+//   for (const CharcterId in CCM){
+//     const charcterData = CCM[CharcterId]
+//     context.beginPath();
+//     // Math.floor(charcterData.x1 * 1127/692 + 10), Math.floor(charcterData.y1 *1386/850 + 10)
+//     context.moveTo(charcterData.x1,charcterData.y1);
+//     context.arc(charcterData.x1,charcterData.y1, 5, 0, Math.PI * 2);
+//     context.fillStyle = 'red'
+//     context.fill()
+//   }
+// }
 
 export function resetCCM(){
   for (const Charcter in charctercolisionsmap){
@@ -130,16 +239,15 @@ function LinkIdsAndLayers(CCM){
       if (surv.id.includes(charcterData.id)) CCM[CharcterId].SurvivorBannedIMG = surv.img
     }
 
-  }
-  return CCM// console.log(CCM)
+  } console.log(CCM)
+  return CCM
 }
 export const CCM = LinkIdsAndLayers(charctercolisionsmap);
-
 
 const PropogationSpeed = {select:10, blacklines:10, redlines:6}
 
 export function Draw_5_Selection_Layer_BG (Drawing_array,context, width, height){
-  // const Drawing_array = GlobalList.getSelected()
+  if (Drawing_array.length === 0) return
   for (const CharcterId of Drawing_array){
     const charcterData = CCM[CharcterId]
     if (!charcterData || !charcterData.SurvivorSelectedBGIMG) continue
@@ -194,7 +302,7 @@ export function freezeOpacity(){
   return 0
 }
 export function Draw_51_Selection_Layer (Drawing_array,context, width, height){
-  // const Drawing_array = GlobalList.getSelected()
+  if (Drawing_array.length === 0) return
   for (const CharcterId of Drawing_array){
     const charcterData = CCM[CharcterId]
     if (!charcterData || !charcterData.SurvivorSelectedIMG) continue
@@ -213,15 +321,16 @@ export function Draw_51_Selection_Layer (Drawing_array,context, width, height){
   }
 }
 export function Draw_6_Clean_Hunter_Layer (Drawing_array,context,width,height){
-  // const Drawing_array = GlobalList.getBannedRemoved()
+  if (Drawing_array.length === 0) return
   //console.log("Clean Layer for => ",Drawing_array)
   for (const CharcterId of Drawing_array){
     const charcterData = CCM[CharcterId]
+    // console.log(charcterData)
     if (charcterData && !!charcterData.CleanLayerIMG ) context.drawImage(charcterData.CleanLayerIMG, 0, 0, width, height);
   }
 }
 export function Draw_7_Black_Lines_Gone_Layer (Drawing_array,context, width, height){
-  // const Drawing_array = GlobalList.getBannedRemoved()
+  if (Drawing_array.length === 0) return
   for (const CharcterId of Drawing_array){
     const charcterData = CCM[CharcterId]
     if (!charcterData  || !charcterData.BlackLinesGoneIMG) continue // else =>
@@ -238,7 +347,7 @@ export function Draw_7_Black_Lines_Gone_Layer (Drawing_array,context, width, hei
   }
 }
 export function Draw_71_Red_Lines_Gone_Layer (Drawing_array,context,width, height){
-  // const Drawing_array = GlobalList.getRemoved()
+  if (Drawing_array.length === 0) return
   for (const CharcterId of Drawing_array){
     const charcterData = CCM[CharcterId]
     if (!charcterData  || !charcterData.RedLinesGoneIMG) continue // else =>
@@ -255,7 +364,7 @@ export function Draw_71_Red_Lines_Gone_Layer (Drawing_array,context,width, heigh
   }
 }
 export function Draw_8_Banned_Charcters_Layer (Drawing_array,context,width, height){
-  // const Drawing_array = GlobalList.getBanned()
+  if (Drawing_array.length === 0) return
   for (const CharcterId of Drawing_array){
     const charcterData = CCM[CharcterId]
     if (charcterData && !!charcterData.SurvivorBannedIMG) context.drawImage(charcterData.SurvivorBannedIMG, 0, 0, width, height);
@@ -272,7 +381,6 @@ function DrawLayerWithCircleAnimation(C,RayonPropertyToUse,img,context,width,hei
 }
 
 export function DrawLayerWithSelectedMask(charcterNames,img,context,width,height){
-
   context.save()
   context.beginPath();
   for (let i=0;i<4;i++){

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect,useMemo } from 'react';
 import HunterSlot from './HunterSlot';
 import * as DM from './DrawingMethods.js'
 import "../App.css";
@@ -47,9 +47,15 @@ images2.push(...makeImagesArr(hlayers2));
 images3.push(...makeImagesArr(hlayers3));
 images4.push(...makeImagesArr(hlayers4));
 
+
 function Canvas(props) {
   const GlobalList = props.globalList
   const canvasRef = useRef(null);
+  // eslint-disable-next-line
+  let hunterPoints = []
+  useMemo(() => {    DM.CalculateHunterPoints(hunterPoints,images0,props.PictureList.filter(P=>P.id>41),GlobalList)  }, []); 
+  // console.log("Hunter points = >",hunterPoints)
+  console.log(props.PictureList.filter(P => P.id > 41))
     
   const handleCanvasClick =(event)=>{ // C : charcter
     if (event.type === 'contextmenu') event.preventDefault();
@@ -102,6 +108,8 @@ function Canvas(props) {
   const AnimationActive = useRef(null);
 
   function animate(){
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
     console.log("     Animate() function excuted");
     AnimationActive.current = true
     const layerID0 = GlobalList.layerID(props.PictureList[GlobalList.hunterSlot0]?.url)
@@ -110,8 +118,7 @@ function Canvas(props) {
     const layerID3 = GlobalList.layerID(props.PictureList[GlobalList.hunterSlot3]?.url)
     const layerID4 = GlobalList.layerID(props.PictureList[GlobalList.hunterSlot4]?.url)
     // Start drawing
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(N1_BlackLinesImg, 0, 0, canvas.width, canvas.height);
     context.drawImage(N2_RedLinesimg, 0, 0, canvas.width, canvas.height);
@@ -173,6 +180,7 @@ function Canvas(props) {
         DM.resetOpacity();
       }
     }
+    // DM.test_points(context)
   }
 
   useEffect(() => {
@@ -233,6 +241,10 @@ function Canvas(props) {
       props.update();
     });
   }
+  const handleHunterRiskButtonClick =()=>{
+    const HunterPointsTotal = DM.HunterPointsTotal(GlobalList)
+    // console.log(HunterPointsTotal)
+  }
 
   const Button1 = {
     "border":"2px solid black",
@@ -278,6 +290,7 @@ function Canvas(props) {
               <div>
                 <button onClick={handleExportButtonClick}    style={Button1}>Export</button>
                 <button onClick={handleImportButtonClick}    style={Button2}>Import</button>
+                <button onClick={handleHunterRiskButtonClick}      style={Button1}>Hunter Risk</button>
               </div>
           </div>
             <div style={{marginLeft:"7.5px"}}>
