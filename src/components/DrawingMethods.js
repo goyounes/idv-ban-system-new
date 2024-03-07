@@ -168,9 +168,9 @@ function OrderedResult(result,GlobalList){
   }
 
   oResult.sort((a, b)=> {
-    if (a.totalPoints < b.totalPoints ) {
+    if (a.totalPoints <= b.totalPoints ) {
       return -1;
-    } else if (a.totalPoints > b.totalPoints) {
+    } else  {
       return 1;
     }
   })
@@ -271,16 +271,16 @@ let buffer = 0
 export function loopOpacity(){
   if (buffer < BUFFER_LIMIT){
     buffer++;
-    console.log("Buffer not full")
+    // console.log("Buffer not full")
   }else{
-    console.log("Opacity",opacity)
+    // console.log("Opacity",opacity)
     opacity += change
     if ( opacity > 1) {
       change = - DEFAULT_CHANGE
     }
     if ( opacity < 0.5) {
       change = DEFAULT_CHANGE
-      console.log('change is ',change)
+      // console.log('change is ',change)
       // opacity = 1 // change =  DEFAULT_CHANGE
       change =  DEFAULT_CHANGE * 10
       buffer = (30-23)// 170hz => *170/60

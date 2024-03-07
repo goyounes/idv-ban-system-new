@@ -53,9 +53,10 @@ function Canvas(props) {
   const canvasRef = useRef(null);
   // eslint-disable-next-line
   let hunterPoints = []
-  useMemo(() => {    DM.CalculateHunterPoints(hunterPoints,images0,props.PictureList.filter(P=>P.id>41),GlobalList)  }, []); 
+  useMemo(() => {    DM.CalculateHunterPoints(hunterPoints,images0,props.PictureList.filter(P=>P.id>41),GlobalList)  }, 
+  // eslint-disable-next-line
+  []); 
   // console.log("Hunter points = >",hunterPoints)
-  console.log(props.PictureList.filter(P => P.id > 41))
     
   const handleCanvasClick =(event)=>{ // C : charcter
     if (event.type === 'contextmenu') event.preventDefault();
@@ -242,6 +243,7 @@ function Canvas(props) {
     });
   }
   const handleHunterRiskButtonClick =()=>{
+    // eslint-disable-next-line
     const HunterPointsTotal = DM.HunterPointsTotal(GlobalList)
     // console.log(HunterPointsTotal)
   }
@@ -251,8 +253,8 @@ function Canvas(props) {
     "marginTop":"0px",
     "marginLeft":"7.5px",
     "height": '108px',
-    "width" : '115px',
-    "fontSize":"35px",
+    "width" : '120px',
+    "fontSize":"33px",
   }
   
   const Button2 = {
@@ -260,8 +262,8 @@ function Canvas(props) {
     "marginBottom":"11.14px",
     "marginLeft":"7.5px",
     "height": '108px',
-    "width" : '145px',
-    "fontSize":"35px",
+    "width" : '135px',
+    "fontSize":"32px",
   }
 
   return (
@@ -290,6 +292,8 @@ function Canvas(props) {
               <div>
                 <button onClick={handleExportButtonClick}    style={Button1}>Export</button>
                 <button onClick={handleImportButtonClick}    style={Button2}>Import</button>
+              </div>
+              <div>
                 <button onClick={handleHunterRiskButtonClick}      style={Button1}>Hunter Risk</button>
               </div>
           </div>
