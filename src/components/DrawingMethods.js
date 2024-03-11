@@ -146,6 +146,8 @@ export function HunterPointsTotal(GlobalList){
       if (X.has(i)) continue      // hunter is ignored
       if (arr === undefined) continue // hunter has no layer (Clerk etc)
       const NewArr = [arr[SelectedSurvivorsIDs[0]], arr[SelectedSurvivorsIDs[1]], arr[SelectedSurvivorsIDs[2]], arr[SelectedSurvivorsIDs[3]]]
+      //check if it's weak enough
+      if (! (count(NewArr)[-100]>= 2 || (count(NewArr)[-100] === 1 && count(NewArr)[0] >= 1) (count(NewArr)[-100] === 1 && count(NewArr)[50] >= 1) ))
       result[i] = [
         NewArr.reduce((total, item) => total + item) + ((count(NewArr)[-100] >= 2)?-50:0),
         NewArr,  
@@ -163,6 +165,7 @@ function OrderedResult(result,GlobalList){
   for (let i = 42;i <= result.length;i++){
     if(!result[i]) continue
     const temp = result[i]
+
     oResult.push({name: GlobalList.getEquiv(i),id: i, totalPoints: temp[0],Points : temp[1]})
     // oResult.push(5)
   }
