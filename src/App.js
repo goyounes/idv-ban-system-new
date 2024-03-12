@@ -114,19 +114,17 @@ hunters_d.forEach(filename => {
 
 const globalList = new GlobalBanPickList();
 function App() {
-  // const [globalList,/*setGlobalList*/] = useState(new GlobalBanPickList())
 
-  // const globalList = new GlobalBanPickList()
   const [needUpdate,setNeedUpdate] = useState(0);
   const update = () => { 
     setNeedUpdate(needUpdate + 1);
   }
-  // console.log(PictureList);
+  console.log(PictureList);
   console.log(" %c                                      <App Rendering . . .> ","color:red");
   console.log(globalList)
   
   return (
-    // style={{outerWidt:"100%"}}
+ 
     <DndProvider  backend={HTML5Backend}>
       <div className="App">
         <Canvas 

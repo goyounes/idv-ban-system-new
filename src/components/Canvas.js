@@ -245,6 +245,7 @@ function Canvas(props) {
   const handleHunterRiskButtonClick =()=>{
     // eslint-disable-next-line
     const HunterPointsTotal = DM.HunterPointsTotal(GlobalList)
+    props.update();
     // console.log(HunterPointsTotal)
   }
 

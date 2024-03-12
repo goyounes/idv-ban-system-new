@@ -89,47 +89,38 @@ const charctercolisionsmap = {
   "Prisoner":     {"id": "Prisoner ",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
 }
 function translateColour(value){
-  return (value===250&&100)||(value===143&&50)||(value===18&&0)||(value===242&&-100)||0
+  return (value===250 && 100)||(value===143 && 50)||(value===18 && 0)||(value===242 && -100)||0
 }
 const internalHunterPoints = []
 export async function CalculateHunterPoints(hunterPoints,HunterLayers,HunterPictureList,GlobalList){
   // const hunterPoints = [];
   for (const i in HunterPictureList){
     const Hunter = HunterPictureList[i]
-    // if  (ignoredHunterIDs.includes(HunterPictureList)) continue
+
     const split = Hunter.url.split("_");
     const layerId = split.length === 4 ? split[2] : -1;
-    // console.log("Hunter slot id: " + Hunter.id);
-    // console.log("Hunter layer id: "+ layerId);
+
     if (layerId === -1){ 
       // console.log("This hunter is not supported yet, No Canvas Layer will be drawn"); // not supported
       continue
     }
-      // the layer id is:
-      // hunterPoints[Hunter.id] = HunterLayers[layerId]
-      // console.log(Hunter.url,layerId-1)
       const img = HunterLayers[layerId-1]
       const arr = []
-      // console.log(HunterLayers)
-      // console.log(img)
         ImageLib.load(img.src).then((image) => {
           for (const CharcterId in CCM){
             const charcterData = CCM[CharcterId]
             var pixelColor = image.getPixelXY(Math.floor(charcterData.x1 * image.width/850+10), Math.floor(charcterData.y1 *image.height/692+10));
-            // arr[GlobalList.getEquiv(CharcterId)] = CharcterId + pixelColor.join()
             arr[GlobalList.getEquiv(CharcterId)] = translateColour(pixelColor[0])
-            // console.log(`Pixel color for ${CharcterId} at (${charcterData.x1}, ${charcterData.y1})`, pixelColor);
-            // context.arcMath.floor(charcterData.x1 * 0.5577 + 10), Math.floor(charcterData.y1 *0.5585 + 10), 10, 0, Math.PI * 2);
           }
-          // console.log(`Hunter : ${Hunter.id} / ${Hunter.url} height:${image.height} and width:${image.width}`)
+
           hunterPoints[Hunter.id] = arr
           internalHunterPoints[Hunter.id]=[...arr]
-          // console.log(arr);
-          // Log the RGB values of the pixel color
+
         });
   }
   return hunterPoints
 }
+
 export function HunterPointsTotal(GlobalList){
   // console.log(internalHunterPoints)
   const hunterPoints = internalHunterPoints
@@ -147,14 +138,14 @@ export function HunterPointsTotal(GlobalList){
       if (arr === undefined) continue // hunter has no layer (Clerk etc)
       const NewArr = [arr[SelectedSurvivorsIDs[0]], arr[SelectedSurvivorsIDs[1]], arr[SelectedSurvivorsIDs[2]], arr[SelectedSurvivorsIDs[3]]]
       //check if it's weak enough
-      if (! (count(NewArr)[-100]>= 2 || (count(NewArr)[-100] === 1 && count(NewArr)[0] >= 1) (count(NewArr)[-100] === 1 && count(NewArr)[50] >= 1) ))
+      if (count(NewArr,-100)>= 2 || (count(NewArr,-100) === 1 && count(NewArr,0) >= 1) || (count(NewArr,-100) === 1 && count(NewArr,50) >= 1) )
       result[i] = [
-        NewArr.reduce((total, item) => total + item) + ((count(NewArr)[-100] >= 2)?-50:0),
+        NewArr.reduce((total, item) => total + item) + ((count(NewArr,-100) >= 2)?-50:0),
         NewArr,  
       ]
       // if (count(arr)[-100] >= 2) result[i] -= 50 //if 2 charcteres are red then the whole team is significantly weaker
     }
-    GlobalList.getHunterIDsToIgnore()
+  GlobalList.getHunterIDsToIgnore()
   console.log("%c Result points is => ","color:red",result)
   OrderedResult(result,GlobalList)
   return result
@@ -181,12 +172,13 @@ function OrderedResult(result,GlobalList){
   GlobalList.HunterPoints = oResult
   return oResult
 }
-function count(Array){
+function count(Array,val){
   const elementCounts = {};
   Array.forEach(element => {
   elementCounts[element] = (elementCounts[element] || 0) + 1;
   });
-  return elementCounts
+  if (!elementCounts[val]) console.log("Value specified : ",val ,"is not existant")
+  return elementCounts[val]
 }
 
 // export function test_points(context){     //No need for this anymore as i was using it to verify the colours were recognized properly in the layer images

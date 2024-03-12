@@ -226,3 +226,16 @@ html {
   border: 2px solid black;
   background-color: rgb(16, 186, 16);
 }
+
+.bucket_S{
+  background-color: red;
+}
+.bucket_A{
+  background-color: rgb(255, 157, 0);
+}
+.bucket_B{
+  background-color: rgb(234, 255, 0);
+}
+.bucket_C{
+  background-color: rgb(255, 255, 255);
+}
