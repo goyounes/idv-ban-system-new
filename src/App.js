@@ -119,7 +119,7 @@ function App() {
   const update = () => { 
     setNeedUpdate(needUpdate + 1);
   }
-  console.log(PictureList);
+  // console.log(PictureList);
   console.log(" %c                                      <App Rendering . . .> ","color:red");
   console.log(globalList)
   

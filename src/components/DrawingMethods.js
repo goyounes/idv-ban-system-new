@@ -41,25 +41,24 @@ SurvivorSelectedBG.push(...makeIdImagesArr(survivorselectedBG));
   BlackLinesGone.push(...makeIdImagesArr(blacklinesgone));
     RedLinesGone.push(...makeIdImagesArr(redlinesgone));
   SurvivorBanned.push(...makeIdImagesArr(survivorbanned));
-  
-
+ 
 const charctercolisionsmap = {
   "Cowboy":       {"id": "Cowboy",        "x1": 52,  "x2": 96,  "y1": 42,  "y2": 91, "R":5,"RR":5},
   "Coordinator":  {"id": "Coordinator",   "x1": 223, "x2": 269, "y1": 33,  "y2": 89, "R":5,"RR":5},
-  "ToyMerchant":  {"id": "ToyMerchant",   "x1": 469, "x2": 513, "y1": 46,  "y2": 104,"R":5,"RR":5},
+  "ToyMerchant":  {"id": "ToyMerchant",   "x1": 469, "x2": 513, "y1": 46,  "y2": 104,"R":5,"RR":5,"Maps": ["Sacred","Lakeside","Moonlit","Leos Memory","Eversleeping","Chinatown"]},
   "Composer":     {"id": "Composer",      "x1": 622, "x2": 665, "y1": 46,  "y2": 102,"R":5,"RR":5},
   "Aeroplanist":  {"id": "Aeroplanist",   "x1": 51,  "x2": 99,  "y1": 201, "y2": 257,"R":5,"RR":5},
   "Prospector":   {"id": "Prospector",    "x1": 147, "x2": 192, "y1": 201, "y2": 258,"R":5,"RR":5},
   "Antiquarian":  {"id": "Antiquarian",   "x1": 280, "x2": 322, "y1": 201, "y2": 255,"R":5,"RR":5},
-  "Embalmer":     {"id": "Embalmer",      "x1": 387, "x2": 430, "y1": 161, "y2": 212,"R":5,"RR":5},
+  "Embalmer":     {"id": "Embalmer",      "x1": 387, "x2": 430, "y1": 161, "y2": 212,"R":5,"RR":5,"Maps": ["Lakeside","Moonlit","Leos Memory","Eversleeping","Chinatown"]},
   "Mechanic":     {"id": "Mechanic",      "x1": 550, "x2": 596, "y1": 169, "y2": 225,"R":5,"RR":5},
-  "Lawyer":       {"id": "Lawyer",        "x1": 773, "x2": 821, "y1": 219, "y2": 277,"R":5,"RR":5},
+  "Lawyer":       {"id": "Lawyer",        "x1": 773, "x2": 821, "y1": 219, "y2": 277,"R":5,"RR":5,"Maps": ["Red Church","Sacred","Lakeside","Moonlit","Leos Memory","Eversleeping","Chinatown"]},
   "Acrobat":      {"id": "Acrobat",       "x1": 53,  "x2": 102, "y1": 337, "y2": 398,"R":5,"RR":5},
-  "Patient":      {"id": "Patient",       "x1": 169, "x2": 211, "y1": 340, "y2": 393,"R":5,"RR":5},
+  "Patient":      {"id": "Patient",       "x1": 169, "x2": 211, "y1": 340, "y2": 393,"R":5,"RR":5,"Maps": ["Sacred","Lakeside","Moonlit","Leos Memory","Chinatown"]},
   "Psychologist": {"id": "Psychologist",  "x1": 280, "x2": 324, "y1": 341, "y2": 393,"R":5,"RR":5},
-  "Priestess":    {"id": "Priestess",     "x1": 467, "x2": 512, "y1": 283, "y2": 340,"R":5,"RR":5},
+  "Priestess":    {"id": "Priestess",     "x1": 467, "x2": 512, "y1": 283, "y2": 340,"R":5,"RR":5,"Maps": ["Sacred","Moonlit","Leos Memory","Eversleeping","Chinatown"]},
   "Seer":         {"id": "Seer",          "x1": 623, "x2": 669, "y1": 283, "y2": 337,"R":5,"RR":5},
-  "Explorer":     {"id": "Explorer",      "x1": 774, "x2": 820, "y1": 332, "y2": 387,"R":5,"RR":5},
+  "Explorer":     {"id": "Explorer",      "x1": 774, "x2": 820, "y1": 332, "y2": 387,"R":5,"RR":5,"Maps": ["Arms Factory","Sacred","Lakeside","Leos Memory","Eversleeping","Chinatown"]},
   "Wildling":     {"id": "Wildling",      "x1": 41,  "x2": 83,  "y1": 469, "y2": 524,"R":5,"RR":5},
   "Mercenary":    {"id": "Mercenary",     "x1": 170, "x2": 214, "y1": 472, "y2": 521,"R":5,"RR":5},
   "Forward":      {"id": "Forward",       "x1": 278, "x2": 328, "y1": 470, "y2": 521,"R":5,"RR":5},
@@ -89,14 +88,13 @@ const charctercolisionsmap = {
   "Prisoner":     {"id": "Prisoner ",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
 }
 function translateColour(value){
-  return (value===250 && 100)||(value===143 && 50)||(value===18 && 0)||(value===242 && -100)||0
+  return (value===250 && 100)||(value===143 && 50)||(value===18 && "X")||(value===242 && -100)||0
 }
 const internalHunterPoints = []
 export async function CalculateHunterPoints(hunterPoints,HunterLayers,HunterPictureList,GlobalList){
   // const hunterPoints = [];
   for (const i in HunterPictureList){
     const Hunter = HunterPictureList[i]
-
     const split = Hunter.url.split("_");
     const layerId = split.length === 4 ? split[2] : -1;
 
@@ -112,10 +110,8 @@ export async function CalculateHunterPoints(hunterPoints,HunterLayers,HunterPict
             var pixelColor = image.getPixelXY(Math.floor(charcterData.x1 * image.width/850+10), Math.floor(charcterData.y1 *image.height/692+10));
             arr[GlobalList.getEquiv(CharcterId)] = translateColour(pixelColor[0])
           }
-
           hunterPoints[Hunter.id] = arr
           internalHunterPoints[Hunter.id]=[...arr]
-
         });
   }
   return hunterPoints
@@ -128,6 +124,27 @@ export function HunterPointsTotal(GlobalList){
     // console.log("Survivors are not all selected yet, no calculation will be made")
     return
   }
+  const SelectedSurvivorsNames = GlobalList.getSelected()
+  const isGoodOnMap = (survName)=>{
+    const Map = GlobalList.getMapName()
+    const survData = CCM[survName]
+    console.log("the survivor is",survName)
+    console.log("Map is",Map)
+    console.log("the survivor data and prefered maps",survData)
+    console.log("maps array",survData["Maps"])
+    console.log("maps array contain Map?",survData["Maps"].includes(Map))
+    return survData["Maps"].includes(Map)
+  }
+  const turnXtoPoints = (arr)=>{
+    for (let i = 0; i < arr.length;i++){
+      const survName = SelectedSurvivorsNames[i]
+      if (arr[i] === "X") {
+        arr[i] =  isGoodOnMap(survName)?100:0
+        console.log("")
+      } 
+    }
+  }
+
   const SelectedSurvivorsIDs = GlobalList.getSelectedIDs()
   // console.log(GlobalList.getSelectedIDs(), GlobalList.getSelected())
   const result = []
@@ -136,7 +153,13 @@ export function HunterPointsTotal(GlobalList){
       const arr = hunterPoints[i]
       if (X.has(i)) continue      // hunter is ignored
       if (arr === undefined) continue // hunter has no layer (Clerk etc)
-      const NewArr = [arr[SelectedSurvivorsIDs[0]], arr[SelectedSurvivorsIDs[1]], arr[SelectedSurvivorsIDs[2]], arr[SelectedSurvivorsIDs[3]]]
+      const NewArr = [
+        arr[SelectedSurvivorsIDs[0]],
+        arr[SelectedSurvivorsIDs[1]],
+        arr[SelectedSurvivorsIDs[2]],
+        arr[SelectedSurvivorsIDs[3]]
+      ]
+      turnXtoPoints(NewArr)
       //check if it's weak enough
       if (count(NewArr,-100)>= 2 || (count(NewArr,-100) === 1 && count(NewArr,0) >= 1) || (count(NewArr,-100) === 1 && count(NewArr,50) >= 1) )
       result[i] = [
@@ -145,7 +168,6 @@ export function HunterPointsTotal(GlobalList){
       ]
       // if (count(arr)[-100] >= 2) result[i] -= 50 //if 2 charcteres are red then the whole team is significantly weaker
     }
-  GlobalList.getHunterIDsToIgnore()
   console.log("%c Result points is => ","color:red",result)
   OrderedResult(result,GlobalList)
   return result
@@ -177,7 +199,7 @@ function count(Array,val){
   Array.forEach(element => {
   elementCounts[element] = (elementCounts[element] || 0) + 1;
   });
-  if (!elementCounts[val]) console.log("Value specified : ",val ,"is not existant")
+  // if (!elementCounts[val]) console.log("Value specified : ",val ,"is not existant")
   return elementCounts[val]
 }
 
@@ -235,7 +257,7 @@ function LinkIdsAndLayers(CCM){
       if (surv.id.includes(charcterData.id)) CCM[CharcterId].SurvivorBannedIMG = surv.img
     }
 
-  } console.log(CCM)
+  } //console.log(CCM)
   return CCM
 }
 export const CCM = LinkIdsAndLayers(charctercolisionsmap);

@@ -130,7 +130,7 @@ function MapSelect(props) {
     // Draging Logic Ending
     return (
         <div style={mapselect} onMouseMove={dragDiv}>
-            {console.log('%c Map Object Re rendered',"color:red;")}
+            {/* {console.log('%c Map Object Re rendered',"color:red;")} */}
             <br></br>
             <label style={texte} htmlFor="mapselect">Map: </label>
             <select  style={button} name="mapselect" value ={GlobalList.Map===""?"0":GlobalList.Map} onChange={handleMapChange}>
@@ -143,7 +143,7 @@ function MapSelect(props) {
                 <option value="3" >Eversleeping Town</option>
                 <option value="1" >Chinatown</option>
             </select>
-            {(map!==GlobalList.Map) && setMap(GlobalList.Map)}
+         {(map!==GlobalList.Map) && setMap(GlobalList.Map)}
             <label style={texte}> Ciphers: </label>
             <button style={button} onClick={decreaseCipherNum}>-</button>
             <label style={texte}> {cipherNum} </label>
@@ -157,7 +157,7 @@ function MapSelect(props) {
                     let  [x1,y1]= GlobalList.getIdCoords1(id)
                     if (x1 === null || y1 === null){
                         x1 = ""; y1 = "";  
-                        console.log("used Nothing for X1 Y1 because  they dont exist"); 
+                        // console.log("used Nothing for X1 Y1 because  they dont exist"); 
                     }
                     return (
                         <img 

@@ -177,6 +177,8 @@ function Canvas(props) {
           window.requestAnimationFrame(animate);
           AnimationActive.current = true
         }
+        if (GlobalList.isSurvsSelectionomplete()) handleHunterRiskButtonClick()
+
       }else{
         DM.resetOpacity();
       }

@@ -320,8 +320,8 @@ class GlobaBanPickList {
     for (const key in this.ignoredHunters){
       if (this.ignoredHunters[key]!==null) res.add(Number(key))
     }
-    console.log("the set values are=>",res)
     res.delete(-1)
+    // console.log("the set values (HunterIDs to ignore) are =>",res)
     return res
   }
   getSelected (){
@@ -553,10 +553,13 @@ class GlobaBanPickList {
       case "6":
         return "Leos Memory";
       case "7":
-        return "Moonlit";
+        return "Moonlit"; 
       default: 
         return ""        
     }
+  }
+  getMapName(){
+    return this.MapName(this.Map)
   }
 
   importList(JSONtext){
@@ -638,7 +641,7 @@ class GlobaBanPickList {
     return 1
   }
   isHunterIgnored(hunterIdNumber){
-    this.ignoredHunters[hunterIdNumber] === "ignored" && console.log("Condition for hunter ID:",hunterIdNumber ," is :",this.ignoredHunters[hunterIdNumber] === "ignored")
+    // this.ignoredHunters[hunterIdNumber] === "ignored" && console.log("Condition for hunter ID:",hunterIdNumber ," is :",this.ignoredHunters[hunterIdNumber] === "ignored")
     return this.ignoredHunters[hunterIdNumber] === "ignored"
   }
 }

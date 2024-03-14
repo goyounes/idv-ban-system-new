@@ -86,7 +86,7 @@ function Slot(props) {
         }else{
           const CharcterID = GlobalList.value[props.slotID]
           const PictureListID = GlobalList.getEquiv(CharcterID)
-          console.log("attempting to add picture with the ID: ",PictureListID," // CharcterID: ",CharcterID)
+          // console.log("attempting to add picture with the ID: ",PictureListID," // CharcterID: ",CharcterID)
           addPictureToSlot(PictureListID)
           if (props.type ==='selects2' && playerId===-1) setPlayerId(0);
         }

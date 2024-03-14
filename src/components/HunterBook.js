@@ -41,7 +41,7 @@ function HunterBook(props) {
   }
   const Filter_Function_C = (HunterPointsLine)=>{
     const PointsArr = HunterPointsLine.Points
-    if (count(PointsArr,-100) === 1 && count(PointsArr,50) >= 1){
+    if (count(PointsArr,-100) === 1 && (count(PointsArr,50) >= 1 ) ){
       return !Filter_Function_B(HunterPointsLine)  // make sure you only return the hunter that didnt pass the B tier list
     }else{
       return false
@@ -88,8 +88,8 @@ function count(Array,val){
   Array.forEach(element => {
   elementCounts[element] = (elementCounts[element] || 0) + 1;
   });
-  if (!elementCounts[val]) console.log("Value specified : ",val ,"is not existant")
-  return elementCounts[val]
+  // if (!elementCounts[val]) console.log("Value specified : ",val ,"is not existant")
+  return elementCounts[val] || 0
 }
 
 export default HunterBook;
