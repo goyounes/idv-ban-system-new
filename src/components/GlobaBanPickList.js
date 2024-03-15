@@ -309,6 +309,7 @@ class GlobaBanPickList {
     if (this.value[11]!=="11")   result.push( this.getEquiv(this.value[11]) );
     if (this.value[13]!=="13")   result.push( this.getEquiv(this.value[13]) );           
     if (this.hunterSelect!=="") result.push(this.getEquiv(this.hunterSelect));
+    console.log("reulst", result, this.value)
     return result
   }  
   getHunterIDsToIgnore(){
@@ -444,9 +445,9 @@ class GlobaBanPickList {
       33:"Mechanic",
       34:"TME",
       35:"Postman",
-      36:"Enchantress",
-      37:"Journalist",
-      38:"Novelist",
+      36:"Novelist",
+      37:"Enchantress",
+      38:"Journalist",
       39:"LittleGirl",
       40:"WeepingClown",
       41:"Prisoner",
@@ -486,9 +487,9 @@ class GlobaBanPickList {
       "Mechanic":33,
       "TME":34,
       "Postman":35,
-      "Enchantress":36,
-      "Journalist":37,
-      "Novelist":38,
+      "Novelist":36,
+      "Enchantress":37,
+      "Journalist":38,
       "LittleGirl":39,
       "WeepingClown":40,
       "Prisoner":41,
@@ -532,7 +533,12 @@ class GlobaBanPickList {
       "Sculptor":58,
       "Reptilian":59,
       "FoolsGold":60,
-    }
+    }//Novelist
+    // console.log("id :",id," is",C[id])
+    // for (const key in C){
+    //   console.log("key :",key, "=?",id," => ",key===id)
+    // }
+    // console.log(C)
     return C[id]
   };
 

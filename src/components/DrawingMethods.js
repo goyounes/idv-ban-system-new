@@ -72,20 +72,22 @@ const charctercolisionsmap = {
   "Gardener":     {"id": "Gardener",      "x1": 678, "x2": 723, "y1": 614, "y2": 670,"R":5,"RR":5},
   "Cheerleader":  {"id": "Cheerleader",   "x1": 787, "x2": 825, "y1": 615, "y2": 674,"R":5,"RR":5},
 
-  "LuckyGuy":     {"id": "LuckyGuy ",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Doctor":       {"id": "Doctor ",       "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Perfumer":     {"id": "Perfumer ",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Painter":      {"id": "Painter ",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Thief":        {"id": "Thief ",        "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Batter":       {"id": "Batter ",       "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "TME":          {"id": "TME ",          "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Postman":      {"id": "Postman ",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Enchantress":  {"id": "Enchantress ",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Journalist":   {"id": "Journalist ",   "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Novelist":     {"id": "Novelist ",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "LittleGirl":   {"id": "LittleGirl ",   "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "WeepingClown": {"id": "WeepingClown ", "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Prisoner":     {"id": "Prisoner ",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "LuckyGuy":     {"id": "LuckyGuy",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Doctor":       {"id": "Doctor",        "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Perfumer":     {"id": "Perfumer",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Painter":      {"id": "Painter",       "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Thief":        {"id": "Thief",         "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Batter":       {"id": "Batter",        "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "TME":          {"id": "TME",           "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Postman":      {"id": "Postman",       "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Enchantress":  {"id": "Enchantress",   "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Journalist":   {"id": "Journalist",    "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+
+  "Novelist":     {"id": "Novelist",      "x1": 773, "x2": 821, "y1": 46,  "y2": 102,"R":5,"RR":5},         //
+
+  "LittleGirl":   {"id": "LittleGirl",    "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "WeepingClown": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Prisoner":     {"id": "Prisoner",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
 }
 function translateColour(value){
   return (value===250 && 100)||(value===143 && 50)||(value===18 && "X")||(value===242 && -100)||0
@@ -257,7 +259,8 @@ function LinkIdsAndLayers(CCM){
       if (surv.id.includes(charcterData.id)) CCM[CharcterId].SurvivorBannedIMG = surv.img
     }
 
-  } //console.log(CCM)
+  } 
+  console.log(CCM)
   return CCM
 }
 export const CCM = LinkIdsAndLayers(charctercolisionsmap);

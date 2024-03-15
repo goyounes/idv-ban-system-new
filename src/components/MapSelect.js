@@ -153,11 +153,12 @@ function MapSelect(props) {
             <div>
             <div style={{"height": "0px"}}>
                 {props.globalList.getMapCharcters().map((id) => {
+                    console.log("ID: ",id)
                     const [x,y] = GlobalList.getIdCoords(id)
                     let  [x1,y1]= GlobalList.getIdCoords1(id)
                     if (x1 === null || y1 === null){
                         x1 = ""; y1 = "";  
-                        // console.log("used Nothing for X1 Y1 because  they dont exist"); 
+                        console.log("used Nothing for X1 Y1 because  they dont exist"); 
                     }
                     return (
                         <img 
