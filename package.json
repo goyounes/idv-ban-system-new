@@ -1,7 +1,7 @@
 {
-  "name": "idv-ban-system",
+  "name": "idv-ban-system-new",
   "version": "0.1.0",
-  "homepage": "https://goyounes.github.io/idv-ban-system",
+  "homepage": "https://goyounes.github.io/idv-ban-system-new",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
