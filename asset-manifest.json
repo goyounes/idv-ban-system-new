@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/idv-ban-system-new/static/css/main.7478e4a6.css",
-    "main.js": "/idv-ban-system-new/static/js/main.bf346d4c.js",
+    "main.js": "/idv-ban-system-new/static/js/main.edceaf1a.js",
     "static/media/0.png": "/idv-ban-system-new/static/media/0.10f06d8dc2eedc92e917.png",
     "static/media/4.png": "/idv-ban-system-new/static/media/4.515d2568315186d04afb.png",
     "static/media/1.png": "/idv-ban-system-new/static/media/1.ae6550a3a9a6e7c96408.png",
@@ -136,9 +136,9 @@
     "static/media/3_Aeroplanist.png": "/idv-ban-system-new/static/media/3_Aeroplanist.966ef805bcbb0750cd57.png",
     "static/media/3_Cheerleader.png": "/idv-ban-system-new/static/media/3_Cheerleader.7125b7e26ba7fdd75fbb.png",
     "static/media/07_SoulWeaver_9_.png": "/idv-ban-system-new/static/media/07_SoulWeaver_9_.74f0ed057fb348592a79.png",
-    "static/media/3_WeepingClown.png": "/idv-ban-system-new/static/media/3_WeepingClown.d30f29a00e60b5d1b89c.png",
+    "static/media/2_WeepingClown.png": "/idv-ban-system-new/static/media/2_WeepingClown.d30f29a00e60b5d1b89c.png",
     "static/media/2_Prospector.png": "/idv-ban-system-new/static/media/2_Prospector.bfa8c70ced8a7831d977.png",
-    "static/media/2_Journalist.png": "/idv-ban-system-new/static/media/2_Journalist.92a9ba0590d6bffef3fc.png",
+    "static/media/3_Journalist.png": "/idv-ban-system-new/static/media/3_Journalist.92a9ba0590d6bffef3fc.png",
     "static/media/2_Priestess.png": "/idv-ban-system-new/static/media/2_Priestess.d5501c76a6f1e5f44a1c.png",
     "static/media/19_FoolsGold.png": "/idv-ban-system-new/static/media/19_FoolsGold.252c859b7ba8dea9f74e.png",
     "static/media/08_SmileyFace_11_.png": "/idv-ban-system-new/static/media/08_SmileyFace_11_.f0686ad95be7138bae96.png",
@@ -151,13 +151,13 @@
     "static/media/5_Psychologist.png": "/idv-ban-system-new/static/media/5_Psychologist.0d62312a6a663b687424.png",
     "static/media/3_Perfumer.png": "/idv-ban-system-new/static/media/3_Perfumer.09953ff0b203444ba77a.png",
     "static/media/2_Acrobat.png": "/idv-ban-system-new/static/media/2_Acrobat.532f1c0e51415d6a69cc.png",
+    "static/media/6_Prisoner.png": "/idv-ban-system-new/static/media/6_Prisoner.8e4318c2f68bafbcf56c.png",
     "static/media/6_Professor.png": "/idv-ban-system-new/static/media/6_Professor.d49e251a83a237bac815.png",
     "static/media/1_Lawyer.png": "/idv-ban-system-new/static/media/1_Lawyer.e9d193121a88a28c2c1b.png",
     "static/media/2_Explorer.png": "/idv-ban-system-new/static/media/2_Explorer.f3117f3c90be45c1b75a.png",
     "static/media/4_Painter.png": "/idv-ban-system-new/static/media/4_Painter.e967cefd6440cfc95edf.png",
     "static/media/16_Geisha_7_.png": "/idv-ban-system-new/static/media/16_Geisha_7_.9c6968291cc7aa3c0ffa.png",
     "static/media/2_FirstOfficer.png": "/idv-ban-system-new/static/media/2_FirstOfficer.04cd8849a1a0efc63643.png",
-    "static/media/6_LittleGirl.png": "/idv-ban-system-new/static/media/6_LittleGirl.5923a1fb10ebf3000da0.png",
     "static/media/20_Reptilian.png": "/idv-ban-system-new/static/media/20_Reptilian.c0bb1b48a18ebfbcc645.png",
     "static/media/1_Entomologist.png": "/idv-ban-system-new/static/media/1_Entomologist.5391ab499dd0dcd6919c.png",
     "static/media/5_Gravekeeper.png": "/idv-ban-system-new/static/media/5_Gravekeeper.2367aece584b762132f7.png",
@@ -184,10 +184,10 @@
     "static/media/7_Batter.png": "/idv-ban-system-new/static/media/7_Batter.0eebc478621386164301.png",
     "index.html": "/idv-ban-system-new/index.html",
     "main.7478e4a6.css.map": "/idv-ban-system-new/static/css/main.7478e4a6.css.map",
-    "main.bf346d4c.js.map": "/idv-ban-system-new/static/js/main.bf346d4c.js.map"
+    "main.edceaf1a.js.map": "/idv-ban-system-new/static/js/main.edceaf1a.js.map"
   },
   "entrypoints": [
     "static/css/main.7478e4a6.css",
-    "static/js/main.bf346d4c.js"
+    "static/js/main.edceaf1a.js"
   ]
 }
