@@ -84,7 +84,7 @@ function Book(props) {
           <div style={{display: "flex", justifyContent: "space-between",}}>
           {book !== 0 && <button onClick={toggleBook} style={{border:"3px solid", height: '50px', width : '300px',fontSize:"40px"}}>Switch Book ⇔</button>}
           {book !== 0 && <button onClick={closeBook}  style={{border:"3px solid", height: '50px', width : '200px',fontSize:"40px"}}>Close ⇦</button>}
-          {book === 0 && <button onClick={openBook}   style={{border:"3px solid", height: '50px', width : '200px',fontSize:"40px",marginTop:"89.35vh",position:"absolute"}}>Open ⇨</button>}
+          {/* {book === 0 && <button onClick={openBook}   style={{border:"3px solid", height: '50px', width : '200px',fontSize:"40px",marginTop:"89.35vh",position:"absolute"}}>Open ⇨</button>} */}
           </div>
     </div>
     )

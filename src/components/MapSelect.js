@@ -54,9 +54,12 @@ function MapSelect(props) {
         setCipherNum(0);
     }
 
+    const calculatedHeight =  props.bigMap ? "1000vh":"450vh"
+    
+    console.log("height is = ", calculatedHeight )
     const mapselect = {
         "textAlign": "Left",        
-        "minWidth": "530px", 
+        "minWidth": "530px",
     }
     const button = {
         "fontSize":"20px",
@@ -184,7 +187,7 @@ function MapSelect(props) {
                 alt="Invalid"
                 src={combinedMaps[map][cipherNum]}
                 style={{}}
-                height="450vh"
+                height={calculatedHeight}
                 onClick={update} />
             </div>
         </div>

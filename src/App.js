@@ -5,7 +5,7 @@ import Book from "./components/Book";
 import MapSelect from "./components/MapSelect";
 import Canvas from "./components/Canvas";
 import GlobalBanPickList from "./components/GlobaBanPickList.js"
-import React, { useState }  from "react";
+import React, { useState,useEffect } from "react";
 import "./App.css";
 // charctercolisionsmap = 
 // updateMapByIdfunction  = function 
@@ -26,7 +26,7 @@ const Draggables = [];//{id: 1, url: "https://lh4.googleusercontent.com/-8tqTFxi
 function importAll(r) {
     return r.keys().map(r);
 }
-  
+
 const supports = importAll(require.context('./images/survivors/supports', false, /\.(png|jpe?g|svg)$/));
 const rescuers = importAll(require.context('./images/survivors/rescuers', false, /\.(png|jpe?g|svg)$/));
 
@@ -43,7 +43,7 @@ const hunters_d = importAll(require.context('./images/hunters/d_tier', false, /\
  
 //const layers = importAll(require.context('./images/layers', false, /\.(png|jpe?g|svg)$/));
 var count = 0;
-
+var bigMap = false; // variable that decides height of elemnts is nulified when map is bigger.
 others.forEach(filename => {
   OtherList.push({id: count, url: filename});
   PictureList.push({id: count, url: filename, type: "o" });
@@ -122,7 +122,24 @@ function App() {
   // console.log(PictureList);
   console.log(" %c                                      <App Rendering . . .> ","color:red");
   console.log(globalList)
-  
+
+  useEffect(() => {
+    const handleMArrowKey = (e) => {
+      if (e.keyCode === 77 ){ 
+        bigMap = bigMap === true ? false:true;
+        update()
+        console.log("Event M recognized")
+        console.log(bigMap)
+      }
+    };//|| e.keyCode === 68
+   window.addEventListener('keydown', handleMArrowKey);
+
+   return () => {
+     window.removeEventListener('keydown', handleMArrowKey);
+     // clearInterval(intervalId);
+   };
+ }, []);
+
   return (
  
     <DndProvider  backend={HTML5Backend}>
@@ -142,7 +159,8 @@ function App() {
           needUpdate={needUpdate}
           update={update} 
         />
-        <div className="slots">
+      <div>
+        <div className="slots" style={{display: bigMap ? 'none' : ''}}>
           <div className="phase" style={{border:"2px solid black",width:"677.143px", marginBottom:"1vh"}}>
             <Slot PictureList={PictureList} slotID={0} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
             <Slot PictureList={PictureList} slotID={1} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
@@ -169,9 +187,10 @@ function App() {
             <Slot PictureList={PictureList} slotID ={13}           type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
             <Slot PictureList={PictureList} SpecialSlotID ={"AS2"} type="altselects2" globalList={globalList} needUpdate={needUpdate} update={update} />
           </div>
-          <MapSelect PictureList={PictureList} globalList={globalList} />
         </div>  
+          <MapSelect PictureList={PictureList} globalList={globalList} bigMap={bigMap}/>
       </div>
+    </div>
     </DndProvider>
   );
 }
