@@ -129,16 +129,6 @@ function MapSelect(props) {
     function stopDrag() {
         drag=false;
     }
-    function spawnProgressBar(){
-        return <img 
-        alt="Invalid"
-        src={combinedMaps[map][cipherNum]}
-        style={{}}
-        height={"20vh"}
-        onClick={update} 
-        // onClick={spawnProgressBar}
-        />
-    }
 
     // Draging Logic Ending
 
@@ -146,14 +136,24 @@ function MapSelect(props) {
         {id:0,value: 3,position:{x:"35px",y:"35px"}},
         {id:1,value: 5,position:{x:"200px",y:"200px"}},
     ]
+    function spawnProgressBar(){
+        progressBars.push({id:progressBars.length-1,value: 1,position:{x:"0px",y:"0px"}})
+        console.log("New bar added ")
+        console.log(progressBars)
+        update();
+    }
 
     function getProgressAdder(id){
         console.log("this creates a function that will be used to increase the progress when progress bar N:",id,"is clicked")
         return ()=>{
+            console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
             progressBars[id].value++
             if (progressBars[id].value===11) progressBars[id].value = 0
-            console.log(`the prgoress bar N° ${id} has ${progressBars[id].value+1}0% cipher progress `)
+            console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+            const imgElement = document.getElementById("ProgressBar"+id);
+            imgElement.src = progressBarImages[progressBars[id].value]
         }
+        
     }
     
     // function addProgress(){
@@ -223,7 +223,7 @@ function MapSelect(props) {
                     const value = progressBar.value
                     const x = progressBar.position.x
                     const y = progressBar.position.y
-                    console.log(`the prgoress bar N° ${id} has ${value+1}0% cipher progress `)
+                    console.log(`the prgoress bar N° ${id} has ${value}0% cipher progress `)
                     console.log("the source of the image will be",progressBarImages[value])
                     const progressAdder = getProgressAdder(id)
                     return (
@@ -241,7 +241,7 @@ function MapSelect(props) {
                             onMouseDown={startDrag} 
                             onMouseUp={stopDrag} 
                             onMouseMove={dragDiv}
-                            onContextMenu={deletePic} 
+                            onContextMenu={deleteProgressBar} 
                         />
                     );
                 })
@@ -264,5 +264,9 @@ function MapSelect(props) {
 function deletePic(e) {
     e.preventDefault();
     // targ.style.visibility="hidden";
+}
+function deleteProgressBar(e) {
+    e.preventDefault();
+    targ.style.visibility="hidden";
 }
 export default MapSelect;
