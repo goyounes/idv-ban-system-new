@@ -16,6 +16,8 @@ const moonlit = importAll(require.context('../images/maps/moonlit', false, /\.(p
 
 const combinedMaps = [arms, chinatown, church, eversleeping, hospital, lakeside, leos, moonlit];
 
+const progressBarImages = importAll(require.context('../images/progressBars', false, /\.(png|jpe?g|svg)$/));
+
 var drag=false;
 var targ=undefined;
 var coordX=0;
@@ -56,7 +58,6 @@ function MapSelect(props) {
 
     const calculatedHeight =  props.bigMap ? "1000vh":"450vh"
     
-    console.log("height is = ", calculatedHeight )
     const mapselect = {
         "textAlign": "Left",        
         "minWidth": "530px",
@@ -128,9 +129,38 @@ function MapSelect(props) {
     function stopDrag() {
         drag=false;
     }
-
+    function spawnProgressBar(){
+        return <img 
+        alt="Invalid"
+        src={combinedMaps[map][cipherNum]}
+        style={{}}
+        height={"20vh"}
+        onClick={update} 
+        // onClick={spawnProgressBar}
+        />
+    }
 
     // Draging Logic Ending
+
+    const progressBars = [
+        {id:0,value: 3,position:{x:"35px",y:"35px"}},
+        {id:1,value: 5,position:{x:"200px",y:"200px"}},
+    ]
+
+    function getProgressAdder(id){
+        console.log("this creates a function that will be used to increase the progress when progress bar N:",id,"is clicked")
+        return ()=>{
+            progressBars[id].value++
+            if (progressBars[id].value===11) progressBars[id].value = 0
+            console.log(`the prgoress bar N° ${id} has ${progressBars[id].value+1}0% cipher progress `)
+        }
+    }
+    
+    // function addProgress(){
+    //     progressBars[id].value++
+    //     if (progressBars[id].value===11) progressBars[id].value = 0
+    //     console.log(`the prgoress bar N° ${id} has ${progressBars[id].value+1}0% cipher progress `)
+    // }
     return (
         <div style={mapselect} onMouseMove={dragDiv}>
             {/* {console.log('%c Map Object Re rendered',"color:red;")} */}
@@ -183,12 +213,49 @@ function MapSelect(props) {
                 })
                 }
             </div>
+
+            <div style={{"height": "0px"}}>
+                {progressBars.map((progressBar) => {
+                    // progressBar = {
+                    //     progressbar1 : {id:0,value: 3,position:{x:"35",y:"35"}}
+                    // }
+                    const id = progressBar.id
+                    const value = progressBar.value
+                    const x = progressBar.position.x
+                    const y = progressBar.position.y
+                    console.log(`the prgoress bar N° ${id} has ${value+1}0% cipher progress `)
+                    console.log("the source of the image will be",progressBarImages[value])
+                    const progressAdder = getProgressAdder(id)
+                    return (
+                        <img 
+                            id={"ProgressBar"+id}
+                            src={progressBarImages[value]} key={id} alt="todo" 
+                            height="50vh" 
+                            style={{"position": "relative",
+                            "cursor": "move",
+                            left : x,
+                            top :  y,
+                            }}
+                            className="dragme" 
+                            onClick={progressAdder}
+                            onMouseDown={startDrag} 
+                            onMouseUp={stopDrag} 
+                            onMouseMove={dragDiv}
+                            onContextMenu={deletePic} 
+                        />
+                    );
+                })
+                }
+            </div>
+
             <img 
                 alt="Invalid"
                 src={combinedMaps[map][cipherNum]}
                 style={{}}
                 height={calculatedHeight}
-                onClick={update} />
+                // onClick={update} 
+                onClick={spawnProgressBar}
+                />
             </div>
         </div>
     );

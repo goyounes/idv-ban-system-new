@@ -129,11 +129,11 @@ export function HunterPointsTotal(GlobalList){
   const isGoodOnMap = (survName)=>{
     const Map = GlobalList.getMapName()
     const survData = CCM[survName]
-    console.log("the survivor is",survName)
-    console.log("Map is",Map)
-    console.log("the survivor data and prefered maps",survData)
-    console.log("maps array",survData["Maps"])
-    console.log("maps array contain Map?",survData["Maps"].includes(Map))
+    // console.log("the survivor is",survName)
+    // console.log("Map is",Map)
+    // console.log("the survivor data and prefered maps",survData)
+    // console.log("maps array",survData["Maps"])
+    // console.log("maps array contain Map?",survData["Maps"].includes(Map))
     return survData["Maps"].includes(Map)
   }
   const turnXtoPoints = (arr)=>{
@@ -141,7 +141,6 @@ export function HunterPointsTotal(GlobalList){
       const survName = SelectedSurvivorsNames[i]
       if (arr[i] === "X") {
         arr[i] =  isGoodOnMap(survName)?100:0
-        console.log("")
       } 
     }
   }
@@ -259,7 +258,7 @@ function LinkIdsAndLayers(CCM){
     }
 
   } 
-  console.log(CCM)
+  // console.log(CCM)
   return CCM
 }
 export const CCM = LinkIdsAndLayers(charctercolisionsmap);
