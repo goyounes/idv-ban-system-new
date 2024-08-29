@@ -25,6 +25,10 @@ var coordY=0;
 var offsetX=0;
 var offsetY=0;
 
+const progressBars = [
+    // {id:0,value: 3,position:{x:"0px",y:"0px"}} // Empty
+]
+
 function MapSelect(props) {
     const GlobalList = props.globalList;
     const [map, setMap] = useState(0);
@@ -132,15 +136,10 @@ function MapSelect(props) {
 
     // Draging Logic Ending
 
-    const progressBars = [
-        {id:0,value: 3,position:{x:"35px",y:"35px"}},
-        {id:1,value: 5,position:{x:"200px",y:"200px"}},
-    ]
-    function spawnProgressBar(){
-        progressBars.push({id:progressBars.length-1,value: 1,position:{x:"0px",y:"0px"}})
-        console.log("New bar added ")
-        console.log(progressBars)
-        update();
+
+    function spawnProgressBar(e){
+        progressBars.push({id:progressBars.length,value: 1,position:{x:e.clientX-100,y:e.clientY-20}})
+        update()
     }
 
     function getProgressAdder(id){
@@ -150,6 +149,7 @@ function MapSelect(props) {
             progressBars[id].value++
             if (progressBars[id].value===11) progressBars[id].value = 0
             console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+
             const imgElement = document.getElementById("ProgressBar"+id);
             imgElement.src = progressBarImages[progressBars[id].value]
         }
@@ -231,7 +231,7 @@ function MapSelect(props) {
                             id={"ProgressBar"+id}
                             src={progressBarImages[value]} key={id} alt="todo" 
                             height="50vh" 
-                            style={{"position": "relative",
+                            style={{"position": "absolute",
                             "cursor": "move",
                             left : x,
                             top :  y,

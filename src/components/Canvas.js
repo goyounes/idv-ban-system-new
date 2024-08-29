@@ -251,6 +251,12 @@ function Canvas(props) {
     // console.log(HunterPointsTotal)
   }
 
+  const handleBigMapButtonClick =()=>{
+    props.mapSizeToggler();
+    props.update();
+  }
+
+
   const Button1 = {
     "border":"2px solid black",
     "marginTop":"0px",
@@ -298,6 +304,7 @@ function Canvas(props) {
               </div>
               <div>
                 <button onClick={handleHunterRiskButtonClick}      style={Button1}>Hunter Risk</button>
+                <button onClick={handleBigMapButtonClick}          style={Button1}>Big Map  </button>
               </div>
           </div>
             <div style={{marginLeft:"7.5px"}}>

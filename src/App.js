@@ -44,6 +44,9 @@ const hunters_d = importAll(require.context('./images/hunters/d_tier', false, /\
 //const layers = importAll(require.context('./images/layers', false, /\.(png|jpe?g|svg)$/));
 var count = 0;
 var bigMap = false; // variable that decides height of elemnts is nulified when map is bigger.
+const mapSizeToggler = () => {
+  bigMap = bigMap === true ? false:true;
+}
 others.forEach(filename => {
   OtherList.push({id: count, url: filename});
   PictureList.push({id: count, url: filename, type: "o" });
@@ -112,6 +115,8 @@ hunters_d.forEach(filename => {
   count++;
 });
 
+
+
 const globalList = new GlobalBanPickList();
 function App() {
 
@@ -124,26 +129,27 @@ function App() {
   console.log(globalList)
 
   useEffect(() => {
-    const handleMArrowKey = (e) => {
+    const handleMKey = (e) => {
       if (e.keyCode === 77 ){ 
-        bigMap = bigMap === true ? false:true;
+        mapSizeToggler()
         update()
         console.log("Event M recognized")
         console.log(bigMap)
       }
     };//|| e.keyCode === 68
-   window.addEventListener('keydown', handleMArrowKey);
+   window.addEventListener('keydown', handleMKey);
 
    return () => {
-     window.removeEventListener('keydown', handleMArrowKey);
+     window.removeEventListener('keydown', handleMKey);
      // clearInterval(intervalId);
    };
+   // eslint-disable-next-line
  }, []);
 
   return (
  
     <DndProvider  backend={HTML5Backend}>
-      <div className="App">
+      <div className="App" id="IdvApp">
         <Canvas 
           type="canvas"
           PictureList={PictureList}
@@ -151,6 +157,7 @@ function App() {
           needUpdate={needUpdate}
           draggables={Draggables}
           update={update}
+          mapSizeToggler={mapSizeToggler}
         />
         <Book 
           PictureList={PictureList} 
