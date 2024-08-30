@@ -20,6 +20,7 @@ class GlobaBanPickList {
     this.Positions = {}
     this.tempPositions = {}
     this.HunterPoints = []
+    this.progressBars = []
   }
   getIdCoords (id){
     if (this.Positions[id] === undefined){
@@ -54,6 +55,8 @@ class GlobaBanPickList {
     this.hunterBan3  = arr[5][2];
     this.Positions = arr[6];
     this.tempPositions = structuredClone(arr[6]);
+    this.progressBars.splice(0,this.progressBars.length) 
+    this.progressBars.push(...arr[7])
   }
   compileRoundData(){
     // eslint-disable-next-line
@@ -64,8 +67,12 @@ class GlobaBanPickList {
       [this.AB1,this.AB2,this.AS1,this.AS2],
       [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
       [this.hunterBan1, this.hunterBan2, this.hunterBan3],
-      this.tempPositions
+      this.tempPositions,
+      structuredClone(this.progressBars),
     ]; 
+    console.log("exported array element n7 is = ")
+    console.log(exportArray)
+    console.log(this.progressBars)
     return exportArray // change the export 
   }
   
@@ -90,6 +97,7 @@ class GlobaBanPickList {
     this.hunterBan2  =-1;
     this.hunterBan3  =-1;
     this.hunterSlot0 =-1;
+    this.progressBars.splice(0,this.progressBars.length) 
     return 1;
   }
   NextRound (){// (0) 
@@ -124,7 +132,7 @@ class GlobaBanPickList {
   PreviousRound(){
     // this.Round
     const currentRoundName = `Round${this.Round}Data`
-    this[currentRoundName]=this.compileRoundData()
+    this[currentRoundName] = this.compileRoundData()
     const roundName = `Round${this.Round-1}Data`
     this.restoreRoundData(this[roundName])
   }

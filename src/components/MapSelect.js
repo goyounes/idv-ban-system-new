@@ -25,12 +25,13 @@ var coordY=0;
 var offsetX=0;
 var offsetY=0;
 
-const progressBars = [
-    // {id:0,value: 3,position:{x:"0px",y:"0px"}} // Empty
-]
+// const progressBars = [
+//     // {id:0,value: 3,position:{x:"0px",y:"0px"}} // Empty
+// ]
 
 function MapSelect(props) {
     const GlobalList = props.globalList;
+    const progressBars = GlobalList.progressBars
     const [map, setMap] = useState(0);
     const [cipherNum, setCipherNum] = useState(0);
     const [, update] = useReducer(x => x+1, 0); // to update when clicking
@@ -143,12 +144,12 @@ function MapSelect(props) {
     }
 
     function getProgressAdder(id){
-        console.log("this creates a function that will be used to increase the progress when progress bar N:",id,"is clicked")
+        // console.log("this creates a function that will be used to increase the progress when progress bar N:",id,"is clicked")
         return ()=>{
-            console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+            // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
             progressBars[id].value++
             if (progressBars[id].value===11) progressBars[id].value = 0
-            console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+            // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
 
             const imgElement = document.getElementById("ProgressBar"+id);
             imgElement.src = progressBarImages[progressBars[id].value]
@@ -186,12 +187,12 @@ function MapSelect(props) {
             <div>
             <div style={{"height": "0px"}}>
                 {props.globalList.getMapCharcters().map((id) => {
-                    console.log("ID: ",id)
+                    // console.log("ID: ",id)
                     const [x,y] = GlobalList.getIdCoords(id)
                     let  [x1,y1]= GlobalList.getIdCoords1(id)
                     if (x1 === null || y1 === null){
                         x1 = ""; y1 = "";  
-                        console.log("used Nothing for X1 Y1 because  they dont exist"); 
+                        // console.log("used Nothing for X1 Y1 because  they dont exist"); 
                     }
                     return (
                         <img 
@@ -223,8 +224,8 @@ function MapSelect(props) {
                     const value = progressBar.value
                     const x = progressBar.position.x
                     const y = progressBar.position.y
-                    console.log(`the prgoress bar N° ${id} has ${value}0% cipher progress `)
-                    console.log("the source of the image will be",progressBarImages[value])
+                    // console.log(`the prgoress bar N° ${id} has ${value}0% cipher progress `)
+                    // console.log("the source of the image will be",progressBarImages[value])
                     const progressAdder = getProgressAdder(id)
                     return (
                         <img 

@@ -133,8 +133,8 @@ function App() {
       if (e.keyCode === 77 ){ 
         mapSizeToggler()
         update()
-        console.log("Event M recognized")
-        console.log(bigMap)
+        // console.log("Event M recognized")
+        // console.log(bigMap)
       }
     };//|| e.keyCode === 68
    window.addEventListener('keydown', handleMKey);

@@ -168,13 +168,13 @@ export function HunterPointsTotal(GlobalList){
       ]
       // if (count(arr)[-100] >= 2) result[i] -= 50 //if 2 charcteres are red then the whole team is significantly weaker
     }
-  console.log("%c Result points is => ","color:red",result)
+  // console.log("%c Result points is => ","color:red",result)
   OrderedResult(result,GlobalList)
   return result
 }
 function OrderedResult(result,GlobalList){
   const oResult = []
-  console.log("i'm using ths to calculate the ordered list",result)
+  // console.log("i'm using ths to calculate the ordered list",result)
   for (let i = 42;i <= result.length;i++){
     if(!result[i]) continue
     const temp = result[i]
@@ -190,7 +190,7 @@ function OrderedResult(result,GlobalList){
       return 1;
     }
   })
-  console.log("ordered result is =>",oResult)
+  // console.log("ordered result is =>",oResult)
   GlobalList.HunterPoints = oResult
   return oResult
 }
@@ -229,10 +229,10 @@ export function GetIdOfColission(event,CCM){
   for (const CharcterId in CCM){
     const charcterData = CCM[CharcterId]
       if (X+10 < charcterData.x1 || X-10 > charcterData.x2 || Y+10 < charcterData.y1 || Y-10 > charcterData.y2) { continue }
-      console.log("hit on charcter id:",charcterData.id)
+      // console.log("hit on charcter id:",charcterData.id)
       return charcterData.id //C is the array entry (charcter) that was modified after the click event
   }
-  console.log("no hit on ANY charcter !!")
+  // console.log("no hit on ANY charcter !!")
   return 0
 }
 function LinkIdsAndLayers(CCM){
