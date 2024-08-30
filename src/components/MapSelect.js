@@ -33,7 +33,7 @@ function MapSelect(props) {
     const GlobalList = props.globalList;
     const progressBars = GlobalList.progressBars
     const [map, setMap] = useState(0);
-    const [cipherNum, setCipherNum] = useState(0);
+    const [cipherNum, setCipherNum] = useState(GlobalList.cipherLayout);
     const [, update] = useReducer(x => x+1, 0); // to update when clicking
 
     const handleMapChange = (e) => {
@@ -42,19 +42,24 @@ function MapSelect(props) {
     };
 
     const increaseCipherNum = (e) => {
-        setCipherNum(cipherNum+1);
+        // setCipherNum(cipherNum+1);
+        GlobalList.cipherLayout++;
         if (cipherNum === combinedMaps[map].length-1)
-        {
-            setCipherNum(1)
+        {   
+            GlobalList.cipherLayout = 1
+            // setCipherNum(1)
         }
+        update();
     }
 
     const decreaseCipherNum = (e) => {
-        setCipherNum(cipherNum-1);
+        // setCipherNum(cipherNum-1);
+        GlobalList.cipherLayout--;
         if (cipherNum === 1)
-        {
-            setCipherNum(combinedMaps[map].length-1)
+        {   GlobalList.cipherLayout = combinedMaps[map].length-1
+            // setCipherNum(combinedMaps[map].length-1)
         }
+        update();
     }
 
     const resetCipherNum = (e) => {
@@ -178,6 +183,7 @@ function MapSelect(props) {
                 <option value="1" >Chinatown</option>
             </select>
          {(map!==GlobalList.Map) && setMap(GlobalList.Map)}
+         {(cipherNum!==GlobalList.cipherLayout) && setCipherNum(GlobalList.cipherLayout)}
             <label style={texte}> Ciphers: </label>
             <button style={button} onClick={decreaseCipherNum}>-</button>
             <label style={texte}> {cipherNum} </label>

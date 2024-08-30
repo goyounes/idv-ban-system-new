@@ -1,6 +1,7 @@
 class GlobaBanPickList {
   constructor(){
     this.Map =  0 ;// Arms factory by default
+    this.cipherLayout = 0;
     this.value=["0","1","2","3","4","5",     "6","7",   "8","9",    "10",    "11",   "12",   "13"];
     this.Round = 1;
     this.AB1 = "";
@@ -38,6 +39,7 @@ class GlobaBanPickList {
   restoreRoundData(arr){
     if (!arr) return 0
     this.Map = arr[0][0];
+    this.cipherLayout = arr[0][2]
     this.value = [...arr[1]];
     this.Round = arr[2];
     this.AB1 = arr[3][0];
@@ -61,7 +63,7 @@ class GlobaBanPickList {
   compileRoundData(){
     // eslint-disable-next-line
     const exportArray = [
-      [this.Map,this.MapName(this.Map)],
+      [this.Map,this.MapName(this.Map),this.cipherLayout],
       this.value,
       this.Round,
       [this.AB1,this.AB2,this.AS1,this.AS2],
@@ -87,6 +89,7 @@ class GlobaBanPickList {
     for (let k=0;k<14;k++){
       arr[k] = String(k);
     }
+    this.cipherLayout = 0;
     this.value = arr
     this.AB1 = "";
     this.AB2 = "";
