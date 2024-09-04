@@ -44,18 +44,6 @@ function Book(props) {
         // console.log(forwardKey);
       };
       window.addEventListener('keydown', handleArrowKey);
-      // const intervalId = setInterval(() => {
-      //   if (props.globalList.isSurvsSelectionomplete())  {
-      //     if ((props.globalList.hunterSelect ==="")) {
-      //       console.log("No hunter slected yet")
-      //       setBook(2);
-      //     }else{
-      //       closeBook();
-      //       clearInterval(intervalId);
-      //     }
-      //   }else{
-      //   }
-      // }, 1000);
 
       return () => {
         window.removeEventListener('keydown', handleArrowKey);
