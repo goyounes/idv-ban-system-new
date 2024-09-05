@@ -2,7 +2,7 @@ class GlobaBanPickList {
   constructor(){
     this.Map =  0 ;// Arms factory by default
     this.cipherLayout = 0;
-    this.value=["0","1","2","3","4","5",     "6","7",   "8","9",    "10",    "11",   "12",   "13"];
+    this.value=["0","1","2","3","4","5","6","7","8",  "9","10",  "11","12",  "13",  "14",  "15",  "16"];
     this.Round = 1;
     this.AB1 = "";
     this.AB2 = "";
@@ -86,7 +86,7 @@ class GlobaBanPickList {
   }
   Clear (){
     let arr = []
-    for (let k=0;k<14;k++){
+    for (let k=0;k<17;k++){
       arr[k] = String(k);
     }
     this.cipherLayout = 0;
@@ -120,14 +120,16 @@ class GlobaBanPickList {
     }
     this.Round++;
     const oldRemoved = this.getSimpleRemoved();
-    const permBan1 = this.value[8];// First  Selected Charecter
-    const permBan2 = this.value[9];// Second Selected Charecter
+    const permBan1 = this.value[11];// First  Selected Charecter
+    const permBan2 = this.value[12];// Second Selected Charecter
+    const permBan3 = this.value[14];// Third  Selected Charecter
     this.Clear();
     for (let i=0;i < oldRemoved.length;i++){
       this.value[i] = oldRemoved[i]
     }
-    permBan1!=="8" && this.addRemoved(permBan1);
-    permBan2!=="9" && this.addRemoved(permBan2); 
+    permBan1!=="11" && this.addRemoved(permBan1);
+    permBan2!=="12" && this.addRemoved(permBan2); 
+    permBan3!=="14" && this.addRemoved(permBan3); 
     return 1 
       
     
@@ -145,14 +147,14 @@ class GlobaBanPickList {
     this.removeRemoved(id)
     //Insert logic to check if value exists already to skip this step
     const array = this.value
-    if (array[8]==="8"){
-      array[8]=id
-    } else if (array[9]==="9"){
-      array[9]=id
-    } else if (array[11]==="11"){
+    if (array[11]==="11"){
       array[11]=id
-    } else if (array[13]==="13"){
-      array[13]=id
+    } else if (array[12]==="12"){
+      array[12]=id
+    } else if (array[14]==="14"){
+      array[14]=id
+    } else if (array[16]==="16"){
+      array[16]=id
     } else{
       console.log("4 Charcters already SELECTED")
       return 0
@@ -164,17 +166,17 @@ class GlobaBanPickList {
     this.removeSelect(id);
     this.removeRemoved(id);
   const array = this.value
-    if (array[6]==="6"){
-      array[6]=id
+    if (array[9]==="9"){
+      array[9]=id
       this.value = array; 
-    } else if (array[7]==="7"){
-      array[7]=id
-      this.value = array;
     } else if (array[10]==="10"){
       array[10]=id
       this.value = array;
-    } else if (array[12]==="12"){
-      array[12]=id
+    } else if (array[13]==="13"){
+      array[13]=id
+      this.value = array;
+    } else if (array[15]==="15"){
+      array[15]=id
       this.value = array;
     } else{
       console.log("4 Charcters already BANNED")
@@ -189,7 +191,7 @@ class GlobaBanPickList {
     
     const array = this.value
     //Insert logic to check if value exists already to skip this step
-    const nbr_Removed = 2 * this.Round - 2
+    const nbr_Removed = 3 * this.Round - 3
     for (let k=0; k<nbr_Removed; k++){
       console.log("array[k]===String(k)",array[k],String(k))
         if (array[k] === String(k)){
@@ -198,27 +200,27 @@ class GlobaBanPickList {
             return 1
         }
     }
-    console.log("6 Charcters already REMOVED, it will be added to a bonus array")
+    console.log("9 Charcters already REMOVED, it will be added to a bonus array")
     array.push(id)
     this.value = array
     return 1
   }
   removeSelect (id){
     const array = this.value
-    if (array[8]===id){
-        array[8]="8";
-        this.value = array; 
-        return 1
-    } else if (array[9]===id){
-        array[9]="9";
-        this.value = array; 
-        return 1
-    } else if (array[11]===id){
+    if (array[11]===id){
         array[11]="11";
         this.value = array; 
         return 1
-    } else if (array[13]===id){
-      array[13]="13";
+    } else if (array[12]===id){
+        array[12]="12";
+        this.value = array; 
+        return 1
+    } else if (array[14]===id){
+        array[14]="14";
+        this.value = array; 
+        return 1
+    } else if (array[16]===id){
+      array[16]="16";
         this.value = array; 
         return 1
     } else{
@@ -229,20 +231,20 @@ class GlobaBanPickList {
   }
   removeBan (id){
     const array = this.value
-    if (array[6]===id){
-      array[6]="6";
-      this.value = array; 
-      return 1
-    } else if (array[7]===id){
-      array[7]="7";
+    if (array[9]===id){
+      array[9]="9";
       this.value = array; 
       return 1
     } else if (array[10]===id){
       array[10]="10";
       this.value = array; 
       return 1
-    } else if (array[12]===id){
-      array[12]="12";
+    } else if (array[13]===id){
+      array[13]="13";
+      this.value = array; 
+      return 1
+    } else if (array[15]===id){
+      array[15]="15";
       this.value = array; 
       return 1
     } else{
@@ -253,15 +255,15 @@ class GlobaBanPickList {
   }
   removeRemoved(id){
     const array = this.value
-    for (let k=0;k<6;k++){
+    for (let k=0;k<9;k++){
         if (array[k]===id){
             array[k]=String(k);
             this.value = array; 
             return 1
         }
     }
-    if(array.length > 14){
-      for (let k = 14;k < array.length;k++){
+    if(array.length > 17){
+      for (let k = 17;k < array.length;k++){
         if (array[k]===id){
           array.splice(k,1)
           this.value = array; 
@@ -315,10 +317,10 @@ class GlobaBanPickList {
   }
   getMapCharcters(){
     const result = []
-    if (this.value[8]!=="8")     result.push( this.getEquiv(this.value[8]) );
-    if (this.value[9]!=="9")     result.push( this.getEquiv(this.value[9]) );
     if (this.value[11]!=="11")   result.push( this.getEquiv(this.value[11]) );
-    if (this.value[13]!=="13")   result.push( this.getEquiv(this.value[13]) );           
+    if (this.value[12]!=="12")   result.push( this.getEquiv(this.value[12]) );
+    if (this.value[14]!=="14")   result.push( this.getEquiv(this.value[14]) );
+    if (this.value[16]!=="16")   result.push( this.getEquiv(this.value[16]) );           
     if (this.hunterSelect!=="") result.push(this.getEquiv(this.hunterSelect));
     console.log("reulst", result, this.value)
     return result
@@ -337,18 +339,18 @@ class GlobaBanPickList {
     return res
   }
   getSelected (){
-    return [this.value[8],this.value[9],this.value[11],this.value[13]]
+    return [this.value[11],this.value[12],this.value[14],this.value[16]]
   }
   getSelectedIDs (){
-    return [this.getEquiv(this.value[8]),this.getEquiv(this.value[9]),this.getEquiv(this.value[11]),this.getEquiv(this.value[13])]
+    return [this.getEquiv(this.value[11]),this.getEquiv(this.value[12]),this.getEquiv(this.value[14]),this.getEquiv(this.value[16])]
   }
   getBanned ()  {
-    return  [this.value[6],this.value[7],this.value[10],this.value[12]]
+    return  [this.value[9],this.value[10],this.value[13],this.value[15]]
   }
   getSimpleRemoved (){
     const arr = this.value;
     const result = [];
-    for (let i=0;i<6;i++){
+    for (let i=0;i<9;i++){
       if (arr[i]===String(i)) return result;
       result.push(arr[i]);
     }
@@ -357,16 +359,16 @@ class GlobaBanPickList {
   getRemoved (){
     // return  [...getSimpleRemoved,...this.getMoreRemoved()]
 
-    return  [this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],...this.getMoreRemoved()]
+    return  [this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[9],...this.getMoreRemoved()]
   }
   getBannedRemoved(){
     // return  [...getBanned,...getSimpleRemoved,...this.getMoreRemoved()]
-    return  [this.value[6],this.value[7],this.value[10],this.value[12],  this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],...this.getMoreRemoved()]
+    return  [this.value[9],this.value[10],this.value[13],this.value[15],  this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[9],...this.getMoreRemoved()]
   }
   getMoreRemoved(){
     if (this.value.length<=14) return []
     const arr = []
-    for (let k = 14; k < this.value.length; k++){
+    for (let k = 17; k < this.value.length; k++){
       arr.push(this.value[k])
     }
     return arr 
@@ -398,17 +400,17 @@ class GlobaBanPickList {
     return this.findId(id,array)
   }
   isSurvsSelectionomplete (){
-    if (this.value[8]==="8")     return false
-    if (this.value[9]==="9")     return false
     if (this.value[11]==="11")   return false
-    if (this.value[13]==="13")   return false
+    if (this.value[12]==="12")   return false
+    if (this.value[14]==="14")   return false
+    if (this.value[16]==="16")   return false
     return true
   }
   is1SurvsSelecteded (){
-    if (this.value[8]!=="8")     return true
-    if (this.value[9]!=="9")     return true
     if (this.value[11]!=="11")   return true
-    if (this.value[13]!=="13")   return true
+    if (this.value[12]!=="12")   return true
+    if (this.value[14]!=="14")   return true
+    if (this.value[16]!=="16")   return true
     return false
   }
 
@@ -616,7 +618,7 @@ class GlobaBanPickList {
     this[currentRoundName] = this.compileRoundData();
     // start adding rounds to the exported array
     const exportArrays = []
-    for (let i = 1 ; i <=6;i++){
+    for (let i = 1 ; i <= 6 ; i++){
       const roundName = `Round${i}Data`;
       exportArrays.push(this[roundName]);
     }

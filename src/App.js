@@ -132,16 +132,15 @@ function App() {
     const handleMKey = (e) => {
       if (e.keyCode === 77 ){ 
         mapSizeToggler()
+        console.log("Event M recognized")
         update()
-        // console.log("Event M recognized")
-        // console.log(bigMap)
+        console.log("update!!")
       }
-    };//|| e.keyCode === 68
+    };
    window.addEventListener('keydown', handleMKey);
 
    return () => {
      window.removeEventListener('keydown', handleMKey);
-     // clearInterval(intervalId);
    };
    // eslint-disable-next-line
  }, []);
@@ -167,8 +166,8 @@ function App() {
           update={update} 
         />
       <div>
-        <div className="slots" style={{display: bigMap ? 'none' : ''}}>
-          <div className="phase" style={{border:"2px solid black",width:"677.143px", marginBottom:"1vh"}}>
+        {  !bigMap && <div className="slots">
+          <div className="phase" style={{border:"2px solid black",width:"677.8px",marginBottom:"1px"}}>
             <Slot PictureList={PictureList} slotID={0} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
             <Slot PictureList={PictureList} slotID={1} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
             <Slot PictureList={PictureList} slotID={2} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
@@ -176,25 +175,32 @@ function App() {
             <Slot PictureList={PictureList} slotID={4} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
             <Slot PictureList={PictureList} slotID={5} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
           </div>
+          { globalList.Round > 3 && <div className="phase" style={{border:"2px solid black",height:"100%",width:"337.12px",marginBottom:"1px"}}>
+            <Slot PictureList={PictureList} slotID={6} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID={7} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID={8} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
+          </div>}
           <div className="phase">
-            <Slot PictureList={PictureList} slotID ={6} type="bans2" globalList={globalList} needUpdate={needUpdate} update={update} />
-            <Slot PictureList={PictureList} slotID ={7} type="bans2" globalList={globalList} needUpdate={needUpdate} update={update} />
-            <Slot PictureList={PictureList} slotID ={8} type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
-            <Slot PictureList={PictureList} slotID ={9} type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID ={9} type="bans2" globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID ={10} type="bans2" globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID ={11} type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID ={12} type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
           </div>
           <div className="phase">
             <Slot PictureList={PictureList} SpecialSlotID ={"AB1"} type="altbans2" globalList={globalList} needUpdate={needUpdate} update={update} />
-            <Slot PictureList={PictureList} slotID ={10}           type="bans2"    globalList={globalList} needUpdate={needUpdate} update={update} />
-            <Slot PictureList={PictureList} slotID ={11}           type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID ={13}           type="bans2"    globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID ={14}           type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
             <Slot PictureList={PictureList} SpecialSlotID ={"AS1"} type="altselects2" globalList={globalList} needUpdate={needUpdate} update={update} />
           </div>
           <div className="phase">
             <Slot PictureList={PictureList} SpecialSlotID ={"AB2"} type="altbans2" globalList={globalList} needUpdate={needUpdate} update={update}  />
-            <Slot PictureList={PictureList} slotID ={12}           type="bans2"    globalList={globalList} needUpdate={needUpdate} update={update} />
-            <Slot PictureList={PictureList} slotID ={13}           type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID ={15}           type="bans2"    globalList={globalList} needUpdate={needUpdate} update={update} />
+            <Slot PictureList={PictureList} slotID ={16}           type="selects2" globalList={globalList} needUpdate={needUpdate} update={update} />
             <Slot PictureList={PictureList} SpecialSlotID ={"AS2"} type="altselects2" globalList={globalList} needUpdate={needUpdate} update={update} />
           </div>
-        </div>  
+        </div> 
+
+        } 
           <MapSelect PictureList={PictureList} globalList={globalList} bigMap={bigMap}/>
       </div>
     </div>

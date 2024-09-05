@@ -113,8 +113,8 @@ function Slot(props) {
       <div className={props.type} ref={drop} 
         onClick={handleClick} 
         onContextMenu={handleRightClick}
-        style={{backgroundColor:(props.type==="bans1" && props.slotID >= GlobalList.Round* 2-2)  ?"rgb(255,255,255)":"", 
-        borderColor:(props.type==="bans1" && props.slotID >= GlobalList.Round* 2-2)  ?" rgb(255,255,255)":"",
+        style={{backgroundColor:(props.type==="bans1" && props.slotID >= GlobalList.Round* 3-3)  ?"rgb(255,255,255)":"", 
+        borderColor:(props.type==="bans1" && props.slotID >= GlobalList.Round* 3-3)  ?" rgb(255,255,255)":"",
         "backgroundImage":"url('"+(playerId === -1 ? "" : players[playerId])+"')"}}>
         {list.map((picture) => {
           return (<span key={picture.id}>

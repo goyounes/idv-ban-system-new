@@ -20,6 +20,7 @@ const progressBarImages = importAll(require.context('../images/progressBars', fa
 
 var drag=false;
 var targ=undefined;
+// var dragging = false
 var coordX=0;
 var coordY=0;
 var offsetX=0;
@@ -100,43 +101,35 @@ function MapSelect(props) {
         offsetX = e.clientX;
         offsetY = e.clientY;
     
-        // assign default values for top and left properties
-        // if(GlobalList[targ.id]?.left){
-        //     targ.style.left = GlobalList[targ.id].left
-        //     targ.style.top = GlobalList[targ.id].left
-        //     delete GlobalList[targ.id].left
-        //     delete GlobalList[targ.id].left
-        // }else{
             if(!targ.style.left) { targ.style.left='0px'};
             if (!targ.style.top) { targ.style.top='0px'};
-        // }
     
-    
-        // calculate integer values for top and left 
-        // properties
-        // const X = GlobalList.getIdCoords1(e.target.id)[0]? GlobalList.getIdCoords1(e.target.id)[0] : "0px"
-        // const Y = GlobalList.getIdCoords1(e.target.id)[1]? GlobalList.getIdCoords1(e.target.id)[1] : "0px"
         coordX = parseInt(targ.style.left);
         coordY = parseInt(targ.style.top);
 
         drag = true;
-    
         // move div element
         //document.onmousemove=dragDiv;
         return false;
     }
     function dragDiv(e) {
+        // console.log(drag)
+        // if (dragging) return
         if (!drag) {return};
+        // console.log("I'm being dragged ! ")
         if (!e) { e = window.event};
         // var targ=e.target?e.target:e.srcElement;
         // move div element
-        targ.style.left = coordX+e.clientX-offsetX+'px';
-        targ.style.top  = coordY+e.clientY-offsetY+'px';
-        if (e.target.id!=="") GlobalList.tempPositions[e.target.id] = [coordX+e.clientX-offsetX+'px',coordY+e.clientY-offsetY+'px']
+        // dragging=true
+        // setTimeout(()=>{dragging=false},1)
+        targ.style.left = coordX + e.clientX - offsetX + 'px';
+        targ.style.top  = coordY + e.clientY - offsetY + 'px';
+        
 
         return false;
     }
-    function stopDrag() {
+    function stopDrag(e) {
+        if (e.target.id!=="") GlobalList.tempPositions[e.target.id] = [coordX+e.clientX-offsetX+'px',coordY+e.clientY-offsetY+'px']
         drag=false;
     }
 
