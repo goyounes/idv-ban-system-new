@@ -69,7 +69,7 @@ class GlobaBanPickList {
       [this.AB1,this.AB2,this.AS1,this.AS2],
       [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
       [this.hunterBan1, this.hunterBan2, this.hunterBan3],
-      this.tempPositions,
+      structuredClone(this.tempPositions),
       structuredClone(this.progressBars),
     ]; 
     console.log("exported array element n7 is = ")
