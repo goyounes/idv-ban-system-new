@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/idv-ban-system-new/static/css/main.7478e4a6.css",
-    "main.js": "/idv-ban-system-new/static/js/main.3236869b.js",
+    "main.js": "/idv-ban-system-new/static/js/main.cfce257a.js",
     "static/media/0.png": "/idv-ban-system-new/static/media/0.10f06d8dc2eedc92e917.png",
     "static/media/4.png": "/idv-ban-system-new/static/media/4.515d2568315186d04afb.png",
-    "static/media/1.png": "/idv-ban-system-new/static/media/1.ae6550a3a9a6e7c96408.png",
     "static/media/2.png": "/idv-ban-system-new/static/media/2.39ad54a11351afd68bef.png",
     "static/media/5.png": "/idv-ban-system-new/static/media/5.4c6374b7dcceaf3a1287.png",
     "static/media/3.png": "/idv-ban-system-new/static/media/3.2defd2758d12cff5705b.png",
+    "static/media/1.png": "/idv-ban-system-new/static/media/1.ae6550a3a9a6e7c96408.png",
     "static/media/6.png": "/idv-ban-system-new/static/media/6.6cf8ee11db88ed50edb4.png",
     "static/media/04_GameKeeper_15_.png": "/idv-ban-system-new/static/media/04_GameKeeper_15_.53cec251929145e3f57f.png",
     "static/media/Seer.png": "/idv-ban-system-new/static/media/Seer.1a74de3e627f394aa9a2.png",
@@ -15,6 +15,7 @@
     "static/media/Psychologist.png": "/idv-ban-system-new/static/media/Psychologist.7d146c0b0436e70697cb.png",
     "static/media/Barmaid.png": "/idv-ban-system-new/static/media/Barmaid.e396dea83c1a59e1969f.png",
     "static/media/Composer.png": "/idv-ban-system-new/static/media/Composer.906f3bc97543679f51c8.png",
+    "static/media/1.jpg": "/idv-ban-system-new/static/media/1.f737224a950821bf3be7.jpg",
     "static/media/Coordinator.png": "/idv-ban-system-new/static/media/Coordinator.b0861d9e53d3ed22fdbe.png",
     "static/media/Antiquarian.png": "/idv-ban-system-new/static/media/Antiquarian.92a64c6e00abc840196b.png",
     "static/media/Entomologist.png": "/idv-ban-system-new/static/media/Entomologist.b424aa5f7d802012a1ba.png",
@@ -193,10 +194,10 @@
     "static/media/6_Batter.png": "/idv-ban-system-new/static/media/6_Batter.0eebc478621386164301.png",
     "index.html": "/idv-ban-system-new/index.html",
     "main.7478e4a6.css.map": "/idv-ban-system-new/static/css/main.7478e4a6.css.map",
-    "main.3236869b.js.map": "/idv-ban-system-new/static/js/main.3236869b.js.map"
+    "main.cfce257a.js.map": "/idv-ban-system-new/static/js/main.cfce257a.js.map"
   },
   "entrypoints": [
     "static/css/main.7478e4a6.css",
-    "static/js/main.3236869b.js"
+    "static/js/main.cfce257a.js"
   ]
 }
