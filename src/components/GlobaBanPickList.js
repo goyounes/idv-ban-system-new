@@ -24,7 +24,7 @@ class GlobaBanPickList {
     this.progressBars = []
     this.bigMap = false
     this.mapSizeToggler = () => {
-      console.log("big map is : ", this.bigMap)
+      // console.log("big map is : ", this.bigMap)
       switch (this.bigMap) {
         case false:
           this.bigMap = true ;
@@ -33,10 +33,10 @@ class GlobaBanPickList {
           this.bigMap = false ;
           break;
         default:
+      }
+      // console.log("big map is : ", this.bigMap)
     }
-    console.log("big map is : ", this.bigMap)
   }
-}
   getIdCoords (id){
     if (this.Positions[id] === undefined){
       return [null,null]

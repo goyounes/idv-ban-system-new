@@ -117,18 +117,21 @@ hunters_d.forEach(filename => {
 
 const globalList = new GlobalBanPickList();
 function App() {
-
-  const [mapSTATE,setmapSTATE] = useState(false);
-  if (mapSTATE!==globalList.bigMap){
-    setmapSTATE(globalList.bigMap)
+  // console.log(PictureList);
+  console.log(" %c                                      <App Rendering . . .> ","color:red");
+  console.log(globalList)
+  const [needUpdate,setNeedUpdate] = useState(0);
+  const update = () => { 
+    setNeedUpdate(needUpdate + 1);
   }
-  useEffect(() => {
+  
+  const [,setBigMapSTATE] = useState(false);
+    useEffect(() => {
     const handleMKey = (e) => {
       if (e.keyCode === 77 ){ 
-        update()
-        if (mapSTATE!==globalList.bigMap){
-          setmapSTATE(globalList.bigMap)
-        }
+        // console.log("Event M recognized")
+        globalList.mapSizeToggler()
+        setBigMapSTATE(globalList.bigMap)
       }
     };
    window.addEventListener('keydown', handleMKey);
@@ -137,16 +140,6 @@ function App() {
    };
    // eslint-disable-next-line
  }, []);
-
-  const update = () => { 
-    setNeedUpdate(needUpdate + 1);
-    console.log(" %c   <SetNeedUpdate lunched, idk if component did re-render> ","color:red")
-  }
-  // console.log(PictureList);
-  console.log(" %c                                      <App Rendering . . .> ","color:red");
-  console.log(globalList)
-  
-  const [needUpdate,setNeedUpdate] = useState(0);
 
   return (
  

@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useReducer } from "react";
+import React, { useState, useReducer } from "react";
 //import Draggable from "./Draggable";
 
 function importAll(r) {
@@ -18,17 +18,12 @@ const combinedMaps = [arms, chinatown, church, eversleeping, hospital, lakeside,
 
 const progressBarImages = importAll(require.context('../images/progressBars', false, /\.(png|jpe?g|svg)$/));
 
-var drag=false;
-var targ=undefined;
-// var dragging = false
-var coordX=0;
-var coordY=0;
-var offsetX=0;
-var offsetY=0;
-
-// const progressBars = [
-//     // {id:0,value: 3,position:{x:"0px",y:"0px"}} // Empty
-// ]
+var drag = false;
+var targ = undefined;
+var coordX = 0;
+var coordY = 0;
+var offsetX = 0;
+var offsetY = 0;
 
 function MapSelect(props) {
     const GlobalList = props.globalList;
@@ -37,55 +32,26 @@ function MapSelect(props) {
     const [cipherNum, setCipherNum] = useState(GlobalList.cipherLayout);
     const [, update] = useReducer(x => x+1, 0); // to update when clicking
 
-    const [mapSTATE,setmapSTATE] = useState(false);
-    if (mapSTATE!==GlobalList.bigMap){
-      setmapSTATE(GlobalList.bigMap)
-    }
-    useEffect(() => {
-        const handleMKey = (e) => {
-          if (e.keyCode === 77 ){ 
-            console.log("Event M recognized")
-            GlobalList.mapSizeToggler()
-            console.log("update!!")
-            update()
-          }
-        };
-       window.addEventListener('keydown', handleMKey);
-    
-       return () => {
-         window.removeEventListener('keydown', handleMKey);
-       };
-       // eslint-disable-next-line
-     }, []);
-
     const handleMapChange = (e) => {
         setMap(e.target.value);
         GlobalList.Map = e.target.value;
     };
 
     const increaseCipherNum = (e) => {
-        // setCipherNum(cipherNum+1);
         GlobalList.cipherLayout++;
-        if (cipherNum === combinedMaps[map].length-1)
-        {   
-            GlobalList.cipherLayout = 1
-            // setCipherNum(1)
-        }
+        if (cipherNum === combinedMaps[map].length-1)  GlobalList.cipherLayout = 1        
         update();
     }
 
     const decreaseCipherNum = (e) => {
-        // setCipherNum(cipherNum-1);
         GlobalList.cipherLayout--;
-        if (cipherNum === 1)
-        {   GlobalList.cipherLayout = combinedMaps[map].length-1
-            // setCipherNum(combinedMaps[map].length-1)
-        }
+        if (cipherNum === 1)  GlobalList.cipherLayout = combinedMaps[map].length-1
         update();
     }
 
     const resetCipherNum = (e) => {
-        setCipherNum(0);
+        GlobalList.cipherLayout = 0
+        update();
     }
 
     const calculatedHeight =  GlobalList.bigMap ? "1000vh":"450vh"
@@ -169,18 +135,11 @@ function MapSelect(props) {
             progressBars[id].value++
             if (progressBars[id].value===11) progressBars[id].value = 0
             // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
-
             const imgElement = document.getElementById("ProgressBar"+id);
             imgElement.src = progressBarImages[progressBars[id].value]
         }
-        
     }
     
-    // function addProgress(){
-    //     progressBars[id].value++
-    //     if (progressBars[id].value===11) progressBars[id].value = 0
-    //     console.log(`the prgoress bar N° ${id} has ${progressBars[id].value+1}0% cipher progress `)
-    // }
     return (
         <div style={mapselect} onMouseMove={dragDiv}>
             {/* {console.log('%c Map Object Re rendered',"color:red;")} */}
