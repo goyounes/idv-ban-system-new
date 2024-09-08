@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState,useEffect, useReducer } from "react";
 //import Draggable from "./Draggable";
 
 function importAll(r) {
@@ -37,6 +37,27 @@ function MapSelect(props) {
     const [cipherNum, setCipherNum] = useState(GlobalList.cipherLayout);
     const [, update] = useReducer(x => x+1, 0); // to update when clicking
 
+    const [mapSTATE,setmapSTATE] = useState(false);
+    if (mapSTATE!==GlobalList.bigMap){
+      setmapSTATE(GlobalList.bigMap)
+    }
+    useEffect(() => {
+        const handleMKey = (e) => {
+          if (e.keyCode === 77 ){ 
+            console.log("Event M recognized")
+            GlobalList.mapSizeToggler()
+            console.log("update!!")
+            update()
+          }
+        };
+       window.addEventListener('keydown', handleMKey);
+    
+       return () => {
+         window.removeEventListener('keydown', handleMKey);
+       };
+       // eslint-disable-next-line
+     }, []);
+
     const handleMapChange = (e) => {
         setMap(e.target.value);
         GlobalList.Map = e.target.value;
@@ -67,8 +88,8 @@ function MapSelect(props) {
         setCipherNum(0);
     }
 
-    const calculatedHeight =  props.bigMap ? "1000vh":"450vh"
-    
+    const calculatedHeight =  GlobalList.bigMap ? "1000vh":"450vh"
+    console.log("calculated height is = ", calculatedHeight)
     const mapselect = {
         "textAlign": "Left",        
         "minWidth": "530px",

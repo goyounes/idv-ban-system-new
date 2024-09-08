@@ -22,7 +22,21 @@ class GlobaBanPickList {
     this.tempPositions = {}
     this.HunterPoints = []
     this.progressBars = []
+    this.bigMap = false
+    this.mapSizeToggler = () => {
+      console.log("big map is : ", this.bigMap)
+      switch (this.bigMap) {
+        case false:
+          this.bigMap = true ;
+          break;
+        case true:
+          this.bigMap = false ;
+          break;
+        default:
+    }
+    console.log("big map is : ", this.bigMap)
   }
+}
   getIdCoords (id){
     if (this.Positions[id] === undefined){
       return [null,null]
@@ -322,7 +336,7 @@ class GlobaBanPickList {
     if (this.value[14]!=="14")   result.push( this.getEquiv(this.value[14]) );
     if (this.value[16]!=="16")   result.push( this.getEquiv(this.value[16]) );           
     if (this.hunterSelect!=="") result.push(this.getEquiv(this.hunterSelect));
-    console.log("reulst", result, this.value)
+    // console.log("reulst", result, this.value)
     return result
   }  
   getHunterIDsToIgnore(){
@@ -359,11 +373,11 @@ class GlobaBanPickList {
   getRemoved (){
     // return  [...getSimpleRemoved,...this.getMoreRemoved()]
 
-    return  [this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[9],...this.getMoreRemoved()]
+    return  [this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[8],...this.getMoreRemoved()]
   }
   getBannedRemoved(){
     // return  [...getBanned,...getSimpleRemoved,...this.getMoreRemoved()]
-    return  [this.value[9],this.value[10],this.value[13],this.value[15],  this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[9],...this.getMoreRemoved()]
+    return  [this.value[9],this.value[10],this.value[13],this.value[15],  this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[8],...this.getMoreRemoved()]
   }
   getMoreRemoved(){
     if (this.value.length<=14) return []

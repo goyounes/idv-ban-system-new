@@ -252,7 +252,7 @@ function Canvas(props) {
   }
 
   const handleBigMapButtonClick =()=>{
-    props.mapSizeToggler();
+    GlobalList.mapSizeToggler();
     props.update();
   }
 

@@ -5,7 +5,7 @@ import Book from "./components/Book";
 import MapSelect from "./components/MapSelect";
 import Canvas from "./components/Canvas";
 import GlobalBanPickList from "./components/GlobaBanPickList.js"
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 // charctercolisionsmap = 
 // updateMapByIdfunction  = function 
@@ -43,10 +43,8 @@ const hunters_d = importAll(require.context('./images/hunters/d_tier', false, /\
  
 //const layers = importAll(require.context('./images/layers', false, /\.(png|jpe?g|svg)$/));
 var count = 0;
-var bigMap = false; // variable that decides height of elemnts is nulified when map is bigger.
-const mapSizeToggler = () => {
-  bigMap = bigMap === true ? false:true;
-}
+ // variable that decides height of elemnts is nulified when map is bigger. (transfered to globalist object)
+
 others.forEach(filename => {
   OtherList.push({id: count, url: filename});
   PictureList.push({id: count, url: filename, type: "o" });
@@ -120,30 +118,35 @@ hunters_d.forEach(filename => {
 const globalList = new GlobalBanPickList();
 function App() {
 
-  const [needUpdate,setNeedUpdate] = useState(0);
-  const update = () => { 
-    setNeedUpdate(needUpdate + 1);
+  const [mapSTATE,setmapSTATE] = useState(false);
+  if (mapSTATE!==globalList.bigMap){
+    setmapSTATE(globalList.bigMap)
   }
-  // console.log(PictureList);
-  console.log(" %c                                      <App Rendering . . .> ","color:red");
-  console.log(globalList)
-
   useEffect(() => {
     const handleMKey = (e) => {
       if (e.keyCode === 77 ){ 
-        mapSizeToggler()
-        console.log("Event M recognized")
         update()
-        console.log("update!!")
+        if (mapSTATE!==globalList.bigMap){
+          setmapSTATE(globalList.bigMap)
+        }
       }
     };
    window.addEventListener('keydown', handleMKey);
-
    return () => {
      window.removeEventListener('keydown', handleMKey);
    };
    // eslint-disable-next-line
  }, []);
+
+  const update = () => { 
+    setNeedUpdate(needUpdate + 1);
+    console.log(" %c   <SetNeedUpdate lunched, idk if component did re-render> ","color:red")
+  }
+  // console.log(PictureList);
+  console.log(" %c                                      <App Rendering . . .> ","color:red");
+  console.log(globalList)
+  
+  const [needUpdate,setNeedUpdate] = useState(0);
 
   return (
  
@@ -156,7 +159,6 @@ function App() {
           needUpdate={needUpdate}
           draggables={Draggables}
           update={update}
-          mapSizeToggler={mapSizeToggler}
         />
         <Book 
           PictureList={PictureList} 
@@ -166,7 +168,7 @@ function App() {
           update={update} 
         />
       <div>
-        {  !bigMap && <div className="slots">
+        {  !globalList.bigMap && <div className="slots">
           <div className="phase" style={{border:"2px solid black",width:"677.8px",marginBottom:"1px"}}>
             <Slot PictureList={PictureList} slotID={0} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
             <Slot PictureList={PictureList} slotID={1} type="bans1" globalList={globalList} needUpdate={needUpdate} update={update} />
@@ -201,7 +203,7 @@ function App() {
         </div> 
 
         } 
-          <MapSelect PictureList={PictureList} globalList={globalList} bigMap={bigMap}/>
+          <MapSelect PictureList={PictureList} globalList={globalList}/>
       </div>
     </div>
     </DndProvider>
