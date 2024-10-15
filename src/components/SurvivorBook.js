@@ -16,16 +16,6 @@ function SurvivorBook(props) {
 
   return (
     <div className="survivorbook" ref={drop} style={props.bookStyle}>
-      <div className="others">
-        <Row 
-          pictures={props.PictureList}
-          draggables={props.draggables}
-          globalList={props.globalList}
-          needUpdate={props.needUpdate}
-          update={props.update}
-          type="o"
-        />
-      </div>
       <div className="rescuers">
         <Row 
           pictures={props.PictureList}
@@ -34,6 +24,17 @@ function SurvivorBook(props) {
           needUpdate={props.needUpdate}
           update={props.update}
           type="r" 
+        />
+      </div>
+      
+      <div className="others">
+        <Row 
+          pictures={props.PictureList}
+          draggables={props.draggables}
+          globalList={props.globalList}
+          needUpdate={props.needUpdate}
+          update={props.update}
+          type="o"
         />
       </div>
       <div className="kiters">

@@ -55,19 +55,6 @@ html {
   margin: 10px;
 }
 
-.others {
-  padding-top: "50px";
-  max-width: 630px;
-  width: 28vw;
-  height: 12vh;
-  background-color: #97fdff;
-  min-height: 110px;
-  min-width: 630px;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-}
-
 .rescuers {
   max-width: 630px;
   width: 28vw;
@@ -75,6 +62,19 @@ html {
   min-height: 110px;
   min-width: 630px;
   background-color: rgb(165, 165, 255);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.others {
+  padding-top: "50px";
+  max-width: 630px;
+  width: 28vw;
+  height: 12vh;
+  min-height: 110px;
+  min-width: 630px;
+  background-color: #97fdff;
   display: flex;
   align-items: center;
 }
@@ -86,8 +86,10 @@ html {
   min-height: 110px;
   min-width: 630px;
   background-color: rgb(254, 140, 254);
+  margin-top: 30px;
   display: flex;
   align-items: center;
+  border-bottom: 3px solid black;
 }
 
 .harassers {
@@ -118,6 +120,7 @@ html {
   min-height: 110px;
   min-width: 630px;
   background-color: rgb(225, 225, 160);
+  margin-top: 40px;
   display: flex;
   align-items: center;
 }
@@ -129,7 +132,6 @@ html {
   min-height: 110px;
   min-width: 630px;
   background-color: rgb(150, 150, 150);
-  margin-top: 30px;
   display: flex;
   align-items: center;
 }
