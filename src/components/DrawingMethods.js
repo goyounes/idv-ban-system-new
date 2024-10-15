@@ -43,7 +43,7 @@ SurvivorSelectedBG.push(...makeIdImagesArr(survivorselectedBG));
   SurvivorBanned.push(...makeIdImagesArr(survivorbanned));
  
 const charctercolisionsmap = {
-  "Cowboy":       {"id": "Cowboy",        "x1": 52,  "x2": 96,  "y1": 42,  "y2": 91, "R":5,"RR":5},
+  // "Cowboy":       {"id": "Cowboy",        "x1": 52,  "x2": 96,  "y1": 42,  "y2": 91, "R":5,"RR":5},
   "Coordinator":  {"id": "Coordinator",   "x1": 223, "x2": 269, "y1": 33,  "y2": 89, "R":5,"RR":5},
   "ToyMerchant":  {"id": "ToyMerchant",   "x1": 469, "x2": 513, "y1": 46,  "y2": 104,"R":5,"RR":5,"Maps": ["Sacred","Lakeside","Moonlit","Leos Memory","Eversleeping","Chinatown"]},
   "Composer":     {"id": "Composer",      "x1": 622, "x2": 665, "y1": 46,  "y2": 102,"R":5,"RR":5},
@@ -67,11 +67,16 @@ const charctercolisionsmap = {
   "Dancer":       {"id": "Dancer",        "x1": 702, "x2": 745, "y1": 471, "y2": 524,"R":5,"RR":5},
   "FirstOfficer": {"id": "FirstOfficer",  "x1": 105, "x2": 149, "y1": 592, "y2": 646,"R":5,"RR":5},
   "Gravekeeper":  {"id": "Gravekeeper",   "x1": 279, "x2": 323, "y1": 595, "y2": 649,"R":5,"RR":5},
-  "Professor":    {"id": "Professor",     "x1": 398, "x2": 441, "y1": 593, "y2": 645,"R":5,"RR":5},      
+  // "Professor":    {"id": "Professor",     "x1": 398, "x2": 441, "y1": 593, "y2": 645,"R":5,"RR":5},      
   "Puppeteer":    {"id": "Puppeteer",     "x1": 572, "x2": 617, "y1": 615, "y2": 667,"R":5,"RR":5},
   "Gardener":     {"id": "Gardener",      "x1": 678, "x2": 723, "y1": 614, "y2": 670,"R":5,"RR":5},
   "Cheerleader":  {"id": "Cheerleader",   "x1": 787, "x2": 825, "y1": 615, "y2": 674,"R":5,"RR":5},
   "Novelist":     {"id": "Novelist",      "x1": 773, "x2": 821, "y1": 46,  "y2": 102,"R":5,"RR":5},
+  
+  "FireInvestigator": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "WeepingClown": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "FaroLady": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Knight": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
 
   "Magician":     {"id": "Magician",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "LuckyGuy":     {"id": "LuckyGuy",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
@@ -85,7 +90,6 @@ const charctercolisionsmap = {
   "Enchantress":  {"id": "Enchantress",   "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Journalist":   {"id": "Journalist",    "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "LittleGirl":   {"id": "LittleGirl",    "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "WeepingClown": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Prisoner":     {"id": "Prisoner",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
 }
 function translateColour(value){
