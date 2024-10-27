@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/idv-ban-system-new/static/css/main.012ce9c2.css",
-    "main.js": "/idv-ban-system-new/static/js/main.5959ba2d.js",
+    "main.js": "/idv-ban-system-new/static/js/main.095ea0e9.js",
     "static/media/0.png": "/idv-ban-system-new/static/media/0.10f06d8dc2eedc92e917.png",
     "static/media/4.png": "/idv-ban-system-new/static/media/4.515d2568315186d04afb.png",
-    "static/media/2.png": "/idv-ban-system-new/static/media/2.39ad54a11351afd68bef.png",
+    "static/media/2.png": "/idv-ban-system-new/static/media/2.0b5d4ba8f7b2afe140d2.png",
     "static/media/5.png": "/idv-ban-system-new/static/media/5.4c6374b7dcceaf3a1287.png",
-    "static/media/3.png": "/idv-ban-system-new/static/media/3.cbac13ea158fa52fa24a.png",
+    "static/media/3.png": "/idv-ban-system-new/static/media/3.119edb26086c70d223ee.png",
     "static/media/1.png": "/idv-ban-system-new/static/media/1.0e9ec080cc80a1f9d0e8.png",
     "static/media/6.png": "/idv-ban-system-new/static/media/6.6cf8ee11db88ed50edb4.png",
     "static/media/08_GameKeeper_15_.png": "/idv-ban-system-new/static/media/08_GameKeeper_15_.53cec251929145e3f57f.png",
@@ -64,7 +64,6 @@
     "static/media/053.png": "/idv-ban-system-new/static/media/053.42e57a005c668fdc2af7.png",
     "static/media/010.png": "/idv-ban-system-new/static/media/010.3893cfc7a1949c415664.png",
     "static/media/054.png": "/idv-ban-system-new/static/media/054.ab6684cf024f29815c8a.png",
-    "static/media/OLD 1.png": "/idv-ban-system-new/static/media/OLD 1.ae6550a3a9a6e7c96408.png",
     "static/media/110.png": "/idv-ban-system-new/static/media/110.945f8efaa976deed6440.png",
     "static/media/091.png": "/idv-ban-system-new/static/media/091.9657d9080235d3a0db61.png",
     "static/media/094.png": "/idv-ban-system-new/static/media/094.b64ca272680f2f7bb6ef.png",
@@ -155,6 +154,7 @@
     "static/media/20_FoolsGold.png": "/idv-ban-system-new/static/media/20_FoolsGold.252c859b7ba8dea9f74e.png",
     "static/media/14_SmileyFace_11_.png": "/idv-ban-system-new/static/media/14_SmileyFace_11_.f0686ad95be7138bae96.png",
     "static/media/1_Puppeteer.png": "/idv-ban-system-new/static/media/1_Puppeteer.01fbfe3a78fb4d57144a.png",
+    "static/media/6_Knight.png": "/idv-ban-system-new/static/media/6_Knight.a5cac8584f0f6cae63c4.png",
     "static/media/09_Guard26_4_.png": "/idv-ban-system-new/static/media/09_Guard26_4_.6c1778944fc448d7f15f.png",
     "static/media/4_Patient.png": "/idv-ban-system-new/static/media/4_Patient.b6a7bc7f411a9b862526.png",
     "static/media/13_DreamWitch_2_.png": "/idv-ban-system-new/static/media/13_DreamWitch_2_.5e6fa68cb8ff4a540e7e.png",
@@ -163,7 +163,6 @@
     "static/media/4_Psychologist.png": "/idv-ban-system-new/static/media/4_Psychologist.0d62312a6a663b687424.png",
     "static/media/3_Perfumer.png": "/idv-ban-system-new/static/media/3_Perfumer.09953ff0b203444ba77a.png",
     "static/media/2_FaroLady.png": "/idv-ban-system-new/static/media/2_FaroLady.517ecd93de80863cc874.png",
-    "static/media/6_Knight.png": "/idv-ban-system-new/static/media/6_Knight.517ecd93de80863cc874.png",
     "static/media/6_FireInvestigator.png": "/idv-ban-system-new/static/media/6_FireInvestigator.1bc20e980acb5a917d79.png",
     "static/media/2_Acrobat.png": "/idv-ban-system-new/static/media/2_Acrobat.532f1c0e51415d6a69cc.png",
     "static/media/6_Prisoner.png": "/idv-ban-system-new/static/media/6_Prisoner.8e4318c2f68bafbcf56c.png",
@@ -196,10 +195,10 @@
     "static/media/1_Antiquarian.png": "/idv-ban-system-new/static/media/1_Antiquarian.ac0fd6bffe4a482d1f28.png",
     "index.html": "/idv-ban-system-new/index.html",
     "main.012ce9c2.css.map": "/idv-ban-system-new/static/css/main.012ce9c2.css.map",
-    "main.5959ba2d.js.map": "/idv-ban-system-new/static/js/main.5959ba2d.js.map"
+    "main.095ea0e9.js.map": "/idv-ban-system-new/static/js/main.095ea0e9.js.map"
   },
   "entrypoints": [
     "static/css/main.012ce9c2.css",
-    "static/js/main.5959ba2d.js"
+    "static/js/main.095ea0e9.js"
   ]
 }
