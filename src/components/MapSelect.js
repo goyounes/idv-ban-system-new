@@ -5,6 +5,21 @@ function importAll(r) {
     return r.keys().map(r);
 }
 
+const InjuredState = importAll(require.context('../images/survivors/InjuredState', false, /\.(png|jpe?g|svg)$/));
+const InjuredStateList = [];
+var i=0;
+InjuredState.forEach(filename => {
+    InjuredStateList.push({id: i, url: filename});
+    i++;
+});
+// const ChairedState = importAll(require.context('./images/survivors/ChairedState', false, /\.(png|jpe?g|svg)$/));
+// const ChairedStateList = [];
+// i = 0;
+// ChairedState.forEach(filename => {
+//     ChairedStateList.push({id: i, url: filename});
+//     i++;
+// });
+
 const arms = importAll(require.context('../images/maps/arms', false, /\.(png|jpe?g|svg)$/));
 const chinatown = importAll(require.context('../images/maps/chinatown', false, /\.(png|jpe?g|svg)$/));
 const church = importAll(require.context('../images/maps/church', false, /\.(png|jpe?g|svg)$/));
@@ -55,7 +70,7 @@ function MapSelect(props) {
     }
 
     const calculatedHeight =  GlobalList.bigMap ? "1000vh":"450vh"
-    console.log("calculated height is = ", calculatedHeight)
+    // console.log("calculated height is = ", calculatedHeight)
     const mapselect = {
         "textAlign": "Left",        
         "minWidth": "530px",
@@ -128,7 +143,7 @@ function MapSelect(props) {
         update()
     }
 
-    function getProgressAdder(id){
+    function getProgressAdder(id,e){
         // console.log("this creates a function that will be used to increase the progress when progress bar N:",id,"is clicked")
         return ()=>{
             // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
@@ -139,10 +154,30 @@ function MapSelect(props) {
             imgElement.src = progressBarImages[progressBars[id].value]
         }
     }
+
+            console.log("Injured state list is real?")
+            console.log(InjuredStateList);
+            // console.log(InjuredState);
+            function srcCyclerMaker(id){
+                if (id > 41) return
+                const sources = [props.PictureList[id].url]
+                sources.push(InjuredStateList[id].url)
+                // sources.push(ChairedStateList[id].url)
+                console.log(sources)
+            // console.log("this creates a function that will be cycle through all different Srcs for one image")
+            return (e)=>{
+                e.preventDefault();
+                // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+                const imgElement = document.getElementById(id)
+                const currentSource = 
+                imgElement.src = sources[1];
+            }
+    }
+
     
     return (
         <div style={mapselect} onMouseMove={dragDiv}>
-            {/* {console.log('%c Map Object Re rendered',"color:red;")} */}
+            {/* {mconsole.log('%c Map Object Re rendered',"color:red;")} */}
             <br></br>
             <label style={texte} htmlFor="mapselect">Map: </label>
             <select  style={button} name="mapselect" value ={GlobalList.Map===""?"0":GlobalList.Map} onChange={handleMapChange}>
@@ -166,6 +201,7 @@ function MapSelect(props) {
             <div>
             <div style={{"height": "0px"}}>
                 {props.globalList.getMapCharcters().map((id) => {
+                    const srcCycler = srcCyclerMaker(id)
                     // console.log("ID: ",id)
                     const [x,y] = GlobalList.getIdCoords(id)
                     let  [x1,y1]= GlobalList.getIdCoords1(id)
@@ -187,7 +223,7 @@ function MapSelect(props) {
                             onMouseDown={startDrag} 
                             onMouseUp={stopDrag} 
                             onMouseMove={dragDiv}
-                            onContextMenu={deletePic} 
+                            onContextMenu={srcCycler} 
                         />
                     );
                 })
