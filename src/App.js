@@ -20,6 +20,7 @@ const KiterList = [];
 const DecodeList = [];
 const OtherList = [];
 const UselessList = [];
+const InjuredStateList = [];
 const Draggables = [];//{id: 1, url: "https://lh4.googleusercontent.com/-8tqTFxi2ebU/Ufo4j_thf7I/AAAAAAAADFM/_ZBQctm9e8E/w270-h203-no/flower.jpg"}];
 //const LayersList = [];
 
@@ -27,14 +28,19 @@ function importAll(r) {
     return r.keys().map(r);
 }
 
-const supports = importAll(require.context('./images/survivors/supports', false, /\.(png|jpe?g|svg)$/));
 const rescuers = importAll(require.context('./images/survivors/rescuers', false, /\.(png|jpe?g|svg)$/));
 
-const harassers = importAll(require.context('./images/survivors/harassers', false, /\.(png|jpe?g|svg)$/));
-const kiters = importAll(require.context('./images/survivors/kiters', false, /\.(png|jpe?g|svg)$/));
-const decoders = importAll(require.context('./images/survivors/decoders', false, /\.(png|jpe?g|svg)$/));
 const others = importAll(require.context('./images/survivors/others', false, /\.(png|jpe?g|svg)$/));
+const kiters = importAll(require.context('./images/survivors/kiters', false, /\.(png|jpe?g|svg)$/));
+const harassers = importAll(require.context('./images/survivors/harassers', false, /\.(png|jpe?g|svg)$/));
+const supports = importAll(require.context('./images/survivors/supports', false, /\.(png|jpe?g|svg)$/));
+
+const decoders = importAll(require.context('./images/survivors/decoders', false, /\.(png|jpe?g|svg)$/));
 const useless = importAll(require.context('./images/survivors/useless', false, /\.(png|jpe?g|svg)$/));
+const InjuredState = importAll(require.context('./images/survivors/InjuredState', false, /\.(png|jpe?g|svg)$/));
+
+
+
 const  hunters_s = importAll(require.context('./images/hunters/s_tier', false, /\.(png|jpe?g|svg)$/));
 const  hunters_a = importAll(require.context('./images/hunters/a_tier', false, /\.(png|jpe?g|svg)$/));
 const hunters_b = importAll(require.context('./images/hunters/b_tier', false, /\.(png|jpe?g|svg)$/));
@@ -87,6 +93,10 @@ useless.forEach(filename => {
   count++;
 });
 
+InjuredState.forEach(filename => {
+  InjuredStateList.push({id: count, url: filename});
+  count++;
+});
 
 hunters_s.forEach(filename => {
   PictureList.push({id: count, url: filename, type: "hunter_s", isUsed: false });
