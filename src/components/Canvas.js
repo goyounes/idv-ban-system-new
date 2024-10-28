@@ -168,7 +168,7 @@ function Canvas(props) {
       window.requestAnimationFrame(animate)
     }else{
       AnimationActive.current = false;
-      if (GlobalList.is1SurvsSelecteded()){
+      if (GlobalList.isONEsurvSelecteded()){
         if (!GlobalList.isSurvsSelectionomplete()) {
           DM.loopOpacity()
           window.requestAnimationFrame(animate);

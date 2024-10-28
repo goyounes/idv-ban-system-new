@@ -159,20 +159,26 @@ function MapSelect(props) {
             console.log(InjuredStateList);
             // console.log(InjuredState);
             function srcCyclerMaker(id){
-                if (id > 41) return
+                if (id > 41) return (e)=>{e.preventDefault()} 
                 const sources = [props.PictureList[id].url]
                 sources.push(InjuredStateList[id].url)
+                sources.nextSourceIndex = (index)=>{
+                    if (index < sources.length-1) return (index+1)
+                    return 0
+                }
                 // sources.push(ChairedStateList[id].url)
                 console.log(sources)
-            // console.log("this creates a function that will be cycle through all different Srcs for one image")
-            return (e)=>{
-                e.preventDefault();
-                // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
-                const imgElement = document.getElementById(id)
-                const currentSource = 
-                imgElement.src = sources[1];
+                // console.log("this creates a function that will be cycle through all different Srcs for one image")
+                return (e)=>{
+                    e.preventDefault();
+                    // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+                    const imgElement = document.getElementById(id)
+                    const currentSource = imgElement.src
+                    imgElement.src = sources[1];
+                    const currentSourceIndex = sources.findIndex(currentSource)
+                    imgElement.srcIndex = sources.nextSourceIndex(currentSourceIndex)
+                }
             }
-    }
 
     
     return (
@@ -277,10 +283,10 @@ function MapSelect(props) {
     );
 }
 
-function deletePic(e) {
-    e.preventDefault();
-    // targ.style.visibility="hidden";
-}
+// function deletePic(e) {
+//     e.preventDefault();
+//     targ.style.visibility="hidden";
+// }
 function deleteProgressBar(e) {
     e.preventDefault();
     targ.style.visibility="hidden";

@@ -24,7 +24,6 @@ class GlobaBanPickList {
     this.progressBars = []
     this.bigMap = false
     this.mapSizeToggler = () => {
-      // console.log("big map is : ", this.bigMap)
       switch (this.bigMap) {
         case false:
           this.bigMap = true ;
@@ -34,7 +33,6 @@ class GlobaBanPickList {
           break;
         default:
       }
-      // console.log("big map is : ", this.bigMap)
     }
   }
   getIdCoords (id){
@@ -49,6 +47,25 @@ class GlobaBanPickList {
   getIdCoords1 (id){
     if (this.tempPositions[id] === undefined) return [null,null]
     return this.tempPositions[id]
+  }
+
+  //Save/Load, NextRound/PreviousRound, Export/Import functionality
+  saveRoundData(){
+    // eslint-disable-next-line
+    const exportArray = [
+      [this.Map,this.MapName(this.Map),this.cipherLayout],
+      this.value,
+      this.Round,
+      [this.AB1,this.AB2,this.AS1,this.AS2],
+      [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
+      [this.hunterBan1, this.hunterBan2, this.hunterBan3],
+      structuredClone(this.tempPositions),
+      structuredClone(this.progressBars),
+    ]; 
+    console.log("exported array element n7 is = ")
+    console.log(exportArray)
+    console.log(this.progressBars)
+    return exportArray // change the export 
   }
   restoreRoundData(arr){
     if (!arr) return 0
@@ -74,30 +91,119 @@ class GlobaBanPickList {
     this.progressBars.splice(0,this.progressBars.length) 
     this.progressBars.push(...arr[7])
   }
-  compileRoundData(){
-    // eslint-disable-next-line
-    const exportArray = [
-      [this.Map,this.MapName(this.Map),this.cipherLayout],
-      this.value,
-      this.Round,
-      [this.AB1,this.AB2,this.AS1,this.AS2],
-      [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
-      [this.hunterBan1, this.hunterBan2, this.hunterBan3],
-      structuredClone(this.tempPositions),
-      structuredClone(this.progressBars),
-    ]; 
-    console.log("exported array element n7 is = ")
-    console.log(exportArray)
-    console.log(this.progressBars)
-    return exportArray // change the export 
+  NextRound (){// (0) 
+    // Save the state of this round in a variable called X="Round"+this.round+"Data"
+    if (this.Round === 6) return // No Round after 6th round (OverTime)
+    const currentRoundName = `Round${this.Round}Data`
+    this[currentRoundName]=this.saveRoundData()
+    const nextRoundName = `Round${this.Round+1}Data`
+    const nextRoundData = this[nextRoundName]
+
+    if (nextRoundData!==undefined){
+      const overWrite = window.confirm("Overwrite Next Round data ? Cancel will load Next Round Data directly");
+      if (!overWrite){ 
+        this.restoreRoundData(nextRoundData);
+        return 1
+      }
+    }
+    this.Round++;
+    const oldRemoved = this.getRealRemoved();
+    console.log("Before we go to next round the removed charecters as of now are : ",oldRemoved)
+    const permBan1 = this.value[11];// First  Selected Charecter
+    const permBan2 = this.value[12];// Second Selected Charecter
+    const permBan3 = this.value[14];// Third  Selected Charecter
+    this.Clear();
+    for (let i=0;i < oldRemoved.length;i++){
+      this.value[i] = oldRemoved[i]
+    }
+    console.log("Old removed -->",permBan1, permBan2, permBan3)
+    if (this.Round-1<=3){
+      if (permBan1!=="11")  this.value[(this.Round-2)*3+0] = permBan1 ;
+      if (permBan2!=="12")  this.value[(this.Round-2)*3+1] = permBan2 ;
+      if (permBan3!=="14")  this.value[(this.Round-2)*3+2] = permBan3 ;
+    }
+    console.log("value -->",this.value)
+    return 1 
+  }
+  PreviousRound(){
+    // this.Round
+    const currentRoundName = `Round${this.Round}Data`
+    this[currentRoundName] = this.saveRoundData()
+    const roundName = `Round${this.Round-1}Data`
+    this.restoreRoundData(this[roundName])
   }
   
-  layerID(url){
-    if (!url) return -1
-    const split = url.split("_");
-    const layerId = split.length === 4 ? split[2] : -1;
-    return layerId;
+  importList(JSONtext){
+    if (JSONtext.length<30) return 0
+    const JSONtext1 = JSONtext.replace("||", '').replace("||", '')
+    let arrays = JSON.parse(JSONtext1)
+    console.log("Imported Globalist is =>",arrays)
+    for (let i = 1 ; i <=6;i++){
+      if (arrays[i-1]===null) continue
+      const roundName = `Round${i}Data`;
+      this[roundName] = arrays[i-1];
+    }
+    for (let i = 1 ; i <=6;i++){
+      if (arrays[i-1]===null) continue
+      this.restoreRoundData(arrays[i-1])
+      return 1
+    }
   }
+  exportList(){
+    // save current round
+    const currentRoundName = `Round${this.Round}Data`
+    this[currentRoundName] = this.saveRoundData();
+    // start adding rounds to the exported array
+    const exportArrays = []
+    for (let i = 1 ; i <= 6 ; i++){
+      const roundName = `Round${i}Data`;
+      exportArrays.push(this[roundName]);
+    }
+    // write the exported array to the clipboard directly.
+    navigator.clipboard.writeText("||"+JSON.stringify(exportArrays)+"||");
+    console.log("Exported Globalist is =>",exportArrays)
+    return exportArrays // change the export 
+  }
+
+  // importOneRound(JSONtext){
+  //   if (JSONtext.length<30) return 0
+  //   let arr = JSON.parse(JSONtext)
+  //   console.log("Imported Globalist is =>",arr)
+  //   this.Map = arr[0][0];
+  //   this.value = [...arr[1]];
+  //   this.Round = arr[2];
+  //   this.AB1 = arr[3][0];
+  //   this.AB2 = arr[3][1];
+  //   this.AS1 = arr[3][2];
+  //   this.AS2 = arr[3][3];
+  //   this.hunterSelect = arr[4][0];
+  //   this.hunterSlot0 = arr[4][1];
+  //   this.hunterSlot1 = arr[4][2];
+  //   this.hunterSlot2 = arr[4][3];
+  //   this.hunterSlot3 = arr[4][4];
+  //   this.hunterSlot4 = arr[4][5];
+  //   this.hunterBan1  = arr[5][0];
+  //   this.hunterBan2  = arr[5][1];
+  //   this.hunterBan3  = arr[5][2];
+  //   this.Positions = arr[6];
+  //   this.tempPositions = structuredClone(arr[6]);
+  // }
+  // exportCurrentRound(){
+  //   // eslint-disable-next-line
+  //   const exportArray = [
+  //     [this.Map,this.MapName(this.Map)],
+  //     this.value,
+  //     this.Round,
+  //     [this.AB1,this.AB2,this.AS1,this.AS2],
+  //     [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
+  //     [this.hunterBan1, this.hunterBan2, this.hunterBan3],
+  //     this.tempPositions
+  //   ]; 
+  //   navigator.clipboard.writeText(JSON.stringify(exportArray));
+  //   console.log("Exported Globalist is =>",exportArray)
+  //   return exportArray // change the export 
+  // }
+
   Clear (){
     let arr = []
     for (let k=0;k<17;k++){
@@ -117,44 +223,16 @@ class GlobaBanPickList {
     this.progressBars.splice(0,this.progressBars.length) 
     return 1;
   }
-  NextRound (){// (0) 
-    // Save the state of this round in a variable called X="Round"+this.round+"Data"
-    if (this.Round === 6) return // No ROund after 6th round (OverTime)
-    const currentRoundName = `Round${this.Round}Data`
-    this[currentRoundName]=this.compileRoundData()
-    const nextRoundName = `Round${this.Round+1}Data`
-    const nextRoundData = this[nextRoundName]
 
-    if (nextRoundData!==undefined){
-      const overWrite = window.confirm("Overwrite Next Round data ? Cancel will load Next Round Data directly");
-      if (!overWrite){ 
-        this.restoreRoundData(nextRoundData);
-        return 1
-      }
-    }
-    this.Round++;
-    const oldRemoved = this.getSimpleRemoved();
-    const permBan1 = this.value[11];// First  Selected Charecter
-    const permBan2 = this.value[12];// Second Selected Charecter
-    const permBan3 = this.value[14];// Third  Selected Charecter
-    this.Clear();
-    for (let i=0;i < oldRemoved.length;i++){
-      this.value[i] = oldRemoved[i]
-    }
-    permBan1!=="11" && this.addRemoved(permBan1);
-    permBan2!=="12" && this.addRemoved(permBan2); 
-    permBan3!=="14" && this.addRemoved(permBan3); 
-    return 1 
-      
-    
+
+  layerID(url){
+    if (!url) return -1
+    const split = url.split("_");
+    const layerId = split.length === 4 ? split[2] : -1;
+    return layerId;
   }
-  PreviousRound(){
-    // this.Round
-    const currentRoundName = `Round${this.Round}Data`
-    this[currentRoundName] = this.compileRoundData()
-    const roundName = `Round${this.Round-1}Data`
-    this.restoreRoundData(this[roundName])
-  }
+
+  //Survivor Selection and Ban Data
   addSelect (id){
     if(this.isSelected(id)) return 0 
     this.removeBan(id)
@@ -179,7 +257,7 @@ class GlobaBanPickList {
     if(this.isBanned(id)) return 0
     this.removeSelect(id);
     this.removeRemoved(id);
-  const array = this.value
+    const array = this.value
     if (array[9]==="9"){
       array[9]=id
       this.value = array; 
@@ -289,6 +367,8 @@ class GlobaBanPickList {
     this.value = array
     return 0
   }
+
+  //Hunter Selection and Ban Data
   addHunterBan(id){
     if (this.hunterBan1 ===-1 && this.Round >1){
       this.hunterBan1 = id; 
@@ -327,8 +407,65 @@ class GlobaBanPickList {
     if (this.hunterSlot4 === id) return true;
     console.log("Hunter is not used")
     return 0
-
   }
+
+  //Reading from the Ban Selection Data --> for drawing mainly
+  getSelected (){ return [this.value[11],this.value[12],this.value[14],this.value[16]] }
+  getSelectedIDs (){  return [this.getEquiv(this.value[11]),this.getEquiv(this.value[12]),this.getEquiv(this.value[14]),this.getEquiv(this.value[16])]  }
+  getBanned (){ return  [this.value[9],this.value[10],this.value[13],this.value[15]]  }
+  getRealRemoved (){
+    const arr = this.value;
+    const result = [];
+    for (let i=0;i<9;i++){
+      // if (arr[i]===String(i)) return result;
+      result.push(arr[i]);
+    }
+    return  result
+  }
+  getMoreRemoved(){
+    if (this.value.length<=14) return []
+    const arr = []
+    for (let k = 17; k < this.value.length; k++){
+      arr.push(this.value[k])
+    }
+    return arr 
+  }
+  getRemoved (){
+    // return  [...getRealRemoved,...this.getMoreRemoved()]
+    return  [this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[8],...this.getMoreRemoved()]
+  }
+  getBannedRemoved(){
+    // return  [...getBanned,...getRealRemoved,...this.getMoreRemoved()]
+    return  [this.value[9],this.value[10],this.value[13],this.value[15],  this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[8],...this.getMoreRemoved()]
+  }
+
+  //Reading from the Ban Selection Data --> Check information on a charecter
+  findId(id,array){
+    for (let i = 0; i < array.length; i++){
+      if (array[i]===id) return true
+    }
+    return false
+  }
+  isSelected(id){ return this.findId(id,this.getSelected()) }
+  isBanned(id){   return this.findId(id,this.getBanned())   }
+  isRemoved(id){  return this.findId(id,this.getRemoved())  }
+  idExist(id){    return this.findId(id,this.value)         }
+  isSurvsSelectionomplete (){
+    if (this.value[11]==="11")   return false
+    if (this.value[12]==="12")   return false
+    if (this.value[14]==="14")   return false
+    if (this.value[16]==="16")   return false
+    return true
+  }
+  isONEsurvSelecteded (){
+    if (this.value[11]!=="11")   return true
+    if (this.value[12]!=="12")   return true
+    if (this.value[14]!=="14")   return true
+    if (this.value[16]!=="16")   return true
+    return false
+  }
+
+  //Reading from the Ban Selection Data --> To add pictures on the map as move-able <img> elements
   getMapCharcters(){
     const result = []
     if (this.value[11]!=="11")   result.push( this.getEquiv(this.value[11]) );
@@ -336,9 +473,10 @@ class GlobaBanPickList {
     if (this.value[14]!=="14")   result.push( this.getEquiv(this.value[14]) );
     if (this.value[16]!=="16")   result.push( this.getEquiv(this.value[16]) );           
     if (this.hunterSelect!=="") result.push(this.getEquiv(this.hunterSelect));
-    // console.log("reulst", result, this.value)
     return result
   }  
+
+  //used to ignore hunters for the RISK calculations.
   getHunterIDsToIgnore(){
     const res = new Set([
       Number(this.hunterBan1),
@@ -349,85 +487,9 @@ class GlobaBanPickList {
       if (this.ignoredHunters[key]!==null) res.add(Number(key))
     }
     res.delete(-1)
-    // console.log("the set values (HunterIDs to ignore) are =>",res)
     return res
   }
-  getSelected (){
-    return [this.value[11],this.value[12],this.value[14],this.value[16]]
-  }
-  getSelectedIDs (){
-    return [this.getEquiv(this.value[11]),this.getEquiv(this.value[12]),this.getEquiv(this.value[14]),this.getEquiv(this.value[16])]
-  }
-  getBanned ()  {
-    return  [this.value[9],this.value[10],this.value[13],this.value[15]]
-  }
-  getSimpleRemoved (){
-    const arr = this.value;
-    const result = [];
-    for (let i=0;i<9;i++){
-      if (arr[i]===String(i)) return result;
-      result.push(arr[i]);
-    }
-    return  result
-  }
-  getRemoved (){
-    // return  [...getSimpleRemoved,...this.getMoreRemoved()]
-
-    return  [this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[8],...this.getMoreRemoved()]
-  }
-  getBannedRemoved(){
-    // return  [...getBanned,...getSimpleRemoved,...this.getMoreRemoved()]
-    return  [this.value[9],this.value[10],this.value[13],this.value[15],  this.value[0],this.value[1],this.value[2],this.value[3],this.value[4],this.value[5],this.value[6],this.value[7],this.value[8],...this.getMoreRemoved()]
-  }
-  getMoreRemoved(){
-    if (this.value.length<=14) return []
-    const arr = []
-    for (let k = 17; k < this.value.length; k++){
-      arr.push(this.value[k])
-    }
-    return arr 
-  }
-  // getAllStates(){
-  //   return [...this.getSelected,...this.getBanned,...this.getRemoved]
-  // }
-
-  findId(id,array){
-    for (let i = 0; i < array.length; i++){
-      if (array[i]===id) return true
-    }
-    return false
-  }
-  isSelected(id){
-    const array = this.getSelected()
-    return this.findId(id,array)
-  }
-  isBanned(id){
-    const array = this.getBanned()
-    return this.findId(id,array)
-  }
-  isRemoved(id){
-    const array = this.getRemoved()
-    return this.findId(id,array)
-  }
-  idExist(id){
-    const array = this.value
-    return this.findId(id,array)
-  }
-  isSurvsSelectionomplete (){
-    if (this.value[11]==="11")   return false
-    if (this.value[12]==="12")   return false
-    if (this.value[14]==="14")   return false
-    if (this.value[16]==="16")   return false
-    return true
-  }
-  is1SurvsSelecteded (){
-    if (this.value[11]!=="11")   return true
-    if (this.value[12]!=="12")   return true
-    if (this.value[14]!=="14")   return true
-    if (this.value[16]!=="16")   return true
-    return false
-  }
-
+ 
   getName(filename) {
     const split1 = filename.split("_");
     if (split1.length < 1) return "";
@@ -436,140 +498,75 @@ class GlobaBanPickList {
   }
   getEquiv (id) { 
     const C = {
-      0:"Mercenary",
-      1:"FirstOfficer",
-      2:"Wildling",
-      3:"Coordinator",
-      4:"Gravekeeper",
-      5:"Forward",
-      6:"Puppeteer",
-      7:"Gardener",
-      8:"Perfumer",
-      9:"Magician",
-      10:"Novelist",
-      11:"Prisoner",
-      12:"Seer",
-      13:"Acrobat",
-      14:"Aeroplanist",
-      15:"Patient",
-      16:"WeepingClown",
-      17:"FireInvestigator",
-      18:"Antiquarian",
-      19:"Prospector",
-      20:"Cheerleader",
-      21:"Psychologist",
-      22:"Barmaid",
-      23:"Knight",
-      24:"Dancer",
-      25:"Priestess",
-      26:"Entomologist",
-      27:"Embalmer",
-      28:"ToyMerchant",
-      29:"Professor",
-      30:"Lawyer",
-      31:"Explorer",
-      32:"Composer",
-      33:"Mechanic",
-      34:"TME",
-      35:"Postman",
-      36:"Painter",
-      37:"FaroLady",
-      38:"Doctor",
-      39:"Journalist",
-      40:"Enchantress",
-      41:"LuckyGuy",
+      0:"Mercenary",                 "Mercenary":0,
+      1:"FirstOfficer",              "FirstOfficer":1,
+      2:"Wildling",                  "Wildling":2,
+      3:"Coordinator",               "Coordinator":3,
+      4:"Gravekeeper",               "Gravekeeper":4,
+      5:"Forward",                   "Forward":5,
+      6:"Puppeteer",                 "Puppeteer":6,
+      7:"Gardener",                  "Gardener":7,
+      8:"Perfumer",                  "Perfumer":8,
+      9:"Magician",                  "Magician":9,
+      10:"Novelist",                 "Novelist":10,
+      11:"Prisoner",                 "Prisoner":11,
+      12:"Seer",                     "Seer":12,
+      13:"Acrobat",                  "Acrobat":13,
+      14:"Aeroplanist",              "Aeroplanist":14,
+      15:"Patient",                  "Patient":15,
+      16:"WeepingClown",             "WeepingClown":16,
+      17:"FireInvestigator",         "FireInvestigator":17,
+      18:"Antiquarian",              "Antiquarian":18,
+      19:"Prospector",               "Prospector":19,
+      20:"Cheerleader",              "Cheerleader":20,
+      21:"Psychologist",             "Psychologist":21,
+      22:"Barmaid",                  "Barmaid":22,
+      23:"Knight",                   "Knight":23,
+      24:"Dancer",                   "Dancer":24,
+      25:"Priestess",                "Priestess":25,
+      26:"Entomologist",             "Entomologist":26,
+      27:"Embalmer",                 "Embalmer":27,
+      28:"ToyMerchant",              "ToyMerchant":28,
+      29:"Professor",                "Professor":29,
+      30:"Lawyer",                   "Lawyer":30,
+      31:"Explorer",                 "Explorer":31,
+      32:"Composer",                 "Composer":32,
+      33:"Mechanic",                 "Mechanic":33,
+      34:"TME",                      "TME":34,
+      35:"Postman",                  "Postman":35,
+      36:"Painter",                  "Painter":36,
+      37:"FaroLady",                 "FaroLady":37,
+      38:"Doctor",                   "Doctor":38,
+      39:"Journalist",               "Journalist":39,
+      40:"Enchantress",              "Enchantress":40,
+      41:"LuckyGuy",                 "LuckyGuy":41,
 
-      "Mercenary":0,
-      "FirstOfficer":1,
-      "Wildling":2,
-      "Coordinator":3,
-      "Gravekeeper":4,
-      "Forward":5,
-      "Puppeteer":6,
-      "Gardener":7,
-      "Perfumer":8,
-      "Magician":9,
-      "Novelist":10,
-      "Prisoner":11,
-      "Seer":12,
-      "Acrobat":13,
-      "Aeroplanist":14,
-      "Patient":15,
-      "WeepingClown":16,
-      "FireInvestigator":17,
-      "Antiquarian":18,
-      "Prospector":19,
-      "Cheerleader":20,
-      "Psychologist":21,
-      "Barmaid":22,
-      "Knight":23,
-      "Dancer":24,
-      "Priestess":25,
-      "Entomologist":26,
-      "Embalmer":27,
-      "ToyMerchant":28,
-      "Professor":29,
-      "Lawyer":30,
-      "Explorer":31,
-      "Composer":32,
-      "Mechanic":33,
-      "TME":34,
-      "Postman":35,
-      "Painter":36,
-      "FaroLady":37,
-      "Doctor":38,
-      "Journalist":39,
-      "Enchantress":40,
-      "LuckyGuy":41,
-
-      42:"OperaSinger",
-      43:"TheShadow",
-      44:"GoatMan",
-      45:"GameKeeper",
-      46:"Disciple",
-      47:"WaxArtis",
-      48:"Geisha",
-      49:"SoulWeaver",
-      50:"DreamWitch",
-      51:"SmileyFace",
-      52:"BreakingWheel",
-      53:"Hermit",
-      54:"AxeBoy",
-      55:"Naiad",
-      56:"Guard26",
-      57:"NightWatch",
-      58:"BloodyQueen",
-      59:"Clerk",
-      60:"Sculptor",
-      61:"FoolsGold",
-      62:"Reptilian",
-       
-      "OperaSinger":42,
-      "TheShadow":43,
-      "GoatMan":44,
-      "GameKeeper":45,
-      "Disciple":46,
-      "WaxArtis":47,
-      "Geisha":48,
-      "SoulWeaver":49,
-      "DreamWitch":50,
-      "SmileyFace":51,
-      "BreakingWheel":52,
-      "Hermit":53,
-      "AxeBoy":54,
-      "Naiad":55,
-      "Guard26":56,
-      "NightWatch":57,
-      "BloodyQueen":58,
-      "Clerk":59,
-      "Sculptor":60,
-      "FoolsGold":61,
-      "Reptilian":62,
-         
+      42:"OperaSinger",              "OperaSinger":42,
+      43:"TheShadow",                "TheShadow":43,
+      44:"GoatMan",                  "GoatMan":44,
+      45:"GameKeeper",               "GameKeeper":45,
+      46:"Disciple",                 "Disciple":46,
+      47:"WaxArtis",                 "WaxArtis":47,
+      48:"Geisha",                   "Geisha":48,
+      49:"SoulWeaver",               "SoulWeaver":49,
+      50:"DreamWitch",               "DreamWitch":50,
+      51:"SmileyFace",               "SmileyFace":51,
+      52:"BreakingWheel",            "BreakingWheel":52,
+      53:"Hermit",                   "Hermit":53,
+      54:"AxeBoy",                   "AxeBoy":54,
+      55:"Naiad",                    "Naiad":55,
+      56:"Guard26",                  "Guard26":56,
+      57:"NightWatch",               "NightWatch":57,
+      58:"BloodyQueen",              "BloodyQueen":58,
+      59:"Clerk",                    "Clerk":59,
+      60:"Sculptor",                 "Sculptor":60,
+      61:"FoolsGold",                "FoolsGold":61,
+      62:"Reptilian",                "Reptilian":62,
     }
     return C[id]
   };
 
+  //Map related data
   MapName(value) {
     switch (value){
       case "0":
@@ -596,76 +593,7 @@ class GlobaBanPickList {
     return this.MapName(this.Map)
   }
 
-  importList(JSONtext){
-    if (JSONtext.length<30) return 0
-    const JSONtext1 = JSONtext.replace("||", '').replace("||", '')
-    let arrays = JSON.parse(JSONtext1)
-    console.log("Imported Globalist is =>",arrays)
-    for (let i = 1 ; i <=6;i++){
-      if (arrays[i-1]===null) continue
-      const roundName = `Round${i}Data`;
-      this[roundName] = arrays[i-1];
-    }
-    for (let i = 1 ; i <=6;i++){
-      if (arrays[i-1]===null) continue
-      this.restoreRoundData(arrays[i-1])
-      return 1
-    }
-  }
-  // IDK if i need these functions
-  exportList(){
-    // save current round
-    const currentRoundName = `Round${this.Round}Data`
-    this[currentRoundName] = this.compileRoundData();
-    // start adding rounds to the exported array
-    const exportArrays = []
-    for (let i = 1 ; i <= 6 ; i++){
-      const roundName = `Round${i}Data`;
-      exportArrays.push(this[roundName]);
-    }
-
-    navigator.clipboard.writeText("||"+JSON.stringify(exportArrays)+"||");
-    console.log("Exported Globalist is =>",exportArrays)
-    return exportArrays // change the export 
-  }
-  importOneRound(JSONtext){
-    if (JSONtext.length<30) return 0
-    let arr = JSON.parse(JSONtext)
-    console.log("Imported Globalist is =>",arr)
-    this.Map = arr[0][0];
-    this.value = [...arr[1]];
-    this.Round = arr[2];
-    this.AB1 = arr[3][0];
-    this.AB2 = arr[3][1];
-    this.AS1 = arr[3][2];
-    this.AS2 = arr[3][3];
-    this.hunterSelect = arr[4][0];
-    this.hunterSlot0 = arr[4][1];
-    this.hunterSlot1 = arr[4][2];
-    this.hunterSlot2 = arr[4][3];
-    this.hunterSlot3 = arr[4][4];
-    this.hunterSlot4 = arr[4][5];
-    this.hunterBan1  = arr[5][0];
-    this.hunterBan2  = arr[5][1];
-    this.hunterBan3  = arr[5][2];
-    this.Positions = arr[6];
-    this.tempPositions = structuredClone(arr[6]);
-  }
-  exportCurrentRound(){
-    // eslint-disable-next-line
-    const exportArray = [
-      [this.Map,this.MapName(this.Map)],
-      this.value,
-      this.Round,
-      [this.AB1,this.AB2,this.AS1,this.AS2],
-      [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
-      [this.hunterBan1, this.hunterBan2, this.hunterBan3],
-      this.tempPositions
-    ]; 
-    navigator.clipboard.writeText(JSON.stringify(exportArray));
-    console.log("Exported Globalist is =>",exportArray)
-    return exportArray // change the export 
-  }
+  //Hide some Hunters in the book if they're right clicked
   addIgnoredHunter(hunterIdNumber){
     this.ignoredHunters[hunterIdNumber] = "ignored"
     return 1
@@ -675,7 +603,6 @@ class GlobaBanPickList {
     return 1
   }
   isHunterIgnored(hunterIdNumber){
-    // this.ignoredHunters[hunterIdNumber] === "ignored" && console.log("Condition for hunter ID:",hunterIdNumber ," is :",this.ignoredHunters[hunterIdNumber] === "ignored")
     return this.ignoredHunters[hunterIdNumber] === "ignored"
   }
 }
