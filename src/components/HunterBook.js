@@ -48,8 +48,6 @@ function HunterBook(props) {
     }
   }
   
-  
-
   return (
     <div className="hunterbook" ref={drop} style={props.bookStyle}>
       <div className="s_tier">

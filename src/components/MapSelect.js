@@ -153,32 +153,50 @@ function MapSelect(props) {
             const imgElement = document.getElementById("ProgressBar"+id);
             imgElement.src = progressBarImages[progressBars[id].value]
         }
-    }
-
-            console.log("Injured state list is real?")
-            console.log(InjuredStateList);
-            // console.log(InjuredState);
-            function srcCyclerMaker(id){
-                if (id > 41) return (e)=>{e.preventDefault()} 
-                const sources = [props.PictureList[id].url]
-                sources.push(InjuredStateList[id].url)
-                sources.nextSourceIndex = (index)=>{
-                    if (index < sources.length-1) return (index+1)
-                    return 0
-                }
-                // sources.push(ChairedStateList[id].url)
-                console.log(sources)
-                // console.log("this creates a function that will be cycle through all different Srcs for one image")
-                return (e)=>{
-                    e.preventDefault();
-                    // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
-                    const imgElement = document.getElementById(id)
-                    const currentSource = imgElement.src
-                    imgElement.src = sources[1];
-                    const currentSourceIndex = sources.findIndex(currentSource)
-                    imgElement.srcIndex = sources.nextSourceIndex(currentSourceIndex)
-                }
+    }    
+    function getProgressReducer(id,e){
+        // console.log("this creates a function that will be used to decrease the progress when progress bar N:",id,"is clicked")
+        return (e)=>{
+            e.preventDefault()
+            //Delte Bar if shift was held while Right Clicking
+            if (e.shiftKey) {
+                console.log("shift was pressed")
+                targ.style.visibility="hidden";
+                return
             }
+
+            // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+            progressBars[id].value = progressBars[id].value - 1
+            if (progressBars[id].value===-1) progressBars[id].value = 0
+            // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+            const imgElement = document.getElementById("ProgressBar"+id);
+            imgElement.src = progressBarImages[progressBars[id].value]
+
+             
+        }
+    }
+    
+    function srcCyclerMaker(id){
+        if (id > 41) return (e)=>{e.preventDefault()} 
+        const sources = [props.PictureList[id].url]
+        sources.push(InjuredStateList[id].url)
+        sources.nextSourceIndex = (index)=>{
+            if (index < sources.length-1) return (index+1)
+            return 0
+        }
+        // sources.push(ChairedStateList[id].url)
+        console.log(sources)
+        // console.log("this creates a function that will be cycle through all different Srcs for one image")
+        return (e)=>{
+            e.preventDefault();
+            // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+            const imgElement = document.getElementById(id)
+            const currentSource = imgElement.src
+            imgElement.src = sources[1];
+            const currentSourceIndex = sources.findIndex(currentSource)
+            imgElement.srcIndex = sources.nextSourceIndex(currentSourceIndex)
+        }
+    }
 
     
     return (
@@ -248,6 +266,11 @@ function MapSelect(props) {
                     // console.log(`the prgoress bar N° ${id} has ${value}0% cipher progress `)
                     // console.log("the source of the image will be",progressBarImages[value])
                     const progressAdder = getProgressAdder(id)
+                    const progressReducer = getProgressReducer(id)
+                    // const DragAndRestoreProgressBar = (e)=>{
+                    //     dragDiv(e);
+                    //     progressReducer();
+                    // }
                     return (
                         <img 
                             id={"ProgressBar"+id}
@@ -260,10 +283,11 @@ function MapSelect(props) {
                             }}
                             className="dragme" 
                             onClick={progressAdder}
+                            onContextMenu={progressReducer} 
+                            // onDoubleClick={deleteProgressBar}
                             onMouseDown={startDrag} 
                             onMouseUp={stopDrag} 
                             onMouseMove={dragDiv}
-                            onContextMenu={deleteProgressBar} 
                         />
                     );
                 })
@@ -288,7 +312,7 @@ function MapSelect(props) {
 //     targ.style.visibility="hidden";
 // }
 function deleteProgressBar(e) {
-    e.preventDefault();
+    //Delete when you double click and hold Shift key
     targ.style.visibility="hidden";
 }
 export default MapSelect;

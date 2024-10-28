@@ -35,15 +35,14 @@ function makeIdImagesArr(layerX){
   return images
 }
 
-      CleanLayer.push(...makeIdImagesArr(cleanlayer));
-SurvivorSelected.push(...makeIdImagesArr(survivorselected));
+        CleanLayer.push(...makeIdImagesArr(cleanlayer));
+  SurvivorSelected.push(...makeIdImagesArr(survivorselected));
 SurvivorSelectedBG.push(...makeIdImagesArr(survivorselectedBG));
-  BlackLinesGone.push(...makeIdImagesArr(blacklinesgone));
-    RedLinesGone.push(...makeIdImagesArr(redlinesgone));
-  SurvivorBanned.push(...makeIdImagesArr(survivorbanned));
+    BlackLinesGone.push(...makeIdImagesArr(blacklinesgone));
+      RedLinesGone.push(...makeIdImagesArr(redlinesgone));
+    SurvivorBanned.push(...makeIdImagesArr(survivorbanned));
  
 const charctercolisionsmap = {
-  // "Cowboy":       {"id": "Cowboy",        "x1": 52,  "x2": 96,  "y1": 42,  "y2": 91, "R":5,"RR":5},
   "Coordinator":  {"id": "Coordinator",   "x1": 223, "x2": 269, "y1": 33,  "y2": 89, "R":5,"RR":5},
   "ToyMerchant":  {"id": "ToyMerchant",   "x1": 469, "x2": 513, "y1": 46,  "y2": 104,"R":5,"RR":5,"Maps": ["Sacred","Lakeside","Moonlit","Leos Memory","Eversleeping","Chinatown"]},
   "Composer":     {"id": "Composer",      "x1": 622, "x2": 665, "y1": 46,  "y2": 102,"R":5,"RR":5},
@@ -78,135 +77,23 @@ const charctercolisionsmap = {
   "FaroLady":         {"id": "FaroLady",        "x1": 130, "x2":172,  "y1": 31,  "y2":94  ,"R":5,"RR":5},
   "Knight":           {"id": "Knight",          "x1": 37,  "x2":76,   "y1": 31,  "y2":94  ,"R":5,"RR":5},
 
-  "Professor":    {"id": "Professor",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},   
+  "Professor":    {"id": "Professor",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Magician":     {"id": "Magician",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "LuckyGuy":     {"id": "LuckyGuy",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Doctor":       {"id": "Doctor",        "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Perfumer":     {"id": "Perfumer",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Painter":      {"id": "Painter",       "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Thief":        {"id": "Thief",         "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Batter":       {"id": "Batter",        "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "TME":          {"id": "TME",           "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Postman":      {"id": "Postman",       "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Enchantress":  {"id": "Enchantress",   "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Journalist":   {"id": "Journalist",    "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "LittleGirl":   {"id": "LittleGirl",    "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Prisoner":     {"id": "Prisoner",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+
+  "LittleGirl":   {"id": "LittleGirl",    "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Cowboy":       {"id": "Cowboy",        "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Thief":        {"id": "Thief",         "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "Batter":       {"id": "Batter",        "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
 }
-
-
-//----------------------------------------- Hunter points calculations ---------------------------------------------------
-function translateColour(value){
-  return (value===250 && 100)||(value===143 && 50)||(value===18 && "X")||(value===242 && -100)||0
-}
-const internalHunterPoints = []
-export async function CalculateHunterPoints(hunterPoints,HunterLayers,HunterPictureList,GlobalList){
-  // const hunterPoints = [];
-  for (const i in HunterPictureList){
-    const Hunter = HunterPictureList[i]
-    const split = Hunter.url.split("_");
-    const layerId = split.length === 4 ? split[2] : -1;
-
-    if (layerId === -1){ 
-      // console.log("This hunter is not supported yet, No Canvas Layer will be drawn"); // not supported
-      continue
-    }
-      const img = HunterLayers[layerId-1]
-      const arr = []
-        ImageLib.load(img.src).then((image) => {
-          for (const CharcterId in CCM){
-            const charcterData = CCM[CharcterId]
-            //Hard coded Canvas Width & Height in this function along with some spacing.
-            var pixelColor = image.getPixelXY(Math.floor(charcterData.x1 * image.width/850+10), Math.floor(charcterData.y1 *image.height/692+10));
-            arr[GlobalList.getEquiv(CharcterId)] = translateColour(pixelColor[0])
-          }
-          hunterPoints[Hunter.id] = arr
-          internalHunterPoints[Hunter.id]=[...arr]
-        });
-  }
-  return hunterPoints
-}
-
-export function HunterPointsTotal(GlobalList){
-  // console.log(internalHunterPoints)
-  const hunterPoints = internalHunterPoints
-  if (!GlobalList.isSurvsSelectionomplete()){
-    // console.log("Survivors are not all selected yet, no calculation will be made")
-    return
-  }
-  //Code for support functions
-  const SelectedSurvivorsNames = GlobalList.getSelected()
-  const isGoodOnMap = (survName)=>{
-    const Map = GlobalList.getMapName()
-    const survData = CCM[survName]
-    return survData["Maps"].includes(Map)
-  }
-  const turnXtoPoints = (arr)=>{
-    for (let i = 0; i < arr.length;i++){
-      const survName = SelectedSurvivorsNames[i]
-      if (arr[i] === "X") {
-        arr[i] =  isGoodOnMap(survName)?100:0
-      } 
-    }
-  }
-  //Main Code
-  const SelectedSurvivorsIDs = GlobalList.getSelectedIDs()
-  const result = []
-  const X = GlobalList.getHunterIDsToIgnore()
-    for (let i = 42;i <= hunterPoints.length;i++){
-      const arr = hunterPoints[i]
-      if (X.has(i)) continue      // hunter is ignored
-      if (arr === undefined) continue // hunter has no layer (Clerk etc)
-      const NewArr = [
-        arr[SelectedSurvivorsIDs[0]],
-        arr[SelectedSurvivorsIDs[1]],
-        arr[SelectedSurvivorsIDs[2]],
-        arr[SelectedSurvivorsIDs[3]]
-      ]
-      turnXtoPoints(NewArr)
-      //check if it's weak enough  --------- Points Logic ----------
-      if (count(NewArr,-100)>= 2 || (count(NewArr,-100) === 1 && count(NewArr,0) >= 1) || (count(NewArr,-100) === 1 && count(NewArr,50) >= 1) )
-      result[i] = [
-        NewArr.reduce((total, item) => total + item) + ((count(NewArr,-100) >= 2)?-50:0),
-        NewArr,  
-      ]
-      // if (count(NewArr,-100) >= 2) result[i] -= 50 //if 2 charcteres are red then the whole team is significantly weaker
-    }
-  // console.log("%c Result points is => ","color:red",result)
-  OrderedResult(result,GlobalList)
-  return result
-}
-function OrderedResult(result,GlobalList){
-  const oResult = []
-  // console.log("i'm using ths to calculate the ordered list",result)
-  for (let i = 42;i <= result.length;i++){
-    if(!result[i]) continue
-    const temp = result[i]
-
-    oResult.push({name: GlobalList.getEquiv(i),id: i, totalPoints: temp[0],Points : temp[1]})
-    // oResult.push(5)
-  }
-
-  oResult.sort((a, b)=> {
-    if (a.totalPoints <= b.totalPoints ) {
-      return -1;
-    } else  {
-      return 1;
-    }
-  })
-  // console.log("ordered result is =>",oResult)
-  GlobalList.HunterPoints = oResult
-  return oResult
-}
-function count(Array,val){
-  const elementCounts = {};
-  Array.forEach(element => {
-  elementCounts[element] = (elementCounts[element] || 0) + 1;
-  });
-  // if (!elementCounts[val]) console.log("Value specified : ",val ,"is not existant")
-  return elementCounts[val]
-}
-
 
 //---------------------------------------- CCM Logic ----------------------------------------
 export function resetCCM(){
@@ -420,4 +307,116 @@ export function AnimationNotOver(CCM){
     }
   }
   return restart
+}
+
+//----------------------------------------- Hunter points calculations ---------------------------------------------------
+function translateColour(value){
+  return (value===250 && 100)||(value===143 && 50)||(value===18 && "X")||(value===242 && -100)||0
+}
+const internalHunterPoints = []
+export async function CalculateHunterPoints(hunterPoints,HunterLayers,HunterPictureList,GlobalList){
+  // const hunterPoints = [];
+  for (const i in HunterPictureList){
+    const Hunter = HunterPictureList[i]
+    const split = Hunter.url.split("_");
+    const layerId = split.length === 4 ? split[2] : -1;
+
+    if (layerId === -1){ 
+      // console.log("This hunter is not supported yet, No Canvas Layer will be drawn"); // not supported
+      continue
+    }
+      const img = HunterLayers[layerId-1]
+      const arr = []
+        ImageLib.load(img.src).then((image) => {
+          for (const CharcterId in CCM){
+            const charcterData = CCM[CharcterId]
+            //Hard coded Canvas Width & Height in this function along with some spacing.
+            var pixelColor = image.getPixelXY(Math.floor(charcterData.x1 * image.width/850+10), Math.floor(charcterData.y1 *image.height/692+10));
+            arr[GlobalList.getEquiv(CharcterId)] = translateColour(pixelColor[0])
+          }
+          hunterPoints[Hunter.id] = arr
+          internalHunterPoints[Hunter.id]=[...arr]
+        });
+  }
+  return hunterPoints
+}
+
+export function HunterPointsTotal(GlobalList){
+  // console.log(internalHunterPoints)
+  const hunterPoints = internalHunterPoints
+  if (!GlobalList.isSurvsSelectionomplete()){
+    // console.log("Survivors are not all selected yet, no calculation will be made")
+    return
+  }
+  //Code for support functions
+  const SelectedSurvivorsNames = GlobalList.getSelected()
+  const isGoodOnMap = (survName)=>{
+    const Map = GlobalList.getMapName()
+    const survData = CCM[survName]
+    return survData["Maps"].includes(Map)
+  }
+  const turnXtoPoints = (arr)=>{
+    for (let i = 0; i < arr.length;i++){
+      const survName = SelectedSurvivorsNames[i]
+      if (arr[i] === "X") {
+        arr[i] =  isGoodOnMap(survName)?100:0
+      } 
+    }
+  }
+  //Main Code
+  const SelectedSurvivorsIDs = GlobalList.getSelectedIDs()
+  const result = []
+  const X = GlobalList.getHunterIDsToIgnore()
+    for (let i = 42;i <= hunterPoints.length;i++){
+      const arr = hunterPoints[i]
+      if (X.has(i)) continue      // hunter is ignored
+      if (arr === undefined) continue // hunter has no layer (Clerk etc)
+      const NewArr = [
+        arr[SelectedSurvivorsIDs[0]],
+        arr[SelectedSurvivorsIDs[1]],
+        arr[SelectedSurvivorsIDs[2]],
+        arr[SelectedSurvivorsIDs[3]]
+      ]
+      turnXtoPoints(NewArr)
+      //check if it's weak enough  --------- Points Logic ----------
+      if (count(NewArr,-100)>= 2 || (count(NewArr,-100) === 1 && count(NewArr,0) >= 1) || (count(NewArr,-100) === 1 && count(NewArr,50) >= 1) )
+      result[i] = [
+        NewArr.reduce((total, item) => total + item) + ((count(NewArr,-100) >= 2)?-50:0),
+        NewArr,  
+      ]
+      // if (count(NewArr,-100) >= 2) result[i] -= 50 //if 2 charcteres are red then the whole team is significantly weaker
+    }
+  // console.log("%c Result points is => ","color:red",result)
+  OrderedResult(result,GlobalList)
+  return result
+}
+function OrderedResult(result,GlobalList){
+  const oResult = []
+  // console.log("i'm using ths to calculate the ordered list",result)
+  for (let i = 42;i <= result.length;i++){
+    if(!result[i]) continue
+    const temp = result[i]
+
+    oResult.push({name: GlobalList.getEquiv(i),id: i, totalPoints: temp[0],Points : temp[1]})
+    // oResult.push(5)
+  }
+
+  oResult.sort((a, b)=> {
+    if (a.totalPoints <= b.totalPoints ) {
+      return -1;
+    } else  {
+      return 1;
+    }
+  })
+  // console.log("ordered result is =>",oResult)
+  GlobalList.HunterPoints = oResult
+  return oResult
+}
+function count(Array,val){
+  const elementCounts = {};
+  Array.forEach(element => {
+  elementCounts[element] = (elementCounts[element] || 0) + 1;
+  });
+  // if (!elementCounts[val]) console.log("Value specified : ",val ,"is not existant")
+  return elementCounts[val]
 }
