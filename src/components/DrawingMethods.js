@@ -67,17 +67,18 @@ const charctercolisionsmap = {
   "Dancer":       {"id": "Dancer",        "x1": 702, "x2": 745, "y1": 471, "y2": 524,"R":5,"RR":5},
   "FirstOfficer": {"id": "FirstOfficer",  "x1": 105, "x2": 149, "y1": 592, "y2": 646,"R":5,"RR":5},
   "Gravekeeper":  {"id": "Gravekeeper",   "x1": 279, "x2": 323, "y1": 595, "y2": 649,"R":5,"RR":5},
-  "Professor":    {"id": "Professor",     "x1": 398, "x2": 441, "y1": 593, "y2": 645,"R":5,"RR":5},  // <---- GONE   
+  // "Professor":    {"id": "Professor",     "x1": 398, "x2": 441, "y1": 593, "y2": 645,"R":5,"RR":5},  // <---- GONE 
   "Puppeteer":    {"id": "Puppeteer",     "x1": 572, "x2": 617, "y1": 615, "y2": 667,"R":5,"RR":5},
   "Gardener":     {"id": "Gardener",      "x1": 678, "x2": 723, "y1": 614, "y2": 670,"R":5,"RR":5},
   "Cheerleader":  {"id": "Cheerleader",   "x1": 787, "x2": 825, "y1": 615, "y2": 674,"R":5,"RR":5},
   "Novelist":     {"id": "Novelist",      "x1": 773, "x2": 821, "y1": 46,  "y2": 102,"R":5,"RR":5},
   
-  "FireInvestigator": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "WeepingClown": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "FaroLady": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
-  "Knight": {"id": "WeepingClown",  "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
+  "FireInvestigator": {"id": "FireInvestigator","x1": 480, "x2":520,  "y1": 607, "y2":676 ,"R":5,"RR":5},
+  "WeepingClown":     {"id": "WeepingClown",    "x1": 385, "x2":420,  "y1": 607, "y2":676 ,"R":5,"RR":5},
+  "FaroLady":         {"id": "FaroLady",        "x1": 130, "x2":172,  "y1": 31,  "y2":94  ,"R":5,"RR":5},
+  "Knight":           {"id": "Knight",          "x1": 37,  "x2":76,   "y1": 31,  "y2":94  ,"R":5,"RR":5},
 
+  "Professor":    {"id": "Professor",     "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},   
   "Magician":     {"id": "Magician",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "LuckyGuy":     {"id": "LuckyGuy",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Doctor":       {"id": "Doctor",        "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
@@ -92,6 +93,9 @@ const charctercolisionsmap = {
   "LittleGirl":   {"id": "LittleGirl",    "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
   "Prisoner":     {"id": "Prisoner",      "x1": 0,   "x2":0,    "y1": 0,   "y2":0   ,"R":5,"RR":5},
 }
+
+
+//----------------------------------------- Hunter points calculations ---------------------------------------------------
 function translateColour(value){
   return (value===250 && 100)||(value===143 && 50)||(value===18 && "X")||(value===242 && -100)||0
 }
@@ -112,6 +116,7 @@ export async function CalculateHunterPoints(hunterPoints,HunterLayers,HunterPict
         ImageLib.load(img.src).then((image) => {
           for (const CharcterId in CCM){
             const charcterData = CCM[CharcterId]
+            //Hard coded Canvas Width & Height in this function along with some spacing.
             var pixelColor = image.getPixelXY(Math.floor(charcterData.x1 * image.width/850+10), Math.floor(charcterData.y1 *image.height/692+10));
             arr[GlobalList.getEquiv(CharcterId)] = translateColour(pixelColor[0])
           }
@@ -129,15 +134,11 @@ export function HunterPointsTotal(GlobalList){
     // console.log("Survivors are not all selected yet, no calculation will be made")
     return
   }
+  //Code for support functions
   const SelectedSurvivorsNames = GlobalList.getSelected()
   const isGoodOnMap = (survName)=>{
     const Map = GlobalList.getMapName()
     const survData = CCM[survName]
-    // console.log("the survivor is",survName)
-    // console.log("Map is",Map)
-    // console.log("the survivor data and prefered maps",survData)
-    // console.log("maps array",survData["Maps"])
-    // console.log("maps array contain Map?",survData["Maps"].includes(Map))
     return survData["Maps"].includes(Map)
   }
   const turnXtoPoints = (arr)=>{
@@ -148,9 +149,8 @@ export function HunterPointsTotal(GlobalList){
       } 
     }
   }
-
+  //Main Code
   const SelectedSurvivorsIDs = GlobalList.getSelectedIDs()
-  // console.log(GlobalList.getSelectedIDs(), GlobalList.getSelected())
   const result = []
   const X = GlobalList.getHunterIDsToIgnore()
     for (let i = 42;i <= hunterPoints.length;i++){
@@ -164,13 +164,13 @@ export function HunterPointsTotal(GlobalList){
         arr[SelectedSurvivorsIDs[3]]
       ]
       turnXtoPoints(NewArr)
-      //check if it's weak enough
+      //check if it's weak enough  --------- Points Logic ----------
       if (count(NewArr,-100)>= 2 || (count(NewArr,-100) === 1 && count(NewArr,0) >= 1) || (count(NewArr,-100) === 1 && count(NewArr,50) >= 1) )
       result[i] = [
         NewArr.reduce((total, item) => total + item) + ((count(NewArr,-100) >= 2)?-50:0),
         NewArr,  
       ]
-      // if (count(arr)[-100] >= 2) result[i] -= 50 //if 2 charcteres are red then the whole team is significantly weaker
+      // if (count(NewArr,-100) >= 2) result[i] -= 50 //if 2 charcteres are red then the whole team is significantly weaker
     }
   // console.log("%c Result points is => ","color:red",result)
   OrderedResult(result,GlobalList)
@@ -207,18 +207,8 @@ function count(Array,val){
   return elementCounts[val]
 }
 
-// export function test_points(context){     //No need for this anymore as i was using it to verify the colours were recognized properly in the layer images
-//   for (const CharcterId in CCM){
-//     const charcterData = CCM[CharcterId]
-//     context.beginPath();
-//     // Math.floor(charcterData.x1 * 1127/692 + 10), Math.floor(charcterData.y1 *1386/850 + 10)
-//     context.moveTo(charcterData.x1,charcterData.y1);
-//     context.arc(charcterData.x1,charcterData.y1, 5, 0, Math.PI * 2);
-//     context.fillStyle = 'red'
-//     context.fill()
-//   }
-// }
 
+//---------------------------------------- CCM Logic ----------------------------------------
 export function resetCCM(){
   for (const Charcter in charctercolisionsmap){
     charctercolisionsmap[Charcter].state = 0;
@@ -236,7 +226,7 @@ export function GetIdOfColission(event,CCM){
       // console.log("hit on charcter id:",charcterData.id)
       return charcterData.id //C is the array entry (charcter) that was modified after the click event
   }
-  // console.log("no hit on ANY charcter !!")
+  console.log("X=",X," / Y=",Y)
   return 0
 }
 function LinkIdsAndLayers(CCM){

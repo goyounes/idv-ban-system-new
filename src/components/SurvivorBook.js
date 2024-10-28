@@ -16,6 +16,7 @@ function SurvivorBook(props) {
 
   return (
     <div className="survivorbook" ref={drop} style={props.bookStyle}>
+      
       <div className="rescuers">
         <Row 
           pictures={props.PictureList}
@@ -26,7 +27,6 @@ function SurvivorBook(props) {
           type="r" 
         />
       </div>
-      
       <div className="others">
         <Row 
           pictures={props.PictureList}

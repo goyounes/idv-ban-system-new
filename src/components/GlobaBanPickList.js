@@ -540,7 +540,7 @@ class GlobaBanPickList {
       39:"Journalist",               "Journalist":39,
       40:"Enchantress",              "Enchantress":40,
       41:"LuckyGuy",                 "LuckyGuy":41,
-      // Little girl ignored
+      // LittleGirl, Cowboy, Batter, Thief
       42:"OperaSinger",              "OperaSinger":42,
       43:"TheShadow",                "TheShadow":43,
       44:"GoatMan",                  "GoatMan":44,
