@@ -26,21 +26,24 @@ function Picture(props) {
             props.update();
           }else{// if this is altBan or altSelect then:
             if (dropResult.type === "bans1") { if (props.id>41) return
-                  const charName = GlobalList.getName(props.url);
+                  // const charName = GlobalList.getName(props.url);
+                  const charName = GlobalList.getEquiv(props.id);
                   console.log("Name: "+charName);
                   if (DM.CCM[charName]) {
                     GlobalList.addRemoved(charName);
                     props.update();
                   }
             } else if (dropResult.type==="bans2"){ if (props.id>41) return
-                  const charName = GlobalList.getName(props.url);
+                  // const charName = GlobalList.getName(props.url);
+                  const charName = GlobalList.getEquiv(props.id);
                   console.log("Name: "+charName);
                   if (DM.CCM[charName]) {
                     GlobalList.addBan(charName);
                     props.update();
                   }
             } else if ( dropResult.type === "selects2") { if (props.id>41) return
-                  const charName = GlobalList.getName(props.url);
+                  // const charName = GlobalList.getName(props.url);
+                  const charName = GlobalList.getEquiv(props.id);
                   console.log("Name: "+charName);
                   if (DM.CCM[charName]) {
                     GlobalList.addSelect(charName);
@@ -90,7 +93,9 @@ function Picture(props) {
       } 
       if (!GlobalList) return
 
-      const charId = GlobalList.getName(props.url);
+
+      // const charId = GlobalList.getName(props.url);
+      const charId = GlobalList.getEquiv(props.id);
       console.log("Name: "+charId);
       if (DM.CCM[charId]) {
         GlobalList.removeSelect(charId);

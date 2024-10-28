@@ -48,7 +48,8 @@ function Slot(props) {
         return
       }
 
-      const charId = GlobalList.getName(list[0].url);
+      // const charId = GlobalList.getName(list[0].url);
+      const charId = GlobalList.getEquiv(list[0].id);
       if (DM.CCM[charId]) {
         GlobalList.removeSelect(charId);
         GlobalList.removeBan(charId);

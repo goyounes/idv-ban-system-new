@@ -489,13 +489,13 @@ class GlobaBanPickList {
     res.delete(-1)
     return res
   }
- 
-  getName(filename) {
-    const split1 = filename.split("_");
-    if (split1.length < 1) return "";
-    const split2 = split1[1].split(".");
-    return split2[0];
-  }
+  //Rolend's Old Function, Switched by getEquiv which needs to be updated everytime ID's change.
+  // getName(filename) {
+  //   const split1 = filename.split("_");
+  //   if (split1.length < 1) return "";
+  //   const split2 = split1[1].split(".");
+  //   return split2[0];
+  // }
   getEquiv (id) { 
     const C = {
       0:"Mercenary",                 "Mercenary":0,
@@ -540,7 +540,7 @@ class GlobaBanPickList {
       39:"Journalist",               "Journalist":39,
       40:"Enchantress",              "Enchantress":40,
       41:"LuckyGuy",                 "LuckyGuy":41,
-
+      // Little girl ignored
       42:"OperaSinger",              "OperaSinger":42,
       43:"TheShadow",                "TheShadow":43,
       44:"GoatMan",                  "GoatMan":44,
