@@ -137,7 +137,6 @@ function LinkIdsAndLayers(CCM){
     for (const surv of SurvivorBanned){
       if (surv.id.includes(charcterData.id)) CCM[CharcterId].SurvivorBannedIMG = surv.img
     }
-
   } 
   // console.log(CCM)
   return CCM
@@ -342,13 +341,11 @@ export async function CalculateHunterPoints(hunterPoints,HunterLayers,HunterPict
 }
 
 export function HunterPointsTotal(GlobalList){
-  // console.log(internalHunterPoints)
   const hunterPoints = internalHunterPoints
   if (!GlobalList.isSurvsSelectionomplete()){
-    // console.log("Survivors are not all selected yet, no calculation will be made")
     return
   }
-  //Code for support functions
+//Code for support functions
   const SelectedSurvivorsNames = GlobalList.getSelected()
   const isGoodOnMap = (survName)=>{
     const Map = GlobalList.getMapName()
@@ -363,7 +360,7 @@ export function HunterPointsTotal(GlobalList){
       } 
     }
   }
-  //Main Code
+//Main Code
   const SelectedSurvivorsIDs = GlobalList.getSelectedIDs()
   const result = []
   const X = GlobalList.getHunterIDsToIgnore()
@@ -390,17 +387,15 @@ export function HunterPointsTotal(GlobalList){
   OrderedResult(result,GlobalList)
   return result
 }
+
 function OrderedResult(result,GlobalList){
   const oResult = []
   // console.log("i'm using ths to calculate the ordered list",result)
   for (let i = 42;i <= result.length;i++){
     if(!result[i]) continue
     const temp = result[i]
-
     oResult.push({name: GlobalList.getEquiv(i),id: i, totalPoints: temp[0],Points : temp[1]})
-    // oResult.push(5)
   }
-
   oResult.sort((a, b)=> {
     if (a.totalPoints <= b.totalPoints ) {
       return -1;
@@ -408,15 +403,12 @@ function OrderedResult(result,GlobalList){
       return 1;
     }
   })
-  // console.log("ordered result is =>",oResult)
   GlobalList.HunterPoints = oResult
   return oResult
 }
 function count(Array,val){
   const elementCounts = {};
-  Array.forEach(element => {
-  elementCounts[element] = (elementCounts[element] || 0) + 1;
-  });
+  Array.forEach(element =>   elementCounts[element] = (elementCounts[element] || 0) + 1);
   // if (!elementCounts[val]) console.log("Value specified : ",val ,"is not existant")
   return elementCounts[val]
 }
