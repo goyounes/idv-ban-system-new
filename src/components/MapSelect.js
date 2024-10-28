@@ -145,9 +145,10 @@ function MapSelect(props) {
 
     function getProgressAdder(id,e){
         // console.log("this creates a function that will be used to increase the progress when progress bar N:",id,"is clicked")
-        return ()=>{
+        return (e)=>{
             // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
             progressBars[id].value++
+            if (e.shiftKey) progressBars[id].value++
             if (progressBars[id].value===11) progressBars[id].value = 0
             // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
             const imgElement = document.getElementById("ProgressBar"+id);
@@ -159,20 +160,18 @@ function MapSelect(props) {
         return (e)=>{
             e.preventDefault()
             //Delte Bar if shift was held while Right Clicking
-            if (e.shiftKey) {
+            if (e.ctrlKey) {
                 console.log("shift was pressed")
                 targ.style.visibility="hidden";
+                progressBars[id]=null
                 return
             }
 
-            // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
-            progressBars[id].value = progressBars[id].value - 1
+            progressBars[id].value--;
+            if (e.shiftKey) progressBars[id].value--
             if (progressBars[id].value===-1) progressBars[id].value = 0
-            // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
             const imgElement = document.getElementById("ProgressBar"+id);
             imgElement.src = progressBarImages[progressBars[id].value]
-
-             
         }
     }
     
@@ -180,21 +179,20 @@ function MapSelect(props) {
         if (id > 41) return (e)=>{e.preventDefault()} 
         const sources = [props.PictureList[id].url]
         sources.push(InjuredStateList[id].url)
-        sources.nextSourceIndex = (index)=>{
-            if (index < sources.length-1) return (index+1)
+        function nextIndex (array,index){
+            if (index < sources.length - 1) return (index+1)
             return 0
         }
         // sources.push(ChairedStateList[id].url)
-        console.log(sources)
         // console.log("this creates a function that will be cycle through all different Srcs for one image")
         return (e)=>{
             e.preventDefault();
             // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
             const imgElement = document.getElementById(id)
-            const currentSource = imgElement.src
-            imgElement.src = sources[1];
-            const currentSourceIndex = sources.findIndex(currentSource)
-            imgElement.srcIndex = sources.nextSourceIndex(currentSourceIndex)
+            const currenti = imgElement.srcindex || 0
+            const Nexti = nextIndex(sources,currenti)
+            imgElement.src = sources[Nexti];
+            imgElement.srcindex = Nexti
         }
     }
 
@@ -223,54 +221,46 @@ function MapSelect(props) {
             <label style={{marginLeft:"10px"}}> </label>
             <button style={button} onClick={resetCipherNum}>All In</button>
             <div>
-            <div style={{"height": "0px"}}>
-                {props.globalList.getMapCharcters().map((id) => {
-                    const srcCycler = srcCyclerMaker(id)
-                    // console.log("ID: ",id)
-                    const [x,y] = GlobalList.getIdCoords(id)
-                    let  [x1,y1]= GlobalList.getIdCoords1(id)
-                    if (x1 === null || y1 === null){
-                        x1 = ""; y1 = "";  
-                        // console.log("used Nothing for X1 Y1 because  they dont exist"); 
+                {/* Survivor and Hunter charecters Code */}
+                <div style={{"height": "0px"}}>
+                    {props.globalList.getMapCharcters().map((id) => {
+                        const srcCycler = srcCyclerMaker(id)
+                        const [x,y] = GlobalList.getIdCoords(id)
+                        let  [x1,y1]= GlobalList.getIdCoords1(id)
+                        if (x1 === null || y1 === null){
+                            x1 = ""; y1 = "";  
+                            // console.log("used Nothing for X1 Y1 because  they dont exist"); 
+                        }
+                        return (
+                            <img 
+                                id={id}
+                                src={props.PictureList[id].url} key={id} alt="todo" 
+                                height="80px" 
+                                style={{"position": "relative",
+                                "cursor": "move",
+                                left : x===null? x1 :x,
+                                top :  y===null? y1 :y,
+                                }}
+                                className="dragme" 
+                                onMouseDown={startDrag} 
+                                onMouseUp={stopDrag} 
+                                onMouseMove={dragDiv}
+                                onContextMenu={srcCycler} 
+                            />
+                        );
+                    })
                     }
-                    return (
-                        <img 
-                            id={id}
-                            src={props.PictureList[id].url} key={id} alt="todo" 
-                            height="80px" 
-                            style={{"position": "relative",
-                            "cursor": "move",
-                            left : x===null? x1 :x,
-                            top :  y===null? y1 :y,
-                            }}
-                            className="dragme" 
-                            onMouseDown={startDrag} 
-                            onMouseUp={stopDrag} 
-                            onMouseMove={dragDiv}
-                            onContextMenu={srcCycler} 
-                        />
-                    );
-                })
-                }
-            </div>
-
-            <div style={{"height": "0px"}}>
-                {progressBars.map((progressBar) => {
-                    // progressBar = {
-                    //     progressbar1 : {id:0,value: 3,position:{x:"35",y:"35"}}
-                    // }
+                </div>
+                {/* ProgressBars Code */}
+                <div style={{"height": "0px"}}>
+                    {progressBars.map((progressBar) => {
+                    if (progressBar === null) return 0
                     const id = progressBar.id
                     const value = progressBar.value
                     const x = progressBar.position.x
                     const y = progressBar.position.y
-                    // console.log(`the prgoress bar N° ${id} has ${value}0% cipher progress `)
-                    // console.log("the source of the image will be",progressBarImages[value])
                     const progressAdder = getProgressAdder(id)
                     const progressReducer = getProgressReducer(id)
-                    // const DragAndRestoreProgressBar = (e)=>{
-                    //     dragDiv(e);
-                    //     progressReducer();
-                    // }
                     return (
                         <img 
                             id={"ProgressBar"+id}
@@ -284,35 +274,31 @@ function MapSelect(props) {
                             className="dragme" 
                             onClick={progressAdder}
                             onContextMenu={progressReducer} 
-                            // onDoubleClick={deleteProgressBar}
                             onMouseDown={startDrag} 
                             onMouseUp={stopDrag} 
                             onMouseMove={dragDiv}
                         />
                     );
-                })
+                    })
                 }
-            </div>
-
-            <img 
-                alt="Invalid"
-                src={combinedMaps[map][cipherNum]}
-                style={{}}
-                height={calculatedHeight}
-                // onClick={update} 
-                onClick={spawnProgressBar}
+                </div>
+                <img 
+                    alt="Invalid"
+                    src={combinedMaps[map][cipherNum]}
+                    style={{}}
+                    height={calculatedHeight}
+                    onClick={spawnProgressBar}
+                    onContextMenu={HandleRightClickOnTheMap}
                 />
             </div>
         </div>
     );
 }
-
+function HandleRightClickOnTheMap(e) {
+    e.preventDefault();
+}
 // function deletePic(e) {
 //     e.preventDefault();
 //     targ.style.visibility="hidden";
 // }
-function deleteProgressBar(e) {
-    //Delete when you double click and hold Shift key
-    targ.style.visibility="hidden";
-}
 export default MapSelect;
