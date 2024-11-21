@@ -467,12 +467,12 @@ class GlobaBanPickList {
 
   //Reading from the Ban Selection Data --> To add pictures on the map as move-able <img> elements
   getMapCharcters(){
-    const result = []
-    if (this.value[11]!=="11")   result.push( this.getEquiv(this.value[11]) );
-    if (this.value[12]!=="12")   result.push( this.getEquiv(this.value[12]) );
-    if (this.value[14]!=="14")   result.push( this.getEquiv(this.value[14]) );
-    if (this.value[16]!=="16")   result.push( this.getEquiv(this.value[16]) );           
-    if (this.hunterSelect!=="") result.push(this.getEquiv(this.hunterSelect));
+    const result = [null,null,null,null,null]
+    if (this.hunterSelect!=="")  result[0] = ( this.getEquiv(this.hunterSelect))
+    if (this.value[11]!=="11")   result[1] = ( this.getEquiv(this.value[11]) )
+    if (this.value[12]!=="12")   result[2] = ( this.getEquiv(this.value[12]) )
+    if (this.value[14]!=="14")   result[3] = ( this.getEquiv(this.value[14]) )
+    if (this.value[16]!=="16")   result[4] = ( this.getEquiv(this.value[16]) )          
     return result
   }  
 

@@ -36,12 +36,9 @@ function Book(props) {
     useEffect(() => {
        const handleArrowKey = (e) => {
         if (e.keyCode === 39 || e.keyCode === 68)  openBook();
-        if (e.keyCode === 37 || e.keyCode === 81 || e.keyCode === 77)  closeBook();
+        if (e.keyCode === 37 || e.keyCode === 81 || e.keyCode === 77 || e.keyCode === 65)  closeBook();
         if (e.keyCode === 38 || e.keyCode === 90)  setBook(1);
         if (e.keyCode === 40 || e.keyCode === 83)  setBook(2);
-        // const keyboardLayoutMap = await navigator.keyboard.getLayoutMap();
-        // ForwardKey = keyboardLayoutMap.get('KeyW');
-        // console.log(forwardKey);
       };
       window.addEventListener('keydown', handleArrowKey);
 

@@ -134,8 +134,8 @@ function App() {
   const [,setBigMapSTATE] = useState(false);
     useEffect(() => {
     const handleMKey = (e) => {
-      if (e.keyCode === 77 ){ 
-        // console.log("Event M recognized")
+      if (e.keyCode === 65  || e.keyCode === 77){ 
+        // console.log("Event M or A recognized")
         globalList.mapSizeToggler()
         setBigMapSTATE(globalList.bigMap)
       }

@@ -5,15 +5,50 @@ function importAll(r) {
     return r.keys().map(r);
 }
 
-const InjuredState = importAll(require.context('../images/survivors/InjuredState', false, /\.(png|jpe?g|svg)$/));
+const TinidusState = importAll(require.context('../images/hunters/TinidusStates', false, /\.(png|jpe?g|svg)$/));
+const TinidusStateList = [];
+const InjuredState = importAll(require.context('../images/survivors/SurvivorStates/InjuredState', false, /\.(png|jpe?g|svg)$/));
 const InjuredStateList = [];
-var i=0;
-InjuredState.forEach(filename => {
-    InjuredStateList.push({id: i, url: filename});
-    i++;
-});
-// const ChairedState = importAll(require.context('./images/survivors/ChairedState', false, /\.(png|jpe?g|svg)$/));
-// const ChairedStateList = [];
+const HealthyState = importAll(require.context('../images/survivors/SurvivorStates/HealthyState', false, /\.(png|jpe?g|svg)$/));
+const HealthyStateList = [];
+const DownedState = importAll(require.context('../images/survivors/SurvivorStates/DownedState', false, /\.(png|jpe?g|svg)$/));
+const DownedStateList = [];
+const ChairedState0 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState0', false, /\.(png|jpe?g|svg)$/));
+const ChairedStateList0 = [];
+const ChairedState1 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState1', false, /\.(png|jpe?g|svg)$/));
+const ChairedStateList1 = [];
+const ChairedState2 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState2', false, /\.(png|jpe?g|svg)$/));
+const ChairedStateList2 = [];
+const ChairedState3 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState3', false, /\.(png|jpe?g|svg)$/));
+const ChairedStateList3 = [];
+const ChairedState4 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState4', false, /\.(png|jpe?g|svg)$/));
+const ChairedStateList4 = [];
+const ChairedState5 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState5', false, /\.(png|jpe?g|svg)$/));
+const ChairedStateList5 = [];
+const ChairedState6 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState6', false, /\.(png|jpe?g|svg)$/));
+const ChairedStateList6 = [];
+
+function addStatesToPics(array,arrayList){
+    let i=0;
+    array.forEach(filename => {
+        arrayList.push({id: i, url: filename});
+        i++;
+    })
+}
+addStatesToPics(TinidusState,TinidusStateList);
+addStatesToPics(InjuredState,InjuredStateList);
+addStatesToPics(HealthyState,HealthyStateList);
+addStatesToPics(DownedState,DownedStateList);
+addStatesToPics(ChairedState0,ChairedStateList0);
+addStatesToPics(ChairedState1,ChairedStateList1);
+addStatesToPics(ChairedState2,ChairedStateList2);
+addStatesToPics(ChairedState3,ChairedStateList3);
+addStatesToPics(ChairedState4,ChairedStateList4);
+addStatesToPics(ChairedState5,ChairedStateList5);
+addStatesToPics(ChairedState6,ChairedStateList6);
+console.log(DownedStateList)
+
+
 // i = 0;
 // ChairedState.forEach(filename => {
 //     ChairedStateList.push({id: i, url: filename});
@@ -93,11 +128,13 @@ function MapSelect(props) {
         }
     
         if (e.preventDefault) e.preventDefault();
-    
+        
         // IE uses srcElement, others use target
         //targ = e.targetS ? e.target : e.srcElement;
         targ = e.target;
-    
+
+        console.log(targ.style.left,targ.style.top)
+
         if (targ.className !== 'dragme') {return};
         // calculate event X, Y coordinates
         offsetX = e.clientX;
@@ -139,7 +176,7 @@ function MapSelect(props) {
 
 
     function spawnProgressBar(e){
-        progressBars.push({id:progressBars.length,value: 1,position:{x:e.clientX-100,y:e.clientY-20}})
+        progressBars.push({id:progressBars.length,value: 0,position:{x:e.clientX-100,y:e.clientY-20}})
         update()
     }
 
@@ -149,8 +186,12 @@ function MapSelect(props) {
             // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
             progressBars[id].value++
             if (e.shiftKey) progressBars[id].value++
-            if (progressBars[id].value===11) progressBars[id].value = 0
-            // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+            if (progressBars[id].value > progressBarImages.length - 1){
+                progressBars[id].value = progressBarImages.length - 1;
+                // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value+1}0% cipher progress `)
+                return
+            }
+            // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value+1}0% cipher progress `)
             const imgElement = document.getElementById("ProgressBar"+id);
             imgElement.src = progressBarImages[progressBars[id].value]
         }
@@ -161,38 +202,101 @@ function MapSelect(props) {
             e.preventDefault()
             //Delte Bar if shift was held while Right Clicking
             if (e.ctrlKey) {
-                console.log("shift was pressed")
-                targ.style.visibility="hidden";
+                // console.log("shift was pressed")
                 progressBars[id]=null
+                update();
                 return
             }
-
             progressBars[id].value--;
             if (e.shiftKey) progressBars[id].value--
-            if (progressBars[id].value===-1) progressBars[id].value = 0
+
+            if (progressBars[id].value < 0) {
+                progressBars[id] = null
+                update();
+                return
+            }
             const imgElement = document.getElementById("ProgressBar"+id);
             imgElement.src = progressBarImages[progressBars[id].value]
         }
     }
-    
-    function srcCyclerMaker(id){
-        if (id > 41) return (e)=>{e.preventDefault()} 
-        const sources = [props.PictureList[id].url]
-        sources.push(InjuredStateList[id].url)
-        function nextIndex (array,index){
-            if (index < sources.length - 1) return (index+1)
-            return 0
+    function nextIndex (array,index,Direction){
+        if(Direction === "Right"){
+            if (index + 1 > array.length - 1)   return 0
+            return index + 1
         }
-        // sources.push(ChairedStateList[id].url)
-        // console.log("this creates a function that will be cycle through all different Srcs for one image")
-        return (e)=>{
-            e.preventDefault();
-            // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
+        if(Direction === "Left"){
+            if (index - 1 < 0 )   return array.length - 1
+            return index -1
+        }
+        console.log("No direction was recognised, the options are: Left & Right")
+    }
+
+    function AdjustImageHeight(img,i){
+        if (i === 0){
+            console.log("position before : ",img.style.left, img.style.top)
+            img.style.left= parseInt(img.style.left || 0) + 200 +"px"
+            img.style.top= parseInt(img.style.top || 0) + 200 +"px"
+            img.style.height="80px"
+            console.log("position After : ",img.style.left, img.style.top)
+            // targ.style.position="relative"
+        }else if (i !== 0){
+            console.log("position before : ",img.style.left, img.style.top)
+            img.style.left= parseInt(img.style.left || 0) - 200 +"px"
+            img.style.top= parseInt(img.style.top || 0) - 200 +"px"
+            img.style.height="480px"
+            console.log("position After : ",img.style.left, img.style.top)
+            // targ.style.position="absolute"
+        }
+    }
+    function srcCyclerMaker(id){
+        if (id > 41) return (e)=>{
+        //HUNTER CYCLER
+            e.preventDefault()
+            const sources = [props.PictureList[id].url]
+            sources.push(TinidusStateList[0].url)
+
             const imgElement = document.getElementById(id)
             const currenti = imgElement.srcindex || 0
-            const Nexti = nextIndex(sources,currenti)
-            imgElement.src = sources[Nexti];
-            imgElement.srcindex = Nexti
+            if (e.shiftKey){
+                const Nexti = nextIndex(sources,currenti,"Left")
+                imgElement.src = sources[Nexti];
+                imgElement.srcindex = Nexti
+                AdjustImageHeight(targ,Nexti)
+            }else{
+                const Nexti = nextIndex(sources,currenti,"Right")
+                imgElement.src = sources[Nexti];
+                imgElement.srcindex = Nexti
+                AdjustImageHeight(targ,Nexti)
+            }
+            //Height formating
+        } 
+
+        //SURVIVOR CYCLER
+        const sources = [props.PictureList[id].url]
+        sources.push(HealthyStateList[id].url)
+        sources.push(InjuredStateList[id].url)
+        sources.push(DownedStateList[id].url)
+        sources.push(ChairedStateList0[0].url)
+        sources.push(ChairedStateList1[0].url)
+        sources.push(ChairedStateList2[0].url)
+        sources.push(ChairedStateList3[0].url)
+        sources.push(ChairedStateList4[0].url)
+        sources.push(ChairedStateList5[0].url)
+        sources.push(ChairedStateList6[0].url)
+        // console.log("this creates a function that will be cycle through all different Srcs of state images for one survivor")
+        return (e)=>{
+            e.preventDefault();
+            const imgElement = document.getElementById(id)
+            const currenti = imgElement.srcindex || 0
+            if (e.shiftKey){
+                const Nexti = nextIndex(sources,currenti,"Left")
+                imgElement.src = sources[Nexti];
+                imgElement.srcindex = Nexti
+            }else{
+                const Nexti = nextIndex(sources,currenti,"Right")
+                imgElement.src = sources[Nexti];
+                imgElement.srcindex = Nexti
+            }
         }
     }
 
@@ -223,12 +327,13 @@ function MapSelect(props) {
             <div>
                 {/* Survivor and Hunter charecters Code */}
                 <div style={{"height": "0px"}}>
-                    {props.globalList.getMapCharcters().map((id) => {
+                    {props.globalList.getMapCharcters().filter((id)=>id!==null).map((id) => {
                         const srcCycler = srcCyclerMaker(id)
                         const [x,y] = GlobalList.getIdCoords(id)
                         let  [x1,y1]= GlobalList.getIdCoords1(id)
                         if (x1 === null || y1 === null){
-                            x1 = ""; y1 = "";  
+                            const order = props.globalList.getMapCharcters().indexOf(id)
+                            x1 = `${1500+parseInt(order*80)}px`; y1 = "515px";  
                             // console.log("used Nothing for X1 Y1 because  they dont exist"); 
                         }
                         return (
@@ -236,16 +341,19 @@ function MapSelect(props) {
                                 id={id}
                                 src={props.PictureList[id].url} key={id} alt="todo" 
                                 height="80px" 
-                                style={{"position": "relative",
+                                style={{"position": "absolute",
                                 "cursor": "move",
+                                "borderRadius":"50%",
                                 left : x===null? x1 :x,
                                 top :  y===null? y1 :y,
                                 }}
+                                
                                 className="dragme" 
                                 onMouseDown={startDrag} 
                                 onMouseUp={stopDrag} 
                                 onMouseMove={dragDiv}
                                 onContextMenu={srcCycler} 
+                                                           
                             />
                         );
                     })
@@ -265,7 +373,7 @@ function MapSelect(props) {
                         <img 
                             id={"ProgressBar"+id}
                             src={progressBarImages[value]} key={id} alt="todo" 
-                            height="50vh" 
+                            height="45vh" 
                             style={{"position": "absolute",
                             "cursor": "move",
                             left : x,
