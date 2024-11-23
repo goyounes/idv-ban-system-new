@@ -276,13 +276,13 @@ function MapSelect(props) {
         sources.push(HealthyStateList[id].url)
         sources.push(InjuredStateList[id].url)
         sources.push(DownedStateList[id].url)
-        sources.push(ChairedStateList0[0].url)
-        sources.push(ChairedStateList1[0].url)
-        sources.push(ChairedStateList2[0].url)
-        sources.push(ChairedStateList3[0].url)
-        sources.push(ChairedStateList4[0].url)
-        sources.push(ChairedStateList5[0].url)
-        sources.push(ChairedStateList6[0].url)
+        sources.push(ChairedStateList0[id].url)
+        sources.push(ChairedStateList1[id].url)
+        sources.push(ChairedStateList2[id].url)
+        sources.push(ChairedStateList3[id].url)
+        sources.push(ChairedStateList4[id].url)
+        sources.push(ChairedStateList5[id].url)
+        sources.push(ChairedStateList6[id].url)
         // console.log("this creates a function that will be cycle through all different Srcs of state images for one survivor")
         return (e)=>{
             e.preventDefault();
@@ -343,7 +343,7 @@ function MapSelect(props) {
                                 height="80px" 
                                 style={{"position": "absolute",
                                 "cursor": "move",
-                                "borderRadius":"50%",
+                                // "borderRadius": id>41? "" :"50%",
                                 left : x===null? x1 :x,
                                 top :  y===null? y1 :y,
                                 }}
