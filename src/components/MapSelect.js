@@ -253,7 +253,7 @@ function MapSelect(props) {
         //HUNTER CYCLER
             e.preventDefault()
             const sources = [props.PictureList[id].url]
-            sources.push(TinidusStateList[0].url)
+            sources.push(TinidusStateList[id-42].url)
 
             const imgElement = document.getElementById(id)
             const currenti = imgElement.srcindex || 0
