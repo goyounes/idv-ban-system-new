@@ -27,6 +27,7 @@ const ChairedState5 = importAll(require.context('../images/survivors/SurvivorSta
 const ChairedStateList5 = [];
 const ChairedState6 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState6', false, /\.(png|jpe?g|svg)$/));
 const ChairedStateList6 = [];
+const ScareFace = importAll(require.context('../images/hunters/s_tier/ScareFace', false, /\.(png|jpe?g|svg)$/));
 
 function addStatesToPics(array,arrayList){
     let i=0;
@@ -46,14 +47,6 @@ addStatesToPics(ChairedState3,ChairedStateList3);
 addStatesToPics(ChairedState4,ChairedStateList4);
 addStatesToPics(ChairedState5,ChairedStateList5);
 addStatesToPics(ChairedState6,ChairedStateList6);
-console.log(DownedStateList)
-
-
-// i = 0;
-// ChairedState.forEach(filename => {
-//     ChairedStateList.push({id: i, url: filename});
-//     i++;
-// });
 
 const arms = importAll(require.context('../images/maps/arms', false, /\.(png|jpe?g|svg)$/));
 const chinatown = importAll(require.context('../images/maps/chinatown', false, /\.(png|jpe?g|svg)$/));
@@ -80,7 +73,7 @@ function MapSelect(props) {
     const progressBars = GlobalList.progressBars
     const [map, setMap] = useState(0);
     const [cipherNum, setCipherNum] = useState(GlobalList.cipherLayout);
-    const [, update] = useReducer(x => x+1, 0); // to update when clicking
+    const [, update] = useReducer(x => x + 1, 0); // to update when clicking
 
     const handleMapChange = (e) => {
         setMap(e.target.value);
@@ -233,18 +226,13 @@ function MapSelect(props) {
 
     function AdjustImageHeight(img,i){
         if (i === 0){
-            console.log("position before : ",img.style.left, img.style.top)
             img.style.left= parseInt(img.style.left || 0) + 200 +"px"
             img.style.top= parseInt(img.style.top || 0) + 200 +"px"
             img.style.height="80px"
-            console.log("position After : ",img.style.left, img.style.top)
-            // targ.style.position="relative"
         }else if (i !== 0){
-            console.log("position before : ",img.style.left, img.style.top)
             img.style.left= parseInt(img.style.left || 0) - 200 +"px"
             img.style.top= parseInt(img.style.top || 0) - 200 +"px"
             img.style.height="480px"
-            console.log("position After : ",img.style.left, img.style.top)
             // targ.style.position="absolute"
         }
     }
@@ -268,7 +256,6 @@ function MapSelect(props) {
                 imgElement.srcindex = Nexti
                 AdjustImageHeight(targ,Nexti)
             }
-            //Height formating
         } 
 
         //SURVIVOR CYCLER
@@ -336,28 +323,57 @@ function MapSelect(props) {
                             x1 = `${1500+parseInt(order*80)}px`; y1 = "515px";  
                             // console.log("used Nothing for X1 Y1 because  they dont exist"); 
                         }
-                        return (
-                            <img 
-                                id={id}
-                                src={props.PictureList[id].url} key={id} alt="todo" 
-                                height="80px" 
-                                style={{"position": "absolute",
-                                "cursor": "move",
-                                // "borderRadius": id>41? "" :"50%",
-                                left : x===null? x1 :x,
-                                top :  y===null? y1 :y,
-                                }}
-                                
-                                className="dragme" 
-                                onMouseDown={startDrag} 
-                                onMouseUp={stopDrag} 
-                                onMouseMove={dragDiv}
-                                onContextMenu={srcCycler} 
+                        return (<img 
+                                    id={id}
+                                    src={props.PictureList[id].url} key={id} alt="todo" 
+                                    height="80px" 
+                                    style={{"position": "absolute",
+                                    "cursor": "move",
+                                    // "borderRadius": id>41? "" :"50%",
+                                    left : x===null? x1 :x,
+                                    top :  y===null? y1 :y,
+                                    }}
+                                    
+                                    className="dragme" 
+                                    onMouseDown={startDrag} 
+                                    onMouseUp={stopDrag} 
+                                    onMouseMove={dragDiv}
+                                    onContextMenu={srcCycler} 
                                                            
-                            />
-                        );
+                                />);
                     })
                     }
+                    {/* add another image if ivy is the selected hunter, the image is the scare face */}
+                    {props.globalList.getMapCharcters().filter((id)=>id===43).map((id) => {
+                        const [x,y] = GlobalList.getIdCoords(100)
+                        let  [x1,y1]= GlobalList.getIdCoords1(100)
+                        if (x1 === null || y1 === null){
+                            const order = props.globalList.getMapCharcters().indexOf(id)
+                            x1 = `${1500+parseInt(order*80)}px`; y1 = "595px";  
+                        }
+                        return (<img 
+                                    id={100}
+                                    src={ScareFace[0]} key={100} alt="todo" 
+                                    height="80px" 
+                                    style={{"position": "absolute",
+                                    "cursor": "move",
+                                    left : x===null? x1 :x,
+                                    top :  y===null? y1 :y,
+                                    }}
+                                    className="dragme" 
+                                    onMouseDown={startDrag} 
+                                    onMouseUp={stopDrag} 
+                                    onMouseMove={dragDiv}
+                                    onContextMenu={HandleRightClickOnTheMap} 
+                                                           
+                                />);
+                    })
+                    }
+                
+
+
+
+
                 </div>
                 {/* ProgressBars Code */}
                 <div style={{"height": "0px"}}>

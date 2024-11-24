@@ -545,7 +545,6 @@ class GlobaBanPickList {
       43:"TheShadow",                "TheShadow":43,
       44:"GoatMan",                  "GoatMan":44,
       45:"Hullabaloo",               "Hullabaloo":45,
-
           
       46:"Disciple",                 "Disciple":46,             
       47:"WaxArtis",                 "WaxArtis":47,             
