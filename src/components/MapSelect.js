@@ -70,7 +70,7 @@ var offsetY = 0;
 
 function MapSelect(props) {
     const GlobalList = props.globalList;
-    const progressBars = GlobalList.progressBars
+    const PBS = GlobalList.PBS
     const [map, setMap] = useState(0);
     const [cipherNum, setCipherNum] = useState(GlobalList.cipherLayout);
     const [, update] = useReducer(x => x + 1, 0); // to update when clicking
@@ -169,24 +169,25 @@ function MapSelect(props) {
 
 
     function spawnProgressBar(e){
-        progressBars.push({id:progressBars.length,value: 0,position:{x:e.clientX-100,y:e.clientY-20}})
+        PBS.push({id:PBS.length,V: 0,P:{x:e.clientX-100,y:e.clientY-20}})
         update()
+        console.log(PBS)
     }
 
     function getProgressAdder(id,e){
         // console.log("this creates a function that will be used to increase the progress when progress bar N:",id,"is clicked")
         return (e)=>{
             // console.log(`BEFORE: the prgoress bar N° ${id} ${progressBars[id].value}0% cipher progress `)
-            progressBars[id].value++
-            if (e.shiftKey) progressBars[id].value++
-            if (progressBars[id].value > progressBarImages.length - 1){
-                progressBars[id].value = progressBarImages.length - 1;
+            PBS[id].V++
+            if (e.shiftKey) PBS[id].V++
+            if (PBS[id].V > progressBarImages.length - 1){
+                PBS[id].V = progressBarImages.length - 1;
                 // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value+1}0% cipher progress `)
                 return
             }
             // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value+1}0% cipher progress `)
-            const imgElement = document.getElementById("ProgressBar"+id);
-            imgElement.src = progressBarImages[progressBars[id].value]
+            const imgElement = document.getElementById("PB"+id);
+            imgElement.src = progressBarImages[PBS[id].V]
         }
     }    
     function getProgressReducer(id,e){
@@ -196,20 +197,20 @@ function MapSelect(props) {
             //Delte Bar if shift was held while Right Clicking
             if (e.ctrlKey) {
                 // console.log("shift was pressed")
-                progressBars[id]=null
+                PBS[id]=null
                 update();
                 return
             }
-            progressBars[id].value--;
-            if (e.shiftKey) progressBars[id].value--
+            PBS[id].V--;
+            if (e.shiftKey) PBS[id].V--
 
-            if (progressBars[id].value < 0) {
-                progressBars[id] = null
+            if (PBS[id].V < 0) {
+                PBS[id] = null
                 update();
                 return
             }
-            const imgElement = document.getElementById("ProgressBar"+id);
-            imgElement.src = progressBarImages[progressBars[id].value]
+            const imgElement = document.getElementById("PB"+id);
+            imgElement.src = progressBarImages[PBS[id].V]
         }
     }
     function nextIndex (array,index,Direction){
@@ -314,12 +315,12 @@ function MapSelect(props) {
             <div>
                 {/* Survivor and Hunter charecters Code */}
                 <div style={{"height": "0px"}}>
-                    {props.globalList.getMapCharcters().filter((id)=>id!==null).map((id) => {
+                    {GlobalList.getMapCharcters().filter((id)=>id!==null).map((id) => {
                         const srcCycler = srcCyclerMaker(id)
                         const [x,y] = GlobalList.getIdCoords(id)
                         let  [x1,y1]= GlobalList.getIdCoords1(id)
                         if (x1 === null || y1 === null){
-                            const order = props.globalList.getMapCharcters().indexOf(id)
+                            const order = GlobalList.getMapCharcters().indexOf(id)
                             x1 = `${1500+parseInt(order*80)}px`; y1 = "515px";  
                             // console.log("used Nothing for X1 Y1 because  they dont exist"); 
                         }
@@ -342,13 +343,13 @@ function MapSelect(props) {
                                                            
                                 />);
                     })
-                    }
-                    {/* add another image if ivy is the selected hunter, the image is the scare face */}
-                    {props.globalList.getMapCharcters().filter((id)=>id===43).map((id) => {
+                    }{/* add another image if ivy is the selected hunter, the image is the scare face */}
+                    {
+                    GlobalList.getMapCharcters().filter((id)=>id===43).map((id) => {
                         const [x,y] = GlobalList.getIdCoords(100)
                         let  [x1,y1]= GlobalList.getIdCoords1(100)
                         if (x1 === null || y1 === null){
-                            const order = props.globalList.getMapCharcters().indexOf(id)
+                            const order = GlobalList.getMapCharcters().indexOf(id)
                             x1 = `${1500+parseInt(order*80)}px`; y1 = "595px";  
                         }
                         return (<img 
@@ -364,31 +365,26 @@ function MapSelect(props) {
                                     onMouseDown={startDrag} 
                                     onMouseUp={stopDrag} 
                                     onMouseMove={dragDiv}
-                                    onContextMenu={HandleRightClickOnTheMap} 
-                                                           
+                                    onContextMenu={preventDefault}            
                                 />);
                     })
                     }
-                
-
-
-
 
                 </div>
                 {/* ProgressBars Code */}
                 <div style={{"height": "0px"}}>
-                    {progressBars.map((progressBar) => {
+                    {PBS.map((progressBar) => {
                     if (progressBar === null) return 0
                     const id = progressBar.id
-                    const value = progressBar.value
-                    const x = progressBar.position.x
-                    const y = progressBar.position.y
+                    const V = progressBar.V
+                    const x = progressBar.P.x
+                    const y = progressBar.P.y
                     const progressAdder = getProgressAdder(id)
                     const progressReducer = getProgressReducer(id)
                     return (
                         <img 
-                            id={"ProgressBar"+id}
-                            src={progressBarImages[value]} key={id} alt="todo" 
+                            id={"PB"+id}
+                            src={progressBarImages[V]} key={id} alt="todo" 
                             height="45vh" 
                             style={{"position": "absolute",
                             "cursor": "move",
@@ -421,8 +417,8 @@ function MapSelect(props) {
 function HandleRightClickOnTheMap(e) {
     e.preventDefault();
 }
-// function deletePic(e) {
-//     e.preventDefault();
-//     targ.style.visibility="hidden";
-// }
+
+function preventDefault(e) {
+    e.preventDefault();
+}
 export default MapSelect;

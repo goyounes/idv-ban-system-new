@@ -21,7 +21,7 @@ class GlobaBanPickList {
     this.Positions = {}
     this.tempPositions = {}
     this.HunterPoints = []
-    this.progressBars = []
+    this.PBS = []
     this.bigMap = false
     this.mapSizeToggler = () => {
       switch (this.bigMap) {
@@ -60,11 +60,11 @@ class GlobaBanPickList {
       [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
       [this.hunterBan1, this.hunterBan2, this.hunterBan3],
       structuredClone(this.tempPositions),
-      structuredClone(this.progressBars),
+      structuredClone(this.PBS),
     ]; 
     console.log("exported array element n7 is = ")
     console.log(exportArray)
-    console.log(this.progressBars)
+    console.log(this.PBS)
     return exportArray // change the export 
   }
   restoreRoundData(arr){
@@ -88,8 +88,8 @@ class GlobaBanPickList {
     this.hunterBan3  = arr[5][2];
     this.Positions = arr[6];
     this.tempPositions = structuredClone(arr[6]);
-    this.progressBars.splice(0,this.progressBars.length) 
-    this.progressBars.push(...arr[7])
+    this.PBS.splice(0,this.PBS.length) 
+    this.PBS.push(...arr[7])
   }
   NextRound (){// (0) 
     // Save the state of this round in a variable called X="Round"+this.round+"Data"
@@ -135,7 +135,9 @@ class GlobaBanPickList {
   
   importList(JSONtext){
     if (JSONtext.length<30) return 0
-    const JSONtext1 = JSONtext.replace("||", '').replace("||", '')
+    const JSONtext3 = JSONtext.replaceAll("||", '')
+    const JSONtext2 = JSONtext3.replaceAll("ProgressBar", 'PB')
+    const JSONtext1 = JSONtext2.replaceAll("value", 'V').replaceAll("position", 'P')
     let arrays = JSON.parse(JSONtext1)
     console.log("Imported Globalist is =>",arrays)
     for (let i = 1 ; i <=6;i++){
@@ -220,7 +222,9 @@ class GlobaBanPickList {
     this.hunterBan2  =-1;
     this.hunterBan3  =-1;
     this.hunterSlot0 =-1;
-    this.progressBars.splice(0,this.progressBars.length) 
+    this.PBS.splice(0,this.PBS.length) 
+    this.Positions = {}
+    this.tempPositions = {}
     return 1;
   }
 
