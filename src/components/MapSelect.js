@@ -6,47 +6,39 @@ function importAll(r) {
 }
 
 const TinidusState = importAll(require.context('../images/hunters/TinidusStates', false, /\.(png|jpe?g|svg)$/));
-const TinidusStateList = [];
 const InjuredState = importAll(require.context('../images/survivors/SurvivorStates/InjuredState', false, /\.(png|jpe?g|svg)$/));
-const InjuredStateList = [];
 const HealthyState = importAll(require.context('../images/survivors/SurvivorStates/HealthyState', false, /\.(png|jpe?g|svg)$/));
-const HealthyStateList = [];
-const DownedState = importAll(require.context('../images/survivors/SurvivorStates/DownedState', false, /\.(png|jpe?g|svg)$/));
-const DownedStateList = [];
+const DownedState  = importAll(require.context('../images/survivors/SurvivorStates/DownedState', false, /\.(png|jpe?g|svg)$/));
 const ChairedState0 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState0', false, /\.(png|jpe?g|svg)$/));
-const ChairedStateList0 = [];
 const ChairedState1 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState1', false, /\.(png|jpe?g|svg)$/));
-const ChairedStateList1 = [];
 const ChairedState2 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState2', false, /\.(png|jpe?g|svg)$/));
-const ChairedStateList2 = [];
 const ChairedState3 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState3', false, /\.(png|jpe?g|svg)$/));
-const ChairedStateList3 = [];
 const ChairedState4 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState4', false, /\.(png|jpe?g|svg)$/));
-const ChairedStateList4 = [];
 const ChairedState5 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState5', false, /\.(png|jpe?g|svg)$/));
-const ChairedStateList5 = [];
 const ChairedState6 = importAll(require.context('../images/survivors/SurvivorStates/ChairedState6', false, /\.(png|jpe?g|svg)$/));
-const ChairedStateList6 = [];
 const ScareFace = importAll(require.context('../images/hunters/s_tier/ScareFace', false, /\.(png|jpe?g|svg)$/));
 
-function addStatesToPics(array,arrayList){
-    let i=0;
-    array.forEach(filename => {
-        arrayList.push({id: i, url: filename});
-        i++;
-    })
+const SOURCES = []
+for (let i = 0; i<=41;i++){
+   const array = []
+   array.push(HealthyState[i])
+   array.push(InjuredState[i])
+   array.push(DownedState[i])
+   array.push(ChairedState0[i])
+   array.push(ChairedState1[i])
+   array.push(ChairedState2[i])
+   array.push(ChairedState3[i])
+   array.push(ChairedState4[i])
+   array.push(ChairedState5[i])
+   array.push(ChairedState6[i])
+   SOURCES.push(array)
 }
-addStatesToPics(TinidusState,TinidusStateList);
-addStatesToPics(InjuredState,InjuredStateList);
-addStatesToPics(HealthyState,HealthyStateList);
-addStatesToPics(DownedState,DownedStateList);
-addStatesToPics(ChairedState0,ChairedStateList0);
-addStatesToPics(ChairedState1,ChairedStateList1);
-addStatesToPics(ChairedState2,ChairedStateList2);
-addStatesToPics(ChairedState3,ChairedStateList3);
-addStatesToPics(ChairedState4,ChairedStateList4);
-addStatesToPics(ChairedState5,ChairedStateList5);
-addStatesToPics(ChairedState6,ChairedStateList6);
+
+for (let i = 42; i<=63;i++){
+    SOURCES.push([TinidusState[i-42]])
+}
+
+// console.log("SOURCES ----> ",SOURCES)
 
 const arms = importAll(require.context('../images/maps/arms', false, /\.(png|jpe?g|svg)$/));
 const chinatown = importAll(require.context('../images/maps/chinatown', false, /\.(png|jpe?g|svg)$/));
@@ -126,7 +118,7 @@ function MapSelect(props) {
         //targ = e.targetS ? e.target : e.srcElement;
         targ = e.target;
 
-        console.log(targ.style.left,targ.style.top)
+        // console.log(targ.style.left,targ.style.top)
 
         if (targ.className !== 'dragme') {return};
         // calculate event X, Y coordinates
@@ -161,7 +153,7 @@ function MapSelect(props) {
         return false;
     }
     function stopDrag(e) {
-        if (e.target.id!=="") GlobalList.tempPositions[e.target.id] = [coordX+e.clientX-offsetX+'px',coordY+e.clientY-offsetY+'px']
+        if (e.target.id!=="") GlobalList.tempPositions[e.target.id] = [coordX+e.clientX-offsetX+'px',coordY+e.clientY-offsetY+'px',  props.globalList.tempPositions[e.target.id] && props.globalList.tempPositions[e.target.id][2] + 0] //0 is the state of the img, aka the default source
         drag=false;
     }
 
@@ -182,6 +174,7 @@ function MapSelect(props) {
             if (e.shiftKey) PBS[id].V++
             if (PBS[id].V > progressBarImages.length - 1){
                 PBS[id].V = progressBarImages.length - 1;
+                update()
                 // console.log(`AFTER: the prgoress bar N° ${id} ${progressBars[id].value+1}0% cipher progress `)
                 return
             }
@@ -215,76 +208,54 @@ function MapSelect(props) {
     }
     function nextIndex (array,index,Direction){
         if(Direction === "Right"){
-            if (index + 1 > array.length - 1)   return 0
+            if (index + 1 > array.length)   return 0
             return index + 1
         }
         if(Direction === "Left"){
-            if (index - 1 < 0 )   return array.length - 1
+            if (index - 1 < 0 )   return array.length
             return index -1
         }
         console.log("No direction was recognised, the options are: Left & Right")
     }
 
-    function AdjustImageHeight(img,i){
+    function AdjustPosition(i,id){
         if (i === 0){
-            img.style.left= parseInt(img.style.left || 0) + 200 +"px"
-            img.style.top= parseInt(img.style.top || 0) + 200 +"px"
-            img.style.height="80px"
+            props.globalList.tempPositions[id][0] =  parseInt(props.globalList.tempPositions[id][0] || 0) + 200 +"px"
+            props.globalList.tempPositions[id][1] =  parseInt(props.globalList.tempPositions[id][1] || 0) + 200 +"px"
         }else if (i !== 0){
-            img.style.left= parseInt(img.style.left || 0) - 200 +"px"
-            img.style.top= parseInt(img.style.top || 0) - 200 +"px"
-            img.style.height="480px"
-            // targ.style.position="absolute"
+            props.globalList.tempPositions[id][0] =  parseInt(props.globalList.tempPositions[id][0] || 0) - 200 +"px"
+            props.globalList.tempPositions[id][1] =  parseInt(props.globalList.tempPositions[id][1] || 0) - 200 +"px"
         }
     }
     function srcCyclerMaker(id){
+        // console.log("this creates a function that will be cycle through all different Srcs of state images for one survivor/hunter")
         if (id > 41) return (e)=>{
         //HUNTER CYCLER
             e.preventDefault()
-            const sources = [props.PictureList[id].url]
-            sources.push(TinidusStateList[id-42].url)
-
-            const imgElement = document.getElementById(id)
-            const currenti = imgElement.srcindex || 0
+            const currenti = props.globalList.tempPositions[id][2] || 0
             if (e.shiftKey){
-                const Nexti = nextIndex(sources,currenti,"Left")
-                imgElement.src = sources[Nexti];
-                imgElement.srcindex = Nexti
-                AdjustImageHeight(targ,Nexti)
+                const Nexti = nextIndex(SOURCES[id],currenti,"Left")
+                props.globalList.tempPositions[id][2]= Nexti
+                AdjustPosition(Nexti,id)
             }else{
-                const Nexti = nextIndex(sources,currenti,"Right")
-                imgElement.src = sources[Nexti];
-                imgElement.srcindex = Nexti
-                AdjustImageHeight(targ,Nexti)
+                const Nexti = nextIndex(SOURCES[id],currenti,"Right")
+                props.globalList.tempPositions[id][2]= Nexti
+                AdjustPosition(Nexti,id)
             }
+            props.update()
         } 
-
         //SURVIVOR CYCLER
-        const sources = [props.PictureList[id].url]
-        sources.push(HealthyStateList[id].url)
-        sources.push(InjuredStateList[id].url)
-        sources.push(DownedStateList[id].url)
-        sources.push(ChairedStateList0[id].url)
-        sources.push(ChairedStateList1[id].url)
-        sources.push(ChairedStateList2[id].url)
-        sources.push(ChairedStateList3[id].url)
-        sources.push(ChairedStateList4[id].url)
-        sources.push(ChairedStateList5[id].url)
-        sources.push(ChairedStateList6[id].url)
-        // console.log("this creates a function that will be cycle through all different Srcs of state images for one survivor")
         return (e)=>{
             e.preventDefault();
-            const imgElement = document.getElementById(id)
-            const currenti = imgElement.srcindex || 0
+            const currenti = props.globalList.tempPositions[id][2] || 0
             if (e.shiftKey){
-                const Nexti = nextIndex(sources,currenti,"Left")
-                imgElement.src = sources[Nexti];
-                imgElement.srcindex = Nexti
+                const Nexti = nextIndex(SOURCES[id],currenti,"Left")
+                props.globalList.tempPositions[id][2]= Nexti
             }else{
-                const Nexti = nextIndex(sources,currenti,"Right")
-                imgElement.src = sources[Nexti];
-                imgElement.srcindex = Nexti
+                const Nexti = nextIndex(SOURCES[id],currenti,"Right")
+                props.globalList.tempPositions[id][2]= Nexti
             }
+            props.update()
         }
     }
 
@@ -321,13 +292,16 @@ function MapSelect(props) {
                         let  [x1,y1]= GlobalList.getIdCoords1(id)
                         if (x1 === null || y1 === null){
                             const order = GlobalList.getMapCharcters().indexOf(id)
-                            x1 = `${1500+parseInt(order*80)}px`; y1 = "515px";  
+                            x1 = `${1500 + parseInt(order * 80)}px`; y1 = `${515}px`; 
                             // console.log("used Nothing for X1 Y1 because  they dont exist"); 
                         }
+                        let index = GlobalList.getSrcIndex(id)
                         return (<img 
                                     id={id}
-                                    src={props.PictureList[id].url} key={id} alt="todo" 
-                                    height="80px" 
+                                    // src={props.PictureList[id].url} key={id} alt="todo" 
+                                    src={ (index && SOURCES[id][index-1] ) || props.PictureList[id].url } key={id} alt="todo" 
+                                    height= { (id>41 && index === 1 && "480px")  || "80px" }
+                                    // height= "80px" 
                                     style={{"position": "absolute",
                                     "cursor": "move",
                                     // "borderRadius": id>41? "" :"50%",
@@ -344,7 +318,7 @@ function MapSelect(props) {
                                 />);
                     })
                     }{/* add another image if ivy is the selected hunter, the image is the scare face */}
-                    {
+                    { 
                     GlobalList.getMapCharcters().filter((id)=>id===43).map((id) => {
                         const [x,y] = GlobalList.getIdCoords(100)
                         let  [x1,y1]= GlobalList.getIdCoords1(100)

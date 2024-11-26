@@ -48,6 +48,10 @@ class GlobaBanPickList {
     if (this.tempPositions[id] === undefined) return [null,null]
     return this.tempPositions[id]
   }
+  getSrcIndex (id){
+    if (this.tempPositions[id] === undefined) return 0
+    return this.tempPositions[id][2]
+  }
 
   //Save/Load, NextRound/PreviousRound, Export/Import functionality
   saveRoundData(){
@@ -286,7 +290,6 @@ class GlobaBanPickList {
     this.removeBan(id);
     
     const array = this.value
-    //Insert logic to check if value exists already to skip this step
     const nbr_Removed = 3 * this.Round - 3
     for (let k=0; k<nbr_Removed; k++){
       console.log("array[k]===String(k)",array[k],String(k))
@@ -320,7 +323,7 @@ class GlobaBanPickList {
         this.value = array; 
         return 1
     } else{
-      console.log("Charcter was not Selected");
+      // console.log("Charcter was not Selected");
       this.value = array; 
       return 0
     }
@@ -344,7 +347,7 @@ class GlobaBanPickList {
       this.value = array; 
       return 1
     } else{
-      console.log("Charcter was not Banned");
+      // console.log("Charcter was not Banned");
       this.value = array; 
       return 0
     }
@@ -367,7 +370,7 @@ class GlobaBanPickList {
         }
       }
     }
-    console.log("Charcter was not Removed")
+    // console.log("Charcter was not Removed")
     this.value = array
     return 0
   }

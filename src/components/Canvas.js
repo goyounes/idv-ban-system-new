@@ -111,7 +111,7 @@ function Canvas(props) {
   function animate(){
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    console.log("     Animate() function excuted");
+    // console.log("     Animate() function excuted");
     AnimationActive.current = true
     const layerID0 = GlobalList.layerID(props.PictureList[GlobalList.hunterSlot0]?.url)
     const layerID1 = GlobalList.layerID(props.PictureList[GlobalList.hunterSlot1]?.url)
@@ -187,7 +187,7 @@ function Canvas(props) {
   }
 
   useEffect(() => {
-    if (!AnimationActive.current)  console.log(" %c                      Will call Animate() function excuted","color:red");
+    // if (!AnimationActive.current)  console.log(" %c                      Will call Animate() function excuted","color:red");
     if (!AnimationActive.current)  window.requestAnimationFrame(animate);
     N1_BlackLinesImg.onload = function() {
       animate();

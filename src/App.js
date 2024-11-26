@@ -117,7 +117,7 @@ hunters_d.forEach(filename => {
   count++;
 });
 
-console.log(PictureList)
+// console.log(PictureList)
 
 
 
@@ -202,7 +202,7 @@ function App() {
         </div> 
 
         } 
-          <MapSelect PictureList={PictureList} globalList={globalList}/>
+          <MapSelect PictureList={PictureList} globalList={globalList} update={update}/>
       </div>
     </div>
     </DndProvider>
