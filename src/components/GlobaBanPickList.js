@@ -23,16 +23,18 @@ class GlobaBanPickList {
     this.HunterPoints = []
     this.PBS = []
     this.bigMap = false
-    this.mapSizeToggler = () => {
-      switch (this.bigMap) {
-        case false:
-          this.bigMap = true ;
-          break;
-        case true:
-          this.bigMap = false ;
-          break;
-        default:
-      }
+
+  }
+
+  mapSizeToggler(){
+    switch (this.bigMap) {
+      case false:
+        this.bigMap = true ;
+        break;
+      case true:
+        this.bigMap = false ;
+        break;
+      default:
     }
   }
   getIdCoords (id){
@@ -57,7 +59,7 @@ class GlobaBanPickList {
   saveRoundData(){
     // eslint-disable-next-line
     const exportArray = [
-      [this.Map,this.MapName(this.Map),this.cipherLayout],
+      [this.Map,this.cipherLayout],
       this.value,
       this.Round,
       [this.AB1,this.AB2,this.AS1,this.AS2],
@@ -65,6 +67,7 @@ class GlobaBanPickList {
       [this.hunterBan1, this.hunterBan2, this.hunterBan3],
       structuredClone(this.tempPositions),
       structuredClone(this.PBS),
+      this.bigMap,
     ]; 
     console.log("exported array element n7 is = ")
     console.log(exportArray)
@@ -74,7 +77,7 @@ class GlobaBanPickList {
   restoreRoundData(arr){
     if (!arr) return 0
     this.Map = arr[0][0];
-    this.cipherLayout = arr[0][2]
+    this.cipherLayout = arr[0][1]
     this.value = [...arr[1]];
     this.Round = arr[2];
     this.AB1 = arr[3][0];
@@ -90,10 +93,12 @@ class GlobaBanPickList {
     this.hunterBan1  = arr[5][0];
     this.hunterBan2  = arr[5][1];
     this.hunterBan3  = arr[5][2];
-    this.Positions = arr[6];
+    // this.Positions = arr[6];
+
     this.tempPositions = structuredClone(arr[6]);
     this.PBS.splice(0,this.PBS.length) 
     this.PBS.push(...arr[7])
+    this.bigMap=arr[8]
   }
   NextRound (){// (0) 
     // Save the state of this round in a variable called X="Round"+this.round+"Data"
@@ -110,6 +115,7 @@ class GlobaBanPickList {
         return 1
       }
     }
+    this.bigMap=false;
     this.Round++;
     const oldRemoved = this.getRealRemoved();
     console.log("Before we go to next round the removed charecters as of now are : ",oldRemoved)
@@ -227,7 +233,7 @@ class GlobaBanPickList {
     this.hunterBan3  =-1;
     this.hunterSlot0 =-1;
     this.PBS.splice(0,this.PBS.length) 
-    this.Positions = {}
+    // this.Positions = {}
     this.tempPositions = {}
     return 1;
   }

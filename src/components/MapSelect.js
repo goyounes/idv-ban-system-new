@@ -288,7 +288,7 @@ function MapSelect(props) {
                 <div style={{"height": "0px"}}>
                     {GlobalList.getMapCharcters().filter((id)=>id!==null).map((id) => {
                         const srcCycler = srcCyclerMaker(id)
-                        const [x,y] = GlobalList.getIdCoords(id)
+                        // const [x,y] = GlobalList.getIdCoords(id)
                         let  [x1,y1]= GlobalList.getIdCoords1(id)
                         if (x1 === null || y1 === null){
                             const order = GlobalList.getMapCharcters().indexOf(id)
@@ -305,8 +305,10 @@ function MapSelect(props) {
                                     style={{"position": "absolute",
                                     "cursor": "move",
                                     // "borderRadius": id>41? "" :"50%",
-                                    left : x===null? x1 :x,
-                                    top :  y===null? y1 :y,
+                                    // left : x===null? x1 :x,
+                                    // top :  y===null? y1 :y,
+                                    left : x1,
+                                    top :  y1,
                                     }}
                                     
                                     className="dragme" 
