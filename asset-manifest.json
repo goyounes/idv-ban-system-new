@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/idv-ban-system-new/static/css/main.012ce9c2.css",
-    "main.js": "/idv-ban-system-new/static/js/main.4d99f31a.js",
+    "main.js": "/idv-ban-system-new/static/js/main.0a4e33da.js",
     "static/media/0.png": "/idv-ban-system-new/static/media/0.10f06d8dc2eedc92e917.png",
     "static/media/4.png": "/idv-ban-system-new/static/media/4.515d2568315186d04afb.png",
     "static/media/2.png": "/idv-ban-system-new/static/media/2.6cf4e9c2774263d80cb8.png",
@@ -76,8 +76,13 @@
     "static/media/Professor.png": "/idv-ban-system-new/static/media/Professor.9e25a25fd5625a71e39e.png",
     "static/media/132.png": "/idv-ban-system-new/static/media/132.5f1ff3836affe5e92ff9.png",
     "static/media/131.png": "/idv-ban-system-new/static/media/131.a4922922893b31fa3108.png",
+    "static/media/174.png": "/idv-ban-system-new/static/media/174.858dd41277390b7770d3.png",
+    "static/media/173.png": "/idv-ban-system-new/static/media/173.d6483c476a23fa3d0184.png",
+    "static/media/172.png": "/idv-ban-system-new/static/media/172.2ea8f7792255a374318d.png",
     "static/media/134.png": "/idv-ban-system-new/static/media/134.a86b0805ca009b6766ff.png",
     "static/media/133.png": "/idv-ban-system-new/static/media/133.10d29271cb12f6054eb8.png",
+    "static/media/170.png": "/idv-ban-system-new/static/media/170.d0dd5b6cfd4df120dee1.png",
+    "static/media/171.png": "/idv-ban-system-new/static/media/171.d0dd5b6cfd4df120dee1.png",
     "static/media/082.png": "/idv-ban-system-new/static/media/082.e9fd74ec37347dbe2dac.png",
     "static/media/083.png": "/idv-ban-system-new/static/media/083.c3335e65a27ef324a906.png",
     "static/media/081.png": "/idv-ban-system-new/static/media/081.882225db5949cb8f0d93.png",
@@ -166,7 +171,7 @@
     "static/media/29.png": "/idv-ban-system-new/static/media/29.020d4140440cd516d1bf.png",
     "static/media/42.png": "/idv-ban-system-new/static/media/42.64734cfe6e059e93c19c.png",
     "static/media/01_OperaSinger_1_.png": "/idv-ban-system-new/static/media/01_OperaSinger_1_.4d8e802d2221f371144a.png",
-    "static/media/03_Goatman.png": "/idv-ban-system-new/static/media/03_Goatman.f29d98a1184a70af2f2d.png",
+    "static/media/03_Goatman_17_.png": "/idv-ban-system-new/static/media/03_Goatman_17_.f29d98a1184a70af2f2d.png",
     "static/media/39.png": "/idv-ban-system-new/static/media/39.5116374716a90e08b7d5.png",
     "static/media/02_TheShadow_16_.png": "/idv-ban-system-new/static/media/02_TheShadow_16_.a8d641446fbfa7850a20.png",
     "static/media/11_Naiad_14_.png": "/idv-ban-system-new/static/media/11_Naiad_14_.8a310a62eb4da08e6a22.png",
@@ -233,10 +238,10 @@
     "static/media/1_Antiquarian.png": "/idv-ban-system-new/static/media/1_Antiquarian.ac0fd6bffe4a482d1f28.png",
     "index.html": "/idv-ban-system-new/index.html",
     "main.012ce9c2.css.map": "/idv-ban-system-new/static/css/main.012ce9c2.css.map",
-    "main.4d99f31a.js.map": "/idv-ban-system-new/static/js/main.4d99f31a.js.map"
+    "main.0a4e33da.js.map": "/idv-ban-system-new/static/js/main.0a4e33da.js.map"
   },
   "entrypoints": [
     "static/css/main.012ce9c2.css",
-    "static/js/main.4d99f31a.js"
+    "static/js/main.0a4e33da.js"
   ]
 }
