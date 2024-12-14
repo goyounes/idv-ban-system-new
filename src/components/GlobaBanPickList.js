@@ -18,12 +18,70 @@ class GlobaBanPickList {
     this.hunterSlot3 =-1;
     this.hunterSlot4 =-1;
     this.ignoredHunters = {}
-    this.Positions = {}
+    // this.Positions = {}
     this.tempPositions = {}
     this.HunterPoints = []
     this.PBS = []
     this.bigMap = false
+    //new Array(10).fill(...[null,null,null,null,null,null,null,null])
+    this.situations = [
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],      
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+    ]
+    this.situationIndex = 0
+    this.situationCase = 0
+  }
 
+
+  SaveSituation(){
+    console.log("Saving the situation")
+    this.situations[this.situationIndex][this.situationCase] = structuredClone(this.tempPositions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
+    this.situationIndex++
+    console.table(this.situations)
+  }
+  // ChangeCase(){
+  //   this.situationCase++
+  // }
+
+  LoadSituation(i,c){
+    console.log("Restoring the situation")
+    if(!this.situations[this.situationIndex][this.situationCase]) {
+      console.log("empty situation i =>",i,"c =>",c)
+      return
+    }
+    this.tempPositions = this.situations[this.situationIndex][this.situationCase]
+  }
+  NextSituation(){
+    this.situationIndex++
+    if (this.situationIndex>9) this.situationIndex = 0
+    console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
+    this.LoadSituation(this.situationIndex,this.situationIndex)
+  }
+  PreviousSituation(){
+    this.situationIndex--
+    if (this.situationIndex<0) this.situationIndex = 9
+    console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
+    this.LoadSituation(this.situationIndex,this.situationIndex)
+  }
+  NextCase(){
+    this.situationCase++
+    if (this.situationCase>9) this.situationCase = 0
+    console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
+    this.LoadSituation(this.situationIndex,this.situationIndex)
+  }
+  PreviousCase(){
+    this.situationCase--
+    if (this.situationCase<0) this.situationCase = 9
+    console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
+    this.LoadSituation(this.situationIndex,this.situationIndex)
   }
 
   mapSizeToggler(){
@@ -37,14 +95,14 @@ class GlobaBanPickList {
       default:
     }
   }
-  getIdCoords (id){
-    if (this.Positions[id] === undefined){
-      return [null,null]
-    }
-    const result = this.Positions[id]
-    this.Positions[id] = undefined
-    return result
-  }
+  // getIdCoords (id){
+  //   if (this.Positions[id] === undefined){
+  //     return [null,null]
+  //   }
+  //   const result = this.Positions[id]
+  //   this.Positions[id] = undefined
+  //   return result
+  // }
   // you can probabily clean this.
   getIdCoords1 (id){
     if (this.tempPositions[id] === undefined) return [null,null]

@@ -255,24 +255,122 @@ function Canvas(props) {
     GlobalList.mapSizeToggler();
     props.update();
   }
+  const handleSaveSituationClick=()=>{
+    props.globalList.SaveSituation()
+    props.update();
+  }
+  const handleRestoreSituationClick=()=>{
+    props.globalList.SaveSituation()
+    props.update();
+  }
+
+  const handleLeftDirectionButtonClick=()=>{
+    props.globalList.PreviousSituation()
+    props.update();
+  }
+  const handleRightDirectionButtonClick=()=>{
+    props.globalList.NextSituation()
+    props.update();
+  }
+  const handleUptDirectionButtonClick=()=>{
+    props.globalList.PreviousCase()
+    props.update();
+  }
+  const handleDownDirectionButtonClick=()=>{
+    props.globalList.NextCase()
+    props.update();
+  }
 
 
   const Button1 = {
     "border":"2px solid black",
     "marginTop":"0px",
     "marginLeft":"7.5px",
-    "height": '108px',
+    "height": '50px',
     "width" : '120px',
     "fontSize":"32px",
   }
   
   const Button2 = {
     "border":"2px solid black",
-    "marginBottom":"11.14px",
+    // "marginBottom":"11.14px",
     "marginLeft":"7.5px",
-    "height": '108px',
+    "height": '50px',
     "width" : '135px',
     "fontSize":"32px",
+  }
+
+  const Button3 = {
+    "border":"2px solid black",
+    "marginTop":"13px",
+    "marginLeft":"7.5px",
+    "height": '50px',
+    "width" : '147px',
+    "fontSize":"25px",
+  }
+
+  const Button4 = {
+    "border":"2px solid black",
+    "marginTop":"13px",
+    "marginLeft":"7.5px",
+    "height": '50px',
+    "width" : '108px',
+    "fontSize":"25px",
+  }
+
+  const LButton1 = {
+    "border":"2px solid black",
+    "height": '40px',
+    "width" : '60px',
+    "fontSize":"20px",
+    "padding":"2px",
+
+    // "border":"2px solid black",
+    // "marginTop":"13px",
+    // "marginLeft":"7.5px",
+    // "height": '50px',
+    // "width" : '108px',
+    // "fontSize":"25px",
+  }
+
+  const Situationbtn1 = {
+    "border":"2px solid black",
+    "height": '80px',
+    "width" : '120px',
+    "fontSize":"25px",
+    "marginTop": "10px",
+    "marginLeft":"7.5px",
+  }
+  const Situationbtn2 = {
+    "border":"2px solid black",
+    "height": '80px',
+    "width" : '135px',
+    "fontSize":"25px",
+    "marginTop": "10px",
+    "marginLeft":"7.5px",
+  }
+
+
+  const Situation_Div = {
+    // "display":"inline",
+    "margin":"5px",
+    // "border":"2px solid black",
+    // "height": '100px',
+    // "width" : '60px',
+  }
+
+  const StateText = {
+    "height": '40px',
+    "width" : '100px',
+    "fontSize":"20px",
+    "padding":"2px"
+  }
+  const CaseText = {
+    "marginLeft": "20px",
+    "height": '40px',
+    "width" : '100px',
+    "fontSize":"20px",
+    "padding":"2px"
   }
 
   return (
@@ -295,7 +393,7 @@ function Canvas(props) {
           </div>
           <div>
               <div>
-                <button onClick={handleClearButtonClick}      style={Button1}>Clear</button>
+                <button onClick={handleClearButtonClick}     style={Button1}>Clear</button>
                 <button onClick={handleNextRoundButtonClick} onContextMenu={handleNextRoundButtonClick} style={Button2}>Round:{props.globalList.Round}</button>
               </div>
               <div>
@@ -303,9 +401,16 @@ function Canvas(props) {
                 <button onClick={handleImportButtonClick}    style={Button2}>Import</button>
               </div>
               <div>
-                <button onClick={handleHunterRiskButtonClick}      style={Button1}>Hunter Risk</button>
-                <button onClick={handleBigMapButtonClick}          style={Button1}>Big Map  </button>
+                <button onClick={handleHunterRiskButtonClick}      style={Button3}>Hunter Risk</button>
+                <button onClick={handleBigMapButtonClick}          style={Button4}>Big Map  </button>
               </div>
+              <div>
+                <button onClick={handleSaveSituationClick}      style={Situationbtn1}>💾Save Situation</button>
+                <button onClick={handleRestoreSituationClick}   style={Situationbtn2}>↩️Restore Situation</button>
+              </div>
+
+
+
           </div>
             <div style={{marginLeft:"7.5px"}}>
             <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterBan1"} type="hunterbans"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
@@ -318,6 +423,17 @@ function Canvas(props) {
             <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterBan3"} type="hunterbans"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
           </div>
         </div>
+
+        <div display="flex" style={Situation_Div}>
+          <button onClick={handleLeftDirectionButtonClick}   style={LButton1}>◀</button>
+          <button style={StateText}>State {GlobalList.situationIndex }</button>
+          <button onClick={handleRightDirectionButtonClick}  style={LButton1}>▶</button>
+
+          <button style={CaseText}>Case  {GlobalList.situationCase }</button>
+          <button onClick={handleUptDirectionButtonClick}    style={LButton1}>▲</button>
+          <button onClick={handleDownDirectionButtonClick}   style={LButton1}>▼</button>
+        </div>
+
     </div>
   );
 }
