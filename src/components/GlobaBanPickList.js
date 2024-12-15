@@ -48,14 +48,12 @@ class GlobaBanPickList {
       [null,null,null,null,null,null,null,null,null,null],
       [null,null,null,null,null,null,null,null,null,null],
     ]
-
     this.situationIndex = 0
     this.situationCase = 0
   }
 
-
   SaveSituation(){
-    if(!this.situationsPos[this.situationIndex][this.situationCase]) {
+    if(this.situationsPos[this.situationIndex][this.situationCase]) {
       console.log("Non empty situation data, i:",this.situationIndex,"c:",this.situationCase,"\n Will not overwrite.")
       return
     }
@@ -64,6 +62,7 @@ class GlobaBanPickList {
     this.situationsPBS[this.situationIndex][this.situationCase] = structuredClone(this.PBS)
     // this.situationIndex++
     console.table(this.situationsPos)
+    debugger
   }
   ForceSaveSituation(){
     console.log("Force Saving the situation")
@@ -151,6 +150,8 @@ class GlobaBanPickList {
       structuredClone(this.tempPositions),
       structuredClone(this.PBS),
       this.bigMap,
+      structuredClone(this.situationsPos),
+      structuredClone(this.situationsPBS),
     ]; 
     console.log("exported array element n7 is = ")
     console.log(exportArray)
@@ -182,6 +183,8 @@ class GlobaBanPickList {
     this.PBS.splice(0,this.PBS.length) 
     this.PBS.push(...arr[7])
     this.bigMap=arr[8]
+    this.situationsPos = structuredClone(arr[9])
+    this.situationsPBS = structuredClone(arr[10])
   }
   NextRound (){// (0) 
     // Save the state of this round in a variable called X="Round"+this.round+"Data"
