@@ -256,31 +256,13 @@ function Canvas(props) {
     props.update();
   }
   const handleSaveSituationClick=()=>{
-    props.globalList.SaveSituation()
+    props.globalList.ForceSaveSituation()
     props.update();
   }
   const handleRestoreSituationClick=()=>{
     props.globalList.SaveSituation()
     props.update();
   }
-
-  const handleLeftDirectionButtonClick=()=>{
-    props.globalList.PreviousSituation()
-    props.update();
-  }
-  const handleRightDirectionButtonClick=()=>{
-    props.globalList.NextSituation()
-    props.update();
-  }
-  const handleUptDirectionButtonClick=()=>{
-    props.globalList.PreviousCase()
-    props.update();
-  }
-  const handleDownDirectionButtonClick=()=>{
-    props.globalList.NextCase()
-    props.update();
-  }
-
 
   const Button1 = {
     "border":"2px solid black",
@@ -318,20 +300,7 @@ function Canvas(props) {
     "fontSize":"25px",
   }
 
-  const LButton1 = {
-    "border":"2px solid black",
-    "height": '40px',
-    "width" : '60px',
-    "fontSize":"20px",
-    "padding":"2px",
 
-    // "border":"2px solid black",
-    // "marginTop":"13px",
-    // "marginLeft":"7.5px",
-    // "height": '50px',
-    // "width" : '108px',
-    // "fontSize":"25px",
-  }
 
   const Situationbtn1 = {
     "border":"2px solid black",
@@ -351,27 +320,7 @@ function Canvas(props) {
   }
 
 
-  const Situation_Div = {
-    // "display":"inline",
-    "margin":"5px",
-    // "border":"2px solid black",
-    // "height": '100px',
-    // "width" : '60px',
-  }
 
-  const StateText = {
-    "height": '40px',
-    "width" : '100px',
-    "fontSize":"20px",
-    "padding":"2px"
-  }
-  const CaseText = {
-    "marginLeft": "20px",
-    "height": '40px',
-    "width" : '100px',
-    "fontSize":"20px",
-    "padding":"2px"
-  }
 
   return (
     <div>
@@ -423,17 +372,6 @@ function Canvas(props) {
             <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterBan3"} type="hunterbans"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
           </div>
         </div>
-
-        <div display="flex" style={Situation_Div}>
-          <button onClick={handleLeftDirectionButtonClick}   style={LButton1}>◀</button>
-          <button style={StateText}>State {GlobalList.situationIndex }</button>
-          <button onClick={handleRightDirectionButtonClick}  style={LButton1}>▶</button>
-
-          <button style={CaseText}>Case  {GlobalList.situationCase }</button>
-          <button onClick={handleUptDirectionButtonClick}    style={LButton1}>▲</button>
-          <button onClick={handleDownDirectionButtonClick}   style={LButton1}>▼</button>
-        </div>
-
     </div>
   );
 }

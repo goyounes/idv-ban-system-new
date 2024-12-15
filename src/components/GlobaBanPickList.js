@@ -24,7 +24,7 @@ class GlobaBanPickList {
     this.PBS = []
     this.bigMap = false
     //new Array(10).fill(...[null,null,null,null,null,null,null,null])
-    this.situations = [
+    this.situationsPos = [
       [null,null,null,null,null,null,null,null,null,null],
       [null,null,null,null,null,null,null,null,null,null],      
       [null,null,null,null,null,null,null,null,null,null],
@@ -36,48 +36,73 @@ class GlobaBanPickList {
       [null,null,null,null,null,null,null,null,null,null],
       [null,null,null,null,null,null,null,null,null,null],
     ]
+    this.situationsPBS = [
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],      
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null,null,null],
+    ]
+
     this.situationIndex = 0
     this.situationCase = 0
   }
 
 
   SaveSituation(){
+    if(!this.situationsPos[this.situationIndex][this.situationCase]) {
+      console.log("Non empty situation data, i:",this.situationIndex,"c:",this.situationCase,"\n Will not overwrite.")
+      return
+    }
     console.log("Saving the situation")
-    this.situations[this.situationIndex][this.situationCase] = structuredClone(this.tempPositions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
-    this.situationIndex++
-    console.table(this.situations)
+    this.situationsPos[this.situationIndex][this.situationCase] = structuredClone(this.tempPositions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
+    this.situationsPBS[this.situationIndex][this.situationCase] = structuredClone(this.PBS)
+    // this.situationIndex++
+    console.table(this.situationsPos)
   }
-  // ChangeCase(){
-  //   this.situationCase++
-  // }
+  ForceSaveSituation(){
+    console.log("Force Saving the situation")
+    this.situationsPos[this.situationIndex][this.situationCase] = structuredClone(this.tempPositions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
+    this.situationsPBS[this.situationIndex][this.situationCase] = structuredClone(this.PBS)
+  }
 
   LoadSituation(i,c){
     console.log("Restoring the situation")
-    if(!this.situations[this.situationIndex][this.situationCase]) {
+    if(!this.situationsPos[this.situationIndex][this.situationCase]) {
       console.log("empty situation i =>",i,"c =>",c)
       return
     }
-    this.tempPositions = this.situations[this.situationIndex][this.situationCase]
+    this.tempPositions = this.situationsPos[this.situationIndex][this.situationCase]
+    this.PBS = this.situationsPBS[this.situationIndex][this.situationCase]
   }
   NextSituation(){
+    this.SaveSituation()
     this.situationIndex++
     if (this.situationIndex>9) this.situationIndex = 0
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
     this.LoadSituation(this.situationIndex,this.situationIndex)
   }
   PreviousSituation(){
+    this.SaveSituation()
     this.situationIndex--
     if (this.situationIndex<0) this.situationIndex = 9
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
     this.LoadSituation(this.situationIndex,this.situationIndex)
   }
   NextCase(){
+    this.SaveSituation()
     this.situationCase++
     if (this.situationCase>9) this.situationCase = 0
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
     this.LoadSituation(this.situationIndex,this.situationIndex)
   }
   PreviousCase(){
+    this.SaveSituation()
     this.situationCase--
     if (this.situationCase<0) this.situationCase = 9
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)

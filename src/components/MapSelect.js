@@ -60,7 +60,55 @@ var coordY = 0;
 var offsetX = 0;
 var offsetY = 0;
 
+ 
+
 function MapSelect(props) {
+    //Situation specific code
+    const handleLeftDirectionButtonClick=()=>{
+        props.globalList.PreviousSituation()
+        props.update();
+      }
+      const handleRightDirectionButtonClick=()=>{
+        props.globalList.NextSituation()
+        props.update();
+      }
+      const handleUptDirectionButtonClick=()=>{
+        props.globalList.PreviousCase()
+        props.update();
+      }
+      const handleDownDirectionButtonClick=()=>{
+        props.globalList.NextCase()
+        props.update();
+      }
+
+    //   const calculatedHeight =  GlobalList.bigMap ? "1000vh":"450vh"
+
+      const StateText = {
+        "border":"2px solid black",
+        "height":  '43px',
+        "width" : '100px',
+        "fontSize":"20px",
+        "padding":"2px",
+        "marginTop":"-5px",
+        "display":  props.globalList.bigMap ? "":"none"
+      }
+      const CaseText = {
+        "border":"2px solid black",
+        "height": '40px',
+        "width" : '100px',
+        "fontSize":"20px",
+        "padding":"2px",
+        "display":  props.globalList.bigMap ? "":"none",
+    }
+      const LButton1 = {
+        "border":"2px solid black",
+        "height": '40px',
+        "width" : '60px',
+        "fontSize":"20px",
+        "padding":"2px",
+        "display":  props.globalList.bigMap ? "":"none",
+    }
+    // Map select code ~~
     const GlobalList = props.globalList;
     const PBS = GlobalList.PBS
     const [map, setMap] = useState(0);
@@ -263,26 +311,37 @@ function MapSelect(props) {
     return (
         <div style={mapselect} onMouseMove={dragDiv}>
             {/* {mconsole.log('%c Map Object Re rendered',"color:red;")} */}
-            <br></br>
-            <label style={texte} htmlFor="mapselect">Map: </label>
-            <select  style={button} name="mapselect" value ={GlobalList.Map===""?"0":GlobalList.Map} onChange={handleMapChange}>
-                <option value="0" >Arms Factory</option>
-                <option value="2" >Red Church</option>
-                <option value="4" >Sacred Heart Hospital</option>
-                <option value="5" >Lakeside Village</option>
-                <option value="7" >Moonlit River Park</option>
-                <option value="6" >Leos Memory</option>
-                <option value="3" >Eversleeping Town</option>
-                <option value="1" >Chinatown</option>
-            </select>
-         {(map!==GlobalList.Map) && setMap(GlobalList.Map)}
-         {(cipherNum!==GlobalList.cipherLayout) && setCipherNum(GlobalList.cipherLayout)}
-            <label style={texte}> Ciphers: </label>
-            <button style={button} onClick={decreaseCipherNum}>-</button>
-            <label style={texte}> {cipherNum} </label>
-            <button style={button} onClick={increaseCipherNum}>+</button>
-            <label style={{marginLeft:"10px"}}> </label>
-            <button style={button} onClick={resetCipherNum}>All In</button>
+            {/* <br></br> */}
+            <div>
+                <label style={texte} htmlFor="mapselect">Map: </label>
+                <select  style={button} name="mapselect" value ={GlobalList.Map===""?"0":GlobalList.Map} onChange={handleMapChange}>
+                    <option value="0" >Arms Factory</option>
+                    <option value="2" >Red Church</option>
+                    <option value="4" >Sacred Heart Hospital</option>
+                    <option value="5" >Lakeside Village</option>
+                    <option value="7" >Moonlit River Park</option>
+                    <option value="6" >Leos Memory</option>
+                    <option value="3" >Eversleeping Town</option>
+                    <option value="1" >Chinatown</option>
+                </select>
+            {(map!==GlobalList.Map) && setMap(GlobalList.Map)}
+            {(cipherNum!==GlobalList.cipherLayout) && setCipherNum(GlobalList.cipherLayout)}
+                <label style={texte}> Ciphers: </label>
+                <button style={button} onClick={decreaseCipherNum}>-</button>
+                <label style={texte}> {cipherNum} </label>
+                <button style={button} onClick={increaseCipherNum}>+</button>
+                <label style={{marginLeft:"10px"}}> </label>
+                <button style={button} onClick={resetCipherNum} >All In</button>
+                    <label style={{marginLeft:"40px"}}> </label>
+                <button onClick={handleLeftDirectionButtonClick}   style={LButton1}>◀</button>
+                <button style={StateText}>State {GlobalList.situationIndex +1}</button>
+                <button onClick={handleRightDirectionButtonClick}  style={LButton1}>▶</button>
+                    <label style={{marginLeft:"30px"}}> </label>
+                <button style={CaseText}>Case  {GlobalList.situationCase +1}</button>
+                <button onClick={handleUptDirectionButtonClick}    style={LButton1}>▲</button>
+                <button onClick={handleDownDirectionButtonClick}   style={LButton1}>▼</button>
+            </div>
+            
             <div>
                 {/* Survivor and Hunter charecters Code */}
                 <div style={{"height": "0px"}}>
