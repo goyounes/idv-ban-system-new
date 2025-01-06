@@ -237,12 +237,15 @@ function Canvas(props) {
   };
   
   const handleImportButtonClick = ()=>{
-    navigator.clipboard
-    .readText()
-    .then((clipText) => {
-      props.globalList.importList(clipText);
-      props.update();
-    });
+    let x = window.prompt('Please paste the code')
+    props.globalList.importList(x);
+    props.update();
+    // navigator.clipboard
+    // .readText()
+    // .then((clipText) => {
+    //   props.globalList.importList(clipText);
+    //   props.update();
+    // });
   }
   const handleHunterRiskButtonClick =()=>{
     // eslint-disable-next-line
