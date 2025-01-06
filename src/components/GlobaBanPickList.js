@@ -51,7 +51,48 @@ class GlobaBanPickList {
     this.situationIndex = 0
     this.situationCase = 0
   }
-
+  SpecialExportFunc(array2D){
+    const resArray = []
+    for (let i=0;i<10;i++){
+      const line = []
+      for(let j=0;j<10;j++){
+        if (array2D[i][j]!==null){
+          break
+        }else{
+          line.push(array2D[i][j])
+          console.log("added this value -->")
+          console.table(array2D)
+        }
+      }
+      resArray.push(line)
+      console.table(resArray);
+    }
+    return resArray
+  }
+  SpecialImportFunc(resArray,targetarray2D){
+    for (let i=0;i<resArray.length;i++){
+      for(let j=0;j<resArray[i].length;j++){
+        targetarray2D=resArray[i][j]
+      }
+    }
+  }
+  situationsPosIsEmpty(){
+    for (let i=0;i<10;i++){
+      for(let j=0;j<10;j++){
+        if (this.situationsPos[i][j]!==null) return false
+      }
+    }
+    return true
+  }
+  situationsPBsIsEmpty(){
+    for (let i=0;i<10;i++){
+      for(let j=0;j<10;j++){
+        if (this.situationsPBS[i][j]!==null) return false
+      }
+    }
+    return true
+  }
+  
   SaveSituation(){
     if(this.situationsPos[this.situationIndex][this.situationCase]) {
       console.log("Non empty situation data, i:",this.situationIndex,"c:",this.situationCase,"\n Will not overwrite.")
@@ -62,7 +103,7 @@ class GlobaBanPickList {
     this.situationsPBS[this.situationIndex][this.situationCase] = structuredClone(this.PBS)
     // this.situationIndex++
     console.table(this.situationsPos)
-    debugger
+    // debugger
   }
   ForceSaveSituation(){
     console.log("Force Saving the situation")
@@ -82,28 +123,28 @@ class GlobaBanPickList {
   NextSituation(){
     this.SaveSituation()
     this.situationIndex++
-    if (this.situationIndex>9) this.situationIndex = 0
+    if (this.situationIndex>9) this.situationIndex = 9
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
     this.LoadSituation(this.situationIndex,this.situationIndex)
   }
   PreviousSituation(){
     this.SaveSituation()
     this.situationIndex--
-    if (this.situationIndex<0) this.situationIndex = 9
+    if (this.situationIndex<0) this.situationIndex = 0
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
     this.LoadSituation(this.situationIndex,this.situationIndex)
   }
   NextCase(){
     this.SaveSituation()
     this.situationCase++
-    if (this.situationCase>9) this.situationCase = 0
+    if (this.situationCase>9) this.situationCase = 9
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
     this.LoadSituation(this.situationIndex,this.situationIndex)
   }
   PreviousCase(){
     this.SaveSituation()
     this.situationCase--
-    if (this.situationCase<0) this.situationCase = 9
+    if (this.situationCase<0) this.situationCase = 0
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
     this.LoadSituation(this.situationIndex,this.situationIndex)
   }
@@ -150,8 +191,10 @@ class GlobaBanPickList {
       structuredClone(this.tempPositions),
       structuredClone(this.PBS),
       this.bigMap,
-      structuredClone(this.situationsPos),
-      structuredClone(this.situationsPBS),
+      this.situationsPosIsEmpty()? "empty":structuredClone(this.situationsPos),
+      this.situationsPBsIsEmpty()? "empty":structuredClone(this.situationsPBS),
+    //   this.situationsPosIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPos),
+    //   this.situationsPBsIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPBS),
     ]; 
     console.log("exported array element n7 is = ")
     console.log(exportArray)
@@ -183,8 +226,12 @@ class GlobaBanPickList {
     this.PBS.splice(0,this.PBS.length) 
     this.PBS.push(...arr[7])
     this.bigMap=arr[8]
-    this.situationsPos = structuredClone(arr[9])
-    this.situationsPBS = structuredClone(arr[10])
+    if(arr[9]==="empty"){  }else{
+      this.situationsPos = structuredClone(arr[9])
+    } 
+    if(arr[10]==="empty"){ }else{
+      this.situationsPBS = structuredClone(arr[10])
+    }
   }
   NextRound (){// (0) 
     // Save the state of this round in a variable called X="Round"+this.round+"Data"
