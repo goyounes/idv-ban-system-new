@@ -6,7 +6,6 @@ function Picture(props) {
   const [isUsed, setIsUsed] = useState(false);
   const GlobalList = props.globalList;
   const [borderColor, setBorderColor] = useState("transparent");
-  // const borderColor = useRef("transparent")
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "image",
     item: { id: props.id, url: props.url },
@@ -15,61 +14,64 @@ function Picture(props) {
     }),
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult()
-      if (item && dropResult) {
+      
+      if (!item || !dropResult) {
         console.log("Dropped " + dropResult.type);
-        if (dropResult.type === "book") {
-          // do Nothing
-        } else {
-          if (dropResult.type === "altbans2" || dropResult.type === "altselects2") { if (props.id>41) return
-            console.log("Attempting to add"+props.id+"to specialSlotId:" +dropResult.SpecialSlotID)
-            GlobalList[dropResult.SpecialSlotID] = GlobalList.getEquiv(props.id)
-            props.update();
-          }else{// if this is altBan or altSelect then:
-            if (dropResult.type === "bans1") { if (props.id>41) return
-                  // const charName = GlobalList.getName(props.url);
-                  const charName = GlobalList.getEquiv(props.id);
-                  console.log("Name: "+charName);
-                  if (DM.CCM[charName]) {
-                    GlobalList.addRemoved(charName);
-                    props.update();
-                  }
-            } else if (dropResult.type==="bans2"){ if (props.id>41) return
-                  // const charName = GlobalList.getName(props.url);
-                  const charName = GlobalList.getEquiv(props.id);
-                  console.log("Name: "+charName);
-                  if (DM.CCM[charName]) {
-                    GlobalList.addBan(charName);
-                    props.update();
-                  }
-            } else if ( dropResult.type === "selects2") { if (props.id>41) return
-                  // const charName = GlobalList.getName(props.url);
-                  const charName = GlobalList.getEquiv(props.id);
-                  console.log("Name: "+charName);
-                  if (DM.CCM[charName]) {
-                    GlobalList.addSelect(charName);
-                    props.update();
-                  }
-            } else if (dropResult.type === "hunterbans") { if (props.id<=41) return
-                  if (GlobalList.hunterSlot0 === props.id){
-                    GlobalList.hunterSelect = "";
-                    GlobalList.hunterSlot0  = -1;
-                  }
-                  GlobalList.addHunterBan(props.id);
-                  props.update();
-                  return;
-            } else if(dropResult.type==="huntertableslot0" || dropResult.type==="huntertableslot"){ if (props.id<=41) return
-                GlobalList[dropResult.SpecialSlotID] = props.id
-                props.update();
-                if(dropResult.type==="huntertableslot0") { // only for Hunter select 
-                  GlobalList.hunterSelect = GlobalList.getEquiv(props.id);
-                  GlobalList.removeHunterBan(props.id);
-                }
-            }
-          }
-        }
+        return
       }
+      if (dropResult.type === "book") return  // do Nothing
+
+      const isNotSurvivor = props.id > 41
+      const isNotHunter = props.id <= 41
+      if (dropResult.type === "altbans2" || dropResult.type === "altselects2") { 
+        if (isNotSurvivor) return
+        GlobalList[dropResult.SpecialSlotID] = GlobalList.getEquiv(props.id)
+        props.update();
+      }
+      else if (dropResult.type === "bans1") { 
+        if (isNotSurvivor) return
+        const charName = GlobalList.getEquiv(props.id);
+        if (!DM.CCM[charName]) return
+        GlobalList.addRemoved(charName);
+        props.update();
+      } 
+      else if (dropResult.type==="bans2"){ 
+        if (isNotSurvivor) return
+        const charName = GlobalList.getEquiv(props.id);
+        if (!DM.CCM[charName]) return
+        GlobalList.addBan(charName);
+        props.update();
+      } 
+      else if ( dropResult.type === "selects2") { 
+        if (isNotSurvivor) return
+        const charName = GlobalList.getEquiv(props.id);
+        if (!DM.CCM[charName]) return
+        GlobalList.addSelect(charName);
+        props.update();
+      } 
+      else if (dropResult.type === "hunterbans") { 
+        if (isNotHunter) return
+        if (props.id === GlobalList.hunterSlot0){
+          GlobalList.hunterSelect = "";
+          GlobalList.hunterSlot0  = -1;
+        }
+        GlobalList.addHunterBan(props.id);
+        props.update();
+        return;
+      } 
+      else if(dropResult.type==="huntertableslot0" || dropResult.type==="huntertableslot"){ 
+        if (isNotHunter) return
+        GlobalList[dropResult.SpecialSlotID] = props.id
+        if(dropResult.type==="huntertableslot0") { // only for Hunter select 
+          GlobalList.hunterSelect = GlobalList.getEquiv(props.id);
+          GlobalList.removeHunterBan(props.id);
+        }
+        props.update();
+      }     
     },
   }), [props.update]);
+
+
 
   function togglePic(e) {
     e.preventDefault();
