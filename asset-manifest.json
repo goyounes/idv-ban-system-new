@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/idv-ban-system-new/static/css/main.012ce9c2.css",
-    "main.js": "/idv-ban-system-new/static/js/main.518c7ee1.js",
+    "main.css": "/idv-ban-system-new/static/css/main.4d4516ac.css",
+    "main.js": "/idv-ban-system-new/static/js/main.569bf935.js",
     "static/media/0.png": "/idv-ban-system-new/static/media/0.10f06d8dc2eedc92e917.png",
     "static/media/4.png": "/idv-ban-system-new/static/media/4.515d2568315186d04afb.png",
     "static/media/2.png": "/idv-ban-system-new/static/media/2.6cf4e9c2774263d80cb8.png",
@@ -237,11 +237,11 @@
     "static/media/5_Enchantress.png": "/idv-ban-system-new/static/media/5_Enchantress.8dfe65c5eade007fe32e.png",
     "static/media/1_Antiquarian.png": "/idv-ban-system-new/static/media/1_Antiquarian.ac0fd6bffe4a482d1f28.png",
     "index.html": "/idv-ban-system-new/index.html",
-    "main.012ce9c2.css.map": "/idv-ban-system-new/static/css/main.012ce9c2.css.map",
-    "main.518c7ee1.js.map": "/idv-ban-system-new/static/js/main.518c7ee1.js.map"
+    "main.4d4516ac.css.map": "/idv-ban-system-new/static/css/main.4d4516ac.css.map",
+    "main.569bf935.js.map": "/idv-ban-system-new/static/js/main.569bf935.js.map"
   },
   "entrypoints": [
-    "static/css/main.012ce9c2.css",
-    "static/js/main.518c7ee1.js"
+    "static/css/main.4d4516ac.css",
+    "static/js/main.569bf935.js"
   ]
 }
