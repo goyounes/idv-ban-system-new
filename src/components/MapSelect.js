@@ -378,12 +378,10 @@ function MapSelect(props) {
                     }{/* add another image if ivy is the selected hunter, the image is the scare face */}
                     { 
                     GlobalList.getMapCharcters().filter((id)=>id===43).map((id) => {
-                        // const [x,y] = GlobalList.getIdCoords(100)
                         let  [x1,y1]= GlobalList.getIdCoords1(id)
                         if (x1 === null || y1 === null){
                             const order = GlobalList.getMapCharcters().indexOf(id)
-                            x1 = `${1500 + parseInt(order * 80)}px`; y1 = `${515}px`; 
-                            // console.log("used Nothing for X1 Y1 because  they dont exist"); 
+                            x1 = `${1500 + parseInt(order * 80)}px`; y1 = `${515+80}px`; 
                         }
                         return (<img 
                                     id={100}

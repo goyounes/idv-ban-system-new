@@ -518,28 +518,31 @@ class GlobaBanPickList {
 
   //Hunter Selection and Ban Data
   addHunterBan(id){
+    this.removeHunterBan(id)
+    let ret = 0
     if (this.hunterB1 ===-1 && this.Round >1){
       this.hunterB1 = id; 
-      return 1;
+      ret = 1;
     }else if(this.hunterB2 === -1 && this.Round >2){
       this.hunterB2 = id; 
-      return 1;
-    }else{
-      console.log("Hunter was not Banned")
-      return 0;
+      ret = 1;
     }
+    if (ret===0) console.log("Hunter was not Banned")
+    return ret; 
   }
   removeHunterBan(id){
-    if (this.hunterBan1 === id){
-      this.hunterBan1 = -1; return 1;
-    }else if(this.hunterBan2 === id){
-      this.hunterBan2 = -1; return 1;
-    }else if(this.hunterBan3 === id){
-      this.hunterBan3 = -1; return 1;
-    }else{
-      console.log("3 Hunters already Banned")
-      return 0
+    let ret = 0
+    if (this.hunterB1 === id){
+      this.hunterB1 = -1; 
+      ret = 1;
     }
+    if(this.hunterB2 === id){
+      this.hunterB2 = -1; 
+      ret = 1;
+    }
+    if (ret===0) console.log("3 Hunters already Banned")
+    return ret
+    
   }
   addHunterPermaBan(id){
     if (this.hunterBan1 ===-1 && this.Round >1){

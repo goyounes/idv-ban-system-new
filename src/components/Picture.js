@@ -49,16 +49,16 @@ function Picture(props) {
         GlobalList.addSelect(charName);
         props.update();
       } 
-      // else if (dropResult.type === "hunterbans") { //Perma Bans logic  here
-      //   if (isNotHunter) return
-      //   if (props.id === GlobalList.hunterSlot0){
-      //     GlobalList.hunterSelect = "";
-      //     GlobalList.hunterSlot0  = -1;
-      //   }
-      //   GlobalList.addHunterBan(props.id);
-      //   props.update();
-      //   return;
-      // } 
+      else if (dropResult.type === "hunterbans") { //Perma Bans logic  here
+        if (isNotHunter) return
+        if (props.id === GlobalList.hunterSlot0){
+          GlobalList.hunterSelect = "";
+          GlobalList.hunterSlot0  = -1;
+        }
+        GlobalList.addHunterPermaBan(props.id);
+        props.update();
+        return;
+      } 
       else if(dropResult.type==="huntertableslot0"){ 
         if (isNotHunter) return
         GlobalList[dropResult.SpecialSlotID] = props.id
