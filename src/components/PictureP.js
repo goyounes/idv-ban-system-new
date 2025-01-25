@@ -16,7 +16,7 @@ function PictureP(props) {
       const dropResult = monitor.getDropResult()
       
       if (!item || !dropResult) {
-        console.log("Dropped " + dropResult.type);
+        console.log("Dropped " + dropResult?.type);
         return
       }
       if (dropResult.type === "book") return  // do Nothing

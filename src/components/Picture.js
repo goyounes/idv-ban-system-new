@@ -13,10 +13,9 @@ function Picture(props) {
       isDragging: !!monitor.isDragging(),
     }),
     end: (item, monitor) => {
-      const dropResult = monitor.getDropResult()
-      
+      const dropResult = monitor.getDropResult()  
       if (!item || !dropResult) {
-        console.log("Dropped " + dropResult.type);
+        console.log("Dropped " + dropResult?.type);
         return
       }
       if (dropResult.type === "book") return  // do Nothing
@@ -55,6 +54,7 @@ function Picture(props) {
           GlobalList.hunterSelect = "";
           GlobalList.hunterSlot0  = -1;
         }
+        GlobalList.removeHunterBan(props.id);
         GlobalList.addHunterPermaBan(props.id);
         props.update();
         return;
@@ -64,6 +64,7 @@ function Picture(props) {
         GlobalList[dropResult.SpecialSlotID] = props.id
         GlobalList.hunterSelect = GlobalList.getEquiv(props.id);
         GlobalList.removeHunterBan(props.id);
+        GlobalList.removeHunterPermaBan(props.id);
         props.update();
       }
       else if(dropResult.type==="huntertableslot"){ 
@@ -77,6 +78,7 @@ function Picture(props) {
           GlobalList.hunterSelect = "";
           GlobalList.hunterSlot0  = -1;
         }
+        GlobalList.removeHunterPermaBan(props.id)
         GlobalList.addHunterBan(props.id);
         props.update();
         return;
@@ -134,14 +136,17 @@ function Picture(props) {
         if (GlobalList.hunterBan1  === props.id ) GlobalList.hunterBan1 = clearHunter();
         if (GlobalList.hunterBan2  === props.id ) GlobalList.hunterBan2 = clearHunter();
         if (GlobalList.hunterBan3  === props.id ) GlobalList.hunterBan3 = clearHunter();
+        if (GlobalList.hunterB1  === props.id ) GlobalList.hunterB1 = clearHunter();
+        if (GlobalList.hunterB2  === props.id ) GlobalList.hunterB2 = clearHunter();
         props.update();
       }
     }
   };
   const getBgColor = (borderColor) =>{
-    if (borderColor==='green')  return "rgba(  0, 128,   0, 0.9)"
-    if (borderColor==='red')    return "rgba(255,   0,   0, 0.9)"
-    if (borderColor==='black')  return "rgba(  20,   20,   20, 0.9)"
+    if (borderColor==='green')  return "rgba(  0,  128,   0, 0.9)"
+    if (borderColor==='red')    return "rgba(255,    0,   0, 0.9)"
+    if (borderColor==='black')  return "rgba( 20,   20,  20, 0.9)"
+    if (borderColor==='white')  return "rgba( 255, 255, 255, 0.9)"
   }
   useEffect(()=>{
     if (GlobalList && props.container === "book"){
@@ -163,11 +168,13 @@ function Picture(props) {
       } else if(props.id > 41){
         if      (GlobalList.hunterSlot0 === props.id) {
           setBorderColor('green');
-        }else if(GlobalList.hunterSlot1 === props.id || GlobalList.hunterSlot2 === props.id || GlobalList.hunterSlot3 === props.id ||GlobalList.hunterSlot4 === props.id)
-        {
-          setBorderColor('black')
+        }else if(GlobalList.hunterB1 === props.id || GlobalList.hunterB2 === props.id){
+        // }else if(GlobalList.hunterSlot1 === props.id || GlobalList.hunterSlot2 === props.id || GlobalList.hunterSlot3 === props.id ||GlobalList.hunterSlot4 === props.id){
+          setBorderColor('red');
         }else if (GlobalList.hunterBan1 === props.id || GlobalList.hunterBan2 === props.id ||GlobalList.hunterBan3 === props.id ){
-          setBorderColor('red')
+          setBorderColor('black');
+        }else if(GlobalList.hunterSlot1 === props.id || GlobalList.hunterSlot2 === props.id || GlobalList.hunterSlot3 === props.id ||GlobalList.hunterSlot4 === props.id){
+          setBorderColor('white');
         }else{
           if (borderColor!=='transparent') setBorderColor('transparent')
         }

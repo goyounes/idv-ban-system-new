@@ -189,7 +189,7 @@ class GlobaBanPickList {
       this.Round,
       [this.AB1,this.AB2,this.AS1,this.AS2],
       [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
-      [this.hunterBan1, this.hunterBan2, this.hunterBan3],
+      [this.hunterBan1, this.hunterBan2, this.hunterBan3,this.hunterB1,this.hunterB2],
       structuredClone(this.tempPositions),
       structuredClone(this.PBS),
       this.bigMap,
@@ -222,6 +222,8 @@ class GlobaBanPickList {
     this.hunterBan1  = arr[5][0];
     this.hunterBan2  = arr[5][1];
     this.hunterBan3  = arr[5][2];
+    this.hunterB1  = arr[5][3];
+    this.hunterB2  = arr[5][4];
     // this.Positions = arr[6];
 
     this.tempPositions = structuredClone(arr[6]);
@@ -252,20 +254,30 @@ class GlobaBanPickList {
     }
     this.bigMap=false;
     this.Round++;
+    //saving previous permabans
     const oldRemoved = this.getRealRemoved();
     console.log("Before we go to next round the removed charecters as of now are : ",oldRemoved)
     const permBan1 = this.value[11];// First  Selected Charecter
     const permBan2 = this.value[12];// Second Selected Charecter
     const permBan3 = this.value[14];// Third  Selected Charecter
+    //saving previous permabans //Hunter side
+    const [old1,old2,old3] = this.getRealHunterRemoved();
+    const HunterpermBan = this.hunterSlot0;// First  Selected Charecter
     this.Clear();
+    //Restoring
     for (let i=0;i < oldRemoved.length;i++){
       this.value[i] = oldRemoved[i]
     }
+    this.hunterBan1 = old1;
+    this.hunterBan2 = old2;
+    this.hunterBan3 = old3;
+    //Adding : Perma  baninng previous selections
     console.log("Old removed -->",permBan1, permBan2, permBan3)
     if (this.Round-1<=3){
       if (permBan1!=="11")  this.value[(this.Round-2)*3+0] = permBan1 ;
       if (permBan2!=="12")  this.value[(this.Round-2)*3+1] = permBan2 ;
       if (permBan3!=="14")  this.value[(this.Round-2)*3+2] = permBan3 ;
+      if (HunterpermBan!==-1) this.addHunterPermaBan(HunterpermBan);
     }
     console.log("value -->",this.value)
     return 1 
@@ -366,6 +378,8 @@ class GlobaBanPickList {
     this.hunterBan1  =-1;
     this.hunterBan2  =-1;
     this.hunterBan3  =-1;
+    this.hunterB1  =-1;  //New
+    this.hunterB2  =-1;  //New
     this.hunterSlot0 =-1;
     this.PBS.splice(0,this.PBS.length) 
     // this.Positions = {}
@@ -515,7 +529,9 @@ class GlobaBanPickList {
     this.value = array
     return 0
   }
-
+  getRealHunterRemoved(){
+    return  [this.hunterBan1,this.hunterBan2,this.hunterBan3]
+  }
   //Hunter Selection and Ban Data
   addHunterBan(id){
     this.removeHunterBan(id)
@@ -542,14 +558,13 @@ class GlobaBanPickList {
     }
     if (ret===0) console.log("3 Hunters already Banned")
     return ret
-    
   }
   addHunterPermaBan(id){
     if (this.hunterBan1 ===-1 && this.Round >1){
-      this.hunterBan1 = id; 
+      this.hunterBan1 = id;
       return 1;
     }else if(this.hunterBan2 === -1 && this.Round >2){
-      this.hunterBan2 = id; 
+      this.hunterBan2 = id;
       return 1;
     }else if(this.hunterBan3 === -1 && this.Round >3){
       this.hunterBan3 = id; 
