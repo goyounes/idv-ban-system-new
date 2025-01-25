@@ -49,7 +49,29 @@ function Picture(props) {
         GlobalList.addSelect(charName);
         props.update();
       } 
-      else if (dropResult.type === "hunterbans") { 
+      // else if (dropResult.type === "hunterbans") { //Perma Bans logic  here
+      //   if (isNotHunter) return
+      //   if (props.id === GlobalList.hunterSlot0){
+      //     GlobalList.hunterSelect = "";
+      //     GlobalList.hunterSlot0  = -1;
+      //   }
+      //   GlobalList.addHunterBan(props.id);
+      //   props.update();
+      //   return;
+      // } 
+      else if(dropResult.type==="huntertableslot0"){ 
+        if (isNotHunter) return
+        GlobalList[dropResult.SpecialSlotID] = props.id
+        GlobalList.hunterSelect = GlobalList.getEquiv(props.id);
+        GlobalList.removeHunterBan(props.id);
+        props.update();
+      }
+      else if(dropResult.type==="huntertableslot"){ 
+        if (isNotHunter) return
+        GlobalList[dropResult.SpecialSlotID] = props.id
+        props.update();
+      }
+      else if(dropResult.type==="hunterb"){ //Hunter Bans 
         if (isNotHunter) return
         if (props.id === GlobalList.hunterSlot0){
           GlobalList.hunterSelect = "";
@@ -58,16 +80,7 @@ function Picture(props) {
         GlobalList.addHunterBan(props.id);
         props.update();
         return;
-      } 
-      else if(dropResult.type==="huntertableslot0" || dropResult.type==="huntertableslot"){ 
-        if (isNotHunter) return
-        GlobalList[dropResult.SpecialSlotID] = props.id
-        if(dropResult.type==="huntertableslot0") { // only for Hunter select 
-          GlobalList.hunterSelect = GlobalList.getEquiv(props.id);
-          GlobalList.removeHunterBan(props.id);
-        }
-        props.update();
-      }     
+      }       
     },
   }), [props.update]);
 

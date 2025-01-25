@@ -343,7 +343,7 @@ function Canvas(props) {
               globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
             </div>
           </div>
-          <div>
+          <div style={{marginRight:"7.5px"}}>
               <div>
                 <button onClick={handleClearButtonClick}     style={Button1}>Clear</button>
                 <button onClick={handleNextRoundButtonClick} onContextMenu={handleNextRoundButtonClick} style={Button2}>Round:{props.globalList.Round}</button>
@@ -360,19 +360,19 @@ function Canvas(props) {
                 <button onClick={handleSaveSituationClick}      style={Situationbtn1}>💾Save Situation</button>
                 <button onClick={handleRestoreSituationClick}   style={Situationbtn2}>↩️Restore Situation</button>
               </div>
-
-
-
           </div>
-            <div style={{marginLeft:"7.5px"}}>
-            <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterBan1"} type="hunterbans"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
-            <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterSlot0"}type="huntertableslot0" globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
+
+          <div>
+            <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterBan3"} type="hunterbans"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
+            <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterB2"} type="hunterb"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
           </div>
           <div>
             <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterBan2"} type="hunterbans"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
+            <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterB1"} type="hunterb"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
           </div>
           <div>
-            <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterBan3"} type="hunterbans"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
+            <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterBan1"} type="hunterbans"       globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
+            <HunterSlot PictureList={props.PictureList} SpecialSlotID={"hunterSlot0"}type="huntertableslot0" globalList={GlobalList} needUpdate={props.needUpdate} update={props.update}/>
           </div>
         </div>
     </div>

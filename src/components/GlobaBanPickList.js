@@ -12,6 +12,8 @@ class GlobaBanPickList {
     this.hunterBan1  =-1;
     this.hunterBan2  =-1;
     this.hunterBan3  =-1;
+    this.hunterB1      =-1;  //New
+    this.hunterB2      =-1;  //New
     this.hunterSlot0 =-1;
     this.hunterSlot1 =-1;
     this.hunterSlot2 =-1;
@@ -516,14 +518,11 @@ class GlobaBanPickList {
 
   //Hunter Selection and Ban Data
   addHunterBan(id){
-    if (this.hunterBan1 ===-1 && this.Round >1){
-      this.hunterBan1 = id; 
+    if (this.hunterB1 ===-1 && this.Round >1){
+      this.hunterB1 = id; 
       return 1;
-    }else if(this.hunterBan2 === -1 && this.Round >2){
-      this.hunterBan2 = id; 
-      return 1;
-    }else if(this.hunterBan3 === -1 && this.Round >3){
-      this.hunterBan3 = id; 
+    }else if(this.hunterB2 === -1 && this.Round >2){
+      this.hunterB2 = id; 
       return 1;
     }else{
       console.log("Hunter was not Banned")
@@ -542,10 +541,39 @@ class GlobaBanPickList {
       return 0
     }
   }
+  addHunterPermaBan(id){
+    if (this.hunterBan1 ===-1 && this.Round >1){
+      this.hunterBan1 = id; 
+      return 1;
+    }else if(this.hunterBan2 === -1 && this.Round >2){
+      this.hunterBan2 = id; 
+      return 1;
+    }else if(this.hunterBan3 === -1 && this.Round >3){
+      this.hunterBan3 = id; 
+      return 1;
+    }else{
+      console.log("Hunter was not Banned")
+      return 0;
+    }
+  }
+  removeHunterPermaBan(id){
+    if (this.hunterBan1 === id){
+      this.hunterBan1 = -1; return 1;
+    }else if(this.hunterBan2 === id){
+      this.hunterBan2 = -1; return 1;
+    }else if(this.hunterBan3 === id){
+      this.hunterBan3 = -1; return 1;
+    }else{
+      console.log("3 Hunters already Banned")
+      return 0
+    }
+  }
   isHunterUsed(id){
     if (this.hunterBan1 === id) return true;
     if (this.hunterBan2 === id) return true;
     if (this.hunterBan3 === id) return true;
+    if (this.hunterB1 === id) return true;  // New
+    if (this.hunterB2 === id) return true;  // New
     if (this.hunterSlot0 === id) return true;
     if (this.hunterSlot1 === id) return true;
     if (this.hunterSlot2 === id) return true;

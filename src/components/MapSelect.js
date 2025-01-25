@@ -363,9 +363,6 @@ function MapSelect(props) {
                                     // height= "80px" 
                                     style={{"position": "absolute",
                                     "cursor": "move",
-                                    // "borderRadius": id>41? "" :"50%",
-                                    // left : x===null? x1 :x,
-                                    // top :  y===null? y1 :y,
                                     left : x1,
                                     top :  y1,
                                     }}
@@ -381,11 +378,12 @@ function MapSelect(props) {
                     }{/* add another image if ivy is the selected hunter, the image is the scare face */}
                     { 
                     GlobalList.getMapCharcters().filter((id)=>id===43).map((id) => {
-                        const [x,y] = GlobalList.getIdCoords(100)
-                        let  [x1,y1]= GlobalList.getIdCoords1(100)
+                        // const [x,y] = GlobalList.getIdCoords(100)
+                        let  [x1,y1]= GlobalList.getIdCoords1(id)
                         if (x1 === null || y1 === null){
                             const order = GlobalList.getMapCharcters().indexOf(id)
-                            x1 = `${1500+parseInt(order*80)}px`; y1 = "595px";  
+                            x1 = `${1500 + parseInt(order * 80)}px`; y1 = `${515}px`; 
+                            // console.log("used Nothing for X1 Y1 because  they dont exist"); 
                         }
                         return (<img 
                                     id={100}
@@ -393,8 +391,8 @@ function MapSelect(props) {
                                     height="80px" 
                                     style={{"position": "absolute",
                                     "cursor": "move",
-                                    left : x===null? x1 :x,
-                                    top :  y===null? y1 :y,
+                                    left : x1,
+                                    top :  y1,
                                     }}
                                     className="dragme" 
                                     onMouseDown={startDrag} 

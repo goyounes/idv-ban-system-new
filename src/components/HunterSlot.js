@@ -66,7 +66,7 @@ function HunterSlot(props) {
       if (GlobalList[SpecialSlotID] === -1) {
         setList([]);
         setIdList([]);
-      }else{
+      } else{
         const PictureListID = GlobalList[SpecialSlotID]
         addPictureToSlot(PictureListID,props.PictureList[PictureListID].url);
       }
@@ -79,8 +79,8 @@ function HunterSlot(props) {
   return (
     <>
       <div className={props.type} ref={drop}  onContextMenu={handleClick}
-              style={{backgroundColor:(props.type==="hunterbans" && X >= GlobalList.Round)  ?"rgb(255,255,255)":"", 
-              borderColor:(props.type==="hunterbans" && X>= GlobalList.Round)  ?"rgb(255,255,255)":""}}>
+              style={{backgroundColor:((props.type==="hunterbans" || props.type==="hunterb") && X >= GlobalList.Round)  ?"rgb(255,255,255)":"", 
+              borderColor:((props.type==="hunterbans" || props.type==="hunterb") && X>= GlobalList.Round)  ?"rgb(255,255,255)":""}}>
         {list.map((picture) => {
           return (<span key={picture.id} onContextMenu={handleClick}>
             <Picture key={picture.id} url={picture.url} id={picture.id} 
