@@ -13,8 +13,7 @@ function PictureP(props) {
       isDragging: !!monitor.isDragging(),
     }),
     end: (item, monitor) => {
-      const dropResult = monitor.getDropResult()
-      
+      const dropResult = monitor.getDropResult()  
       if (!item || !dropResult) {
         console.log("Dropped " + dropResult?.type);
         return
@@ -49,25 +48,41 @@ function PictureP(props) {
         GlobalList.addSelect(charName);
         props.update();
       } 
-      else if (dropResult.type === "hunterbans") { 
+      else if (dropResult.type === "hunterbans") { //Perma Bans logic  here
         if (isNotHunter) return
         if (props.id === GlobalList.hunterSlot0){
           GlobalList.hunterSelect = "";
           GlobalList.hunterSlot0  = -1;
         }
-        GlobalList.addHunterBan(props.id);
+        GlobalList.removeHunterBan(props.id);
+        GlobalList.addHunterPermaBan(props.id);
         props.update();
         return;
       } 
-      else if(dropResult.type==="huntertableslot0" || dropResult.type==="huntertableslot"){ 
+      else if(dropResult.type==="huntertableslot0"){ 
         if (isNotHunter) return
         GlobalList[dropResult.SpecialSlotID] = props.id
-        if(dropResult.type==="huntertableslot0") { // only for Hunter select 
-          GlobalList.hunterSelect = GlobalList.getEquiv(props.id);
-          GlobalList.removeHunterBan(props.id);
-        }
+        GlobalList.hunterSelect = GlobalList.getEquiv(props.id);
+        GlobalList.removeHunterBan(props.id);
+        GlobalList.removeHunterPermaBan(props.id);
         props.update();
-      }     
+      }
+      else if(dropResult.type==="huntertableslot"){ 
+        if (isNotHunter) return
+        GlobalList[dropResult.SpecialSlotID] = props.id
+        props.update();
+      }
+      else if(dropResult.type==="hunterb"){ //Hunter Bans 
+        if (isNotHunter) return
+        if (props.id === GlobalList.hunterSlot0){
+          GlobalList.hunterSelect = "";
+          GlobalList.hunterSlot0  = -1;
+        }
+        GlobalList.removeHunterPermaBan(props.id)
+        GlobalList.addHunterBan(props.id);
+        props.update();
+        return;
+      }       
     },
   }), [props.update]);
 
@@ -121,6 +136,8 @@ function PictureP(props) {
         if (GlobalList.hunterBan1  === props.id ) GlobalList.hunterBan1 = clearHunter();
         if (GlobalList.hunterBan2  === props.id ) GlobalList.hunterBan2 = clearHunter();
         if (GlobalList.hunterBan3  === props.id ) GlobalList.hunterBan3 = clearHunter();
+        if (GlobalList.hunterB1  === props.id ) GlobalList.hunterB1 = clearHunter();
+        if (GlobalList.hunterB2  === props.id ) GlobalList.hunterB2 = clearHunter();
         props.update();
       }
     }
@@ -166,7 +183,7 @@ function PictureP(props) {
       <img
         ref={drag}
         src={props.url}
-        width="90vh"
+        width="70vh"
         style={{visibility: GlobalList.isHunterIgnored(props.id) ? 'hidden' : '',border: isDragging ? "7px solid white" : "7px solid "+ borderColor , opacity: isUsed ? "60%" : "100%",backgroundColor: getBgColor(borderColor)}}
         alt="Invalid URL"
         onContextMenu={handleClick}

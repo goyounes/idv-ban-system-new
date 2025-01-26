@@ -193,10 +193,10 @@ class GlobaBanPickList {
       structuredClone(this.tempPositions),
       structuredClone(this.PBS),
       this.bigMap,
-      this.situationsPosIsEmpty()? "empty":structuredClone(this.situationsPos),
-      this.situationsPBsIsEmpty()? "empty":structuredClone(this.situationsPBS),
-    //   this.situationsPosIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPos),
-    //   this.situationsPBsIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPBS),
+      // this.situationsPosIsEmpty()? "empty":structuredClone(this.situationsPos),
+      // this.situationsPBsIsEmpty()? "empty":structuredClone(this.situationsPBS),
+      this.situationsPosIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPos),
+      this.situationsPBsIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPBS),
     ]; 
     console.log("exported array element n7 is = ")
     console.log(exportArray)
@@ -680,6 +680,8 @@ class GlobaBanPickList {
       Number(this.hunterBan1),
       Number(this.hunterBan2),
       Number(this.hunterBan3),
+      Number(this.hunterB1),
+      Number(this.hunterB2),
     ])
     for (const key in this.ignoredHunters){
       if (this.ignoredHunters[key]!==null) res.add(Number(key))
