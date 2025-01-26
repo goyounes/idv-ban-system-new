@@ -303,8 +303,6 @@ function Canvas(props) {
     "fontSize":"25px",
   }
 
-
-
   const Situationbtn1 = {
     "border":"2px solid black",
     "height": '80px',

@@ -560,6 +560,7 @@ class GlobaBanPickList {
     return ret
   }
   addHunterPermaBan(id){
+    this.removeHunterPermaBan(id)
     if (this.hunterBan1 ===-1 && this.Round >1){
       this.hunterBan1 = id;
       return 1;
@@ -575,16 +576,21 @@ class GlobaBanPickList {
     }
   }
   removeHunterPermaBan(id){
+    let ret = 0
     if (this.hunterBan1 === id){
-      this.hunterBan1 = -1; return 1;
-    }else if(this.hunterBan2 === id){
-      this.hunterBan2 = -1; return 1;
-    }else if(this.hunterBan3 === id){
-      this.hunterBan3 = -1; return 1;
-    }else{
-      console.log("3 Hunters already Banned")
-      return 0
+      this.hunterBan1 = -1; 
+      ret = 1;
     }
+    if(this.hunterBan2 === id){
+      this.hunterBan2 = -1; 
+      ret = 1;
+    }
+    if(this.hunterBan3 === id){
+      this.hunterBan3 = -1; 
+      ret = 1;
+    }
+    if (ret===0) console.log("3 Hunters already Banned")
+    return ret
   }
   isHunterUsed(id){
     if (this.hunterBan1 === id) return true;
