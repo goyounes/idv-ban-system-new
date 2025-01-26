@@ -6,23 +6,34 @@ function Book(props) {
     const [book, setBook] = useState(1);
 
     const toggleBook = (e) => {
-      setBook(book === 1 ? 2:1);
+      const x = book === 1 ? 2:1
+      setBook(x);
+      props.globalList.bookState = x
     };
   
     const closeBook = (e) => {
       setBook(0);
+      props.globalList.bookState = 0
       props.globalList.bigMap = true
       props.update()
     };
   
     const openBook = (e) => {
       setBook(1);
+      props.globalList.bookState = 1
     }
-    if (props.globalList.bookShouldOpen === true){
+    if (props.globalList.bookShouldToggle === true){
       toggleBook()
-      delete props.globalList.bookShouldOpen;
+      delete props.globalList.bookShouldToggle;
     }
-
+    if (props.globalList.bookShouldClose === true){
+      // setTimeout(() => {
+        setBook(0);
+        props.globalList.bookState = 0
+        props.update()
+      // }, 10);
+      delete props.globalList.bookShouldClose;
+    }
     const visible = {
         "height": "960px",
         "width":"630px",

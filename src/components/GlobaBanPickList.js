@@ -12,8 +12,8 @@ class GlobaBanPickList {
     this.hunterBan1  =-1;
     this.hunterBan2  =-1;
     this.hunterBan3  =-1;
-    this.hunterB1      =-1;  //New
-    this.hunterB2      =-1;  //New
+    this.hunterB1 =-1;  //New
+    this.hunterB2 =-1;  //New
     this.hunterSlot0 =-1;
     this.hunterSlot1 =-1;
     this.hunterSlot2 =-1;
@@ -24,6 +24,7 @@ class GlobaBanPickList {
     this.HunterPoints = []
     this.PBS = []
     this.bigMap = false
+    this.bookState = 1;
     this.situationsPos = Array.from({ length: 10 }, () => new Array(10).fill(null));
     this.situationsPBS = Array.from({ length: 10 }, () => new Array(10).fill(null));
     this.situationIndex = 0
@@ -160,7 +161,7 @@ class GlobaBanPickList {
       [this.hunterBan1, this.hunterBan2, this.hunterBan3,this.hunterB1,this.hunterB2],
       structuredClone(this.Positions),
       structuredClone(this.PBS),
-      this.bigMap,
+      [this.bigMap, this.bookState===0 && true],
       // this.situationsPosIsEmpty()? "empty":structuredClone(this.situationsPos),
       // this.situationsPBsIsEmpty()? "empty":structuredClone(this.situationsPBS),
       this.situationsPosIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPos),
@@ -197,7 +198,11 @@ class GlobaBanPickList {
     this.Positions = structuredClone(arr[6]);
     this.PBS.splice(0,this.PBS.length) 
     this.PBS.push(...arr[7])
-    this.bigMap=arr[8]
+    console.log("big map ",this.bigMap,"=>",arr[8][0])
+    this.bigMap=arr[8][0]
+    console.log("big map is now",this.bigMap)
+
+    this.bookShouldClose=arr[8][1]
     if(arr[9]==="empty"){  }else{
       this.situationsPos = structuredClone(arr[9])
     } 
