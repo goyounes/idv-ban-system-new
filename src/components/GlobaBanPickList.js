@@ -35,23 +35,25 @@ class GlobaBanPickList {
     for (let i=0;i<10;i++){
       const line = []
       for(let j=0;j<10;j++){
-        if (array2D[i][j]!==null){
+        console.log(array2D[i][j])
+        if (array2D[i][j]===null){
           break
         }else{
           line.push(array2D[i][j])
           console.log("added this value -->")
-          console.table(array2D)
+          console.log("obj=> ",array2D[i][j])
         }
       }
+      console.log("line-->",line)
       resArray.push(line)
-      console.table(resArray);
     }
+    console.log(resArray);
     return resArray
   }
   SpecialImportFunc(resArray,targetarray2D){
     for (let i=0;i<resArray.length;i++){
       for(let j=0;j<resArray[i].length;j++){
-        targetarray2D=resArray[i][j]
+        targetarray2D[i][j] = resArray[i][j]
       }
     }
   }
@@ -131,15 +133,7 @@ class GlobaBanPickList {
   mapSizeToggler(){
     this.bigMap = !this.bigMap 
   }
-  // getIdCoords (id){
-  //   if (this.Positions[id] === undefined){
-  //     return [null,null]
-  //   }
-  //   const result = this.Positions[id]
-  //   this.Positions[id] = undefined
-  //   return result
-  // }
-  // you can probabily clean this.
+
   getIdCoords1 (id){
     if (this.Positions[id] === undefined) return [null,null]
     return this.Positions[id]
@@ -149,8 +143,11 @@ class GlobaBanPickList {
     return this.Positions[id][2]
   }
 
-  //Save/Load, NextRound/PreviousRound, Export/Import functionality
+  // Save/Load, NextRound/PreviousRound, Export/Import functionality
   saveRoundData(){
+    // two special arrays
+    const arr1 = this.situationsPosIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPos)
+    const arr2 =  this.situationsPBsIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPBS)
     // eslint-disable-next-line
     const exportArray = [
       [this.Map,this.cipherLayout],
@@ -164,8 +161,8 @@ class GlobaBanPickList {
       [this.bigMap, this.bookState===0 && true],
       // this.situationsPosIsEmpty()? "empty":structuredClone(this.situationsPos),
       // this.situationsPBsIsEmpty()? "empty":structuredClone(this.situationsPBS),
-      this.situationsPosIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPos),
-      this.situationsPBsIsEmpty()? "empty":this.SpecialExportFunc(this.situationsPBS),
+      arr1,
+      arr2,
     ]; 
     console.log("exported array element n7 is = ")
     console.log(exportArray)
@@ -204,11 +201,12 @@ class GlobaBanPickList {
 
     this.bookShouldClose=arr[8][1]
     if(arr[9]==="empty"){  }else{
-      this.situationsPos = structuredClone(arr[9])
+      this.SpecialImportFunc(arr[9],this.situationsPos)
     } 
     if(arr[10]==="empty"){ }else{
-      this.situationsPBS = structuredClone(arr[10])
+      this.SpecialImportFunc(arr[10],this.situationsPBS)
     }
+    this.LoadSituation(0,0);
   }
   NextRound (){// (0) 
     // Save the state of this round in a variable called X="Round"+this.round+"Data"
