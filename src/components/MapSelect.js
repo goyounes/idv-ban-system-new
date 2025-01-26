@@ -201,7 +201,7 @@ function MapSelect(props) {
         return false;
     }
     function stopDrag(e) {
-        if (e.target.id!=="") GlobalList.tempPositions[e.target.id] = [coordX+e.clientX-offsetX+'px',coordY+e.clientY-offsetY+'px',  props.globalList.tempPositions[e.target.id] && props.globalList.tempPositions[e.target.id][2] + 0] //0 is the state of the img, aka the default source
+        if (e.target.id!=="") GlobalList.Positions[e.target.id] = [coordX+e.clientX-offsetX+'px',coordY+e.clientY-offsetY+'px',  props.globalList.Positions[e.target.id] && props.globalList.Positions[e.target.id][2] + 0] //0 is the state of the img, aka the default source
         drag=false;
     }
 
@@ -268,11 +268,11 @@ function MapSelect(props) {
 
     function AdjustPosition(i,id){
         if (i === 0){
-            props.globalList.tempPositions[id][0] =  parseInt(props.globalList.tempPositions[id][0] || 0) + 200 +"px"
-            props.globalList.tempPositions[id][1] =  parseInt(props.globalList.tempPositions[id][1] || 0) + 200 +"px"
+            props.globalList.Positions[id][0] =  parseInt(props.globalList.Positions[id][0] || 0) + 200 +"px"
+            props.globalList.Positions[id][1] =  parseInt(props.globalList.Positions[id][1] || 0) + 200 +"px"
         }else if (i !== 0){
-            props.globalList.tempPositions[id][0] =  parseInt(props.globalList.tempPositions[id][0] || 0) - 200 +"px"
-            props.globalList.tempPositions[id][1] =  parseInt(props.globalList.tempPositions[id][1] || 0) - 200 +"px"
+            props.globalList.Positions[id][0] =  parseInt(props.globalList.Positions[id][0] || 0) - 200 +"px"
+            props.globalList.Positions[id][1] =  parseInt(props.globalList.Positions[id][1] || 0) - 200 +"px"
         }
     }
     function srcCyclerMaker(id){
@@ -280,14 +280,14 @@ function MapSelect(props) {
         if (id > 41) return (e)=>{
         //HUNTER CYCLER
             e.preventDefault()
-            const currenti = props.globalList.tempPositions[id][2] || 0
+            const currenti = props.globalList.Positions[id][2] || 0
             if (e.shiftKey){
                 const Nexti = nextIndex(SOURCES[id],currenti,"Left")
-                props.globalList.tempPositions[id][2]= Nexti
+                props.globalList.Positions[id][2]= Nexti
                 AdjustPosition(Nexti,id)
             }else{
                 const Nexti = nextIndex(SOURCES[id],currenti,"Right")
-                props.globalList.tempPositions[id][2]= Nexti
+                props.globalList.Positions[id][2]= Nexti
                 AdjustPosition(Nexti,id)
             }
             props.update()
@@ -295,13 +295,13 @@ function MapSelect(props) {
         //SURVIVOR CYCLER
         return (e)=>{
             e.preventDefault();
-            const currenti = props.globalList.tempPositions[id][2] || 0
+            const currenti = props.globalList.Positions[id][2] || 0
             if (e.shiftKey){
                 const Nexti = nextIndex(SOURCES[id],currenti,"Left")
-                props.globalList.tempPositions[id][2]= Nexti
+                props.globalList.Positions[id][2]= Nexti
             }else{
                 const Nexti = nextIndex(SOURCES[id],currenti,"Right")
-                props.globalList.tempPositions[id][2]= Nexti
+                props.globalList.Positions[id][2]= Nexti
             }
             props.update()
         }
@@ -375,7 +375,7 @@ function MapSelect(props) {
                                                            
                                 />);
                     })
-                    }{/* add another image if ivy is the selected hunter, the image is the scare face */}
+                    }{/* add aanother image if ivy is the selected hunter, the image is the scare face */}
                     { 
                     GlobalList.getMapCharcters().filter((id)=>id===43).map((id) => {
                         let  [x1,y1]= GlobalList.getIdCoords1(id)

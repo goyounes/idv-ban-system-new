@@ -20,36 +20,12 @@ class GlobaBanPickList {
     this.hunterSlot3 =-1;
     this.hunterSlot4 =-1;
     this.ignoredHunters = {}
-    // this.Positions = {}
-    this.tempPositions = {}
+    this.Positions = {}
     this.HunterPoints = []
     this.PBS = []
     this.bigMap = false
-    //new Array(10).fill(...[null,null,null,null,null,null,null,null])
-    this.situationsPos = [
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],      
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-    ]
-    this.situationsPBS = [
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],      
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null],
-    ]
+    this.situationsPos = Array.from({ length: 10 }, () => new Array(10).fill(null));
+    this.situationsPBS = Array.from({ length: 10 }, () => new Array(10).fill(null));
     this.situationIndex = 0
     this.situationCase = 0
   }
@@ -101,7 +77,7 @@ class GlobaBanPickList {
       return
     }
     console.log("Saving the situation")
-    this.situationsPos[this.situationIndex][this.situationCase] = structuredClone(this.tempPositions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
+    this.situationsPos[this.situationIndex][this.situationCase] = structuredClone(this.Positions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
     this.situationsPBS[this.situationIndex][this.situationCase] = structuredClone(this.PBS)
     // this.situationIndex++
     console.table(this.situationsPos)
@@ -109,7 +85,7 @@ class GlobaBanPickList {
   }
   ForceSaveSituation(){
     console.log("Force Saving the situation")
-    this.situationsPos[this.situationIndex][this.situationCase] = structuredClone(this.tempPositions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
+    this.situationsPos[this.situationIndex][this.situationCase] = structuredClone(this.Positions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
     this.situationsPBS[this.situationIndex][this.situationCase] = structuredClone(this.PBS)
   }
 
@@ -119,7 +95,7 @@ class GlobaBanPickList {
       console.log("empty situation i =>",i,"c =>",c)
       return
     }
-    this.tempPositions = this.situationsPos[this.situationIndex][this.situationCase]
+    this.Positions = this.situationsPos[this.situationIndex][this.situationCase]
     this.PBS = this.situationsPBS[this.situationIndex][this.situationCase]
   }
   NextSituation(){
@@ -152,15 +128,7 @@ class GlobaBanPickList {
   }
 
   mapSizeToggler(){
-    switch (this.bigMap) {
-      case false:
-        this.bigMap = true ;
-        break;
-      case true:
-        this.bigMap = false ;
-        break;
-      default:
-    }
+    this.bigMap = !this.bigMap 
   }
   // getIdCoords (id){
   //   if (this.Positions[id] === undefined){
@@ -172,12 +140,12 @@ class GlobaBanPickList {
   // }
   // you can probabily clean this.
   getIdCoords1 (id){
-    if (this.tempPositions[id] === undefined) return [null,null]
-    return this.tempPositions[id]
+    if (this.Positions[id] === undefined) return [null,null]
+    return this.Positions[id]
   }
   getSrcIndex (id){
-    if (this.tempPositions[id] === undefined) return 0
-    return this.tempPositions[id][2]
+    if (this.Positions[id] === undefined) return 0
+    return this.Positions[id][2]
   }
 
   //Save/Load, NextRound/PreviousRound, Export/Import functionality
@@ -190,7 +158,7 @@ class GlobaBanPickList {
       [this.AB1,this.AB2,this.AS1,this.AS2],
       [this.hunterSelect,this.hunterSlot0,this.hunterSlot1,this.hunterSlot2,this.hunterSlot3,this.hunterSlot4],
       [this.hunterBan1, this.hunterBan2, this.hunterBan3,this.hunterB1,this.hunterB2],
-      structuredClone(this.tempPositions),
+      structuredClone(this.Positions),
       structuredClone(this.PBS),
       this.bigMap,
       // this.situationsPosIsEmpty()? "empty":structuredClone(this.situationsPos),
@@ -226,7 +194,7 @@ class GlobaBanPickList {
     this.hunterB2  = arr[5][4];
     // this.Positions = arr[6];
 
-    this.tempPositions = structuredClone(arr[6]);
+    this.Positions = structuredClone(arr[6]);
     this.PBS.splice(0,this.PBS.length) 
     this.PBS.push(...arr[7])
     this.bigMap=arr[8]
@@ -383,7 +351,7 @@ class GlobaBanPickList {
     this.hunterSlot0 =-1;
     this.PBS.splice(0,this.PBS.length) 
     // this.Positions = {}
-    this.tempPositions = {}
+    this.Positions = {}
     return 1;
   }
 

@@ -11,6 +11,8 @@ function Book(props) {
   
     const closeBook = (e) => {
       setBook(0);
+      props.globalList.bigMap = true
+      props.update()
     };
   
     const openBook = (e) => {
@@ -44,8 +46,9 @@ function Book(props) {
 
       return () => {
         window.removeEventListener('keydown', handleArrowKey);
-        // clearInterval(intervalId);
       };
+
+    // eslint-disable-next-line
     }, []);
 
     return (
