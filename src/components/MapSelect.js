@@ -351,7 +351,7 @@ function MapSelect(props) {
                         let  [x1,y1]= GlobalList.getIdCoords1(id)
                         if (x1 === null || y1 === null){
                             const order = GlobalList.getMapCharcters().indexOf(id)
-                            x1 = `${1500 + parseInt(order * 80)}px`; y1 = `${515}px`; 
+                            x1 = `${1500 + parseInt(order * 80)}px`; y1 = `${515 + Math.floor(GlobalList.Round/3)*100}px`; 
                             // console.log("used Nothing for X1 Y1 because  they dont exist"); 
                         }
                         let index = GlobalList.getSrcIndex(id)
@@ -381,7 +381,7 @@ function MapSelect(props) {
                         let  [x1,y1]= GlobalList.getIdCoords1(id)
                         if (x1 === null || y1 === null){
                             const order = GlobalList.getMapCharcters().indexOf(id)
-                            x1 = `${1500 + parseInt(order * 80)}px`; y1 = `${515+80}px`; 
+                            x1 = `${1500 + parseInt(order * 80)}px`; y1 = `${515 + 80 + Math.floor(GlobalList.Round/3)*100}px`; 
                         }
                         return (<img 
                                     id={100}
