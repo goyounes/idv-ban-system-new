@@ -79,12 +79,8 @@ class GlobaBanPickList {
       console.log("Non empty situation data, i:",this.situationIndex,"c:",this.situationCase,"\n Will not overwrite.")
       return
     }
-    console.log("Saving the situation")
     this.situationsPos[this.situationIndex][this.situationCase] = structuredClone(this.Positions) //{3:{x:15,y:17,s:2},15:{x:15,y:17,s:2}}
     this.situationsPBS[this.situationIndex][this.situationCase] = structuredClone(this.PBS)
-    // this.situationIndex++
-    console.table(this.situationsPos)
-    // debugger
   }
   ForceSaveSituation(){
     console.log("Force Saving the situation")
@@ -129,7 +125,17 @@ class GlobaBanPickList {
     console.log("current index is : ",this.situationIndex,"Current Case is : ",this.situationCase)
     this.LoadSituation(this.situationIndex,this.situationIndex)
   }
-
+  ClearSituation(){
+    this.situationsPos[0][0] = this.situationsPos[this.situationIndex][this.situationCase];
+    this.situationsPBS[0][0] = this.situationsPBS[this.situationIndex][this.situationCase];
+    for(let i=0;i<10;i++){
+      for (let j=0;j<10;j++){
+        if (i===0 && j===0) continue
+        this.situationsPos[i][j] = null
+        this.situationsPBS[i][j] = null
+      }
+    }
+  }
   mapSizeToggler(){
     this.bigMap = !this.bigMap 
   }

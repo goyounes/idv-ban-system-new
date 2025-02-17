@@ -267,6 +267,10 @@ function Canvas(props) {
     props.update();
   }
 
+  const handleClearSituationClick=()=>{
+    props.globalList.ClearSituation()
+    props.update();
+  }
   const Button1 = {
     "border":"2px solid black",
     "marginTop":"0px",
@@ -356,7 +360,8 @@ function Canvas(props) {
               </div>
               <div>
                 <button onClick={handleSaveSituationClick}      style={Situationbtn1}>💾Save Situation</button>
-                <button onClick={handleRestoreSituationClick}   style={Situationbtn2}>↩️Restore Situation</button>
+                {/* <button onClick={handleRestoreSituationClick}   style={Situationbtn2}>↩️Restore Situation</button> */}
+                <button onClick={handleClearSituationClick}   style={Situationbtn2}>Clear Situation</button>
               </div>
           </div>
 
